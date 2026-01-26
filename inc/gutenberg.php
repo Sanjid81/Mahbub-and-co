@@ -46,11 +46,12 @@ use Carbon_Fields\Block;
 
 add_action('carbon_fields_register_fields', function () {
     // ............// Home page..................
-    // ............// Home page..................
     // Hero slider
     // .............
     Block::make('Hero section')
         ->add_fields(array(
+            Field::make('image', 'hero_bg_image', 'Hero Background Image'),
+
             Field::make('complex', 'hero_slides', 'Hero Slides')
                 ->add_fields(array(
                     Field::make('text', 'title', 'Slide Title'),
@@ -61,15 +62,16 @@ add_action('carbon_fields_register_fields', function () {
                     Field::make('image', 'image', 'Slide Image')
                 ))
                 ->set_layout('tabbed-horizontal')
-
         ))
-        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
-            $slides = $fields['hero_slides'] ?? [];
+        ->set_render_callback(function ($fields) {
 
-            // Include hero template and pass variable
-            set_query_var('slides', $slides);
+            set_query_var('slides', $fields['hero_slides'] ?? []);
+            set_query_var('hero_bg_image', $fields['hero_bg_image'] ?? '');
+
             get_template_part('components/home/hero');
         });
+
+
 
 
     // .................News and insights.....................
@@ -172,21 +174,15 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
-
-
-
-
-
     // ===================Our expertise page========================
     // ===========================================
-   
+
     Block::make('FAQ Section')
         ->set_description('Add FAQ section with dynamic team area categories')
         ->set_category('common')
         ->add_fields(array(
             Field::make('text', 'faq_section_title', 'Section Title'),
             Field::make('textarea', 'faq_section_description', 'Section Description'),
-            // No need to add faq_items manually, they will be fetched dynamically
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
             set_query_var('fields', $fields);
@@ -195,38 +191,6 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
-
-
-
-
-
-    // ===================Our expertise page========================
-    // ===========================================
-    // common-footer-top
-    // Block::make('Common footer top Section')
-    //     ->add_fields(array(
-    //         Field::make('text', 'lead_text', 'Lead Text')
-    //             ->set_help_text('Use <br> for line breaks if needed'),
-
-    //         Field::make('textarea', 'legal_text', 'Legal Text')
-    //             ->set_help_text('Use <br> for line breaks if needed'),
-
-    //         Field::make('text', 'button_text', 'Button Text')
-    //             ->set_default_value('Learn More'),
-
-    //         Field::make('text', 'button_link', 'Button Link')
-    //             ->set_default_value('#'),
-    //     ))
-    //     ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
-    //         // Variables
-    //         $lead_text = $fields['lead_text'] ?? '';
-    //         $legal_text = $fields['legal_text'] ?? '';
-    //         $button_text = $fields['button_text'] ?? '';
-    //         $button_link = $fields['button_link'] ?? '';
-
-    //         // Include template directly
-    //         include get_template_directory() . '/components/our-expertise/common-footer-top.php';
-    //     });
 
 
 
