@@ -1,14 +1,17 @@
 <?php
 $testimonials = get_query_var('testimonials', []);
+$testimonials_bg = get_query_var('testimonials_bg', ''); // NEW
 
-// var_dump($testimonials);
-if (!empty($testimonials)): ?>
+$bg_url = $testimonials_bg ? wp_get_attachment_image_url($testimonials_bg, 'full') : '';
+?>
 
-    <section class="testimonials-section">
+<?php if (!empty($testimonials)): ?>
+
+    <section class="testimonials-section" <?php if($bg_url) echo 'style="background-image: url('.esc_url($bg_url).');"'; ?>>
         <div class="overlay"></div>
         <div class="container">
-            <div class="header-row" data-aos="fade-up">
-                <h2>Testimonials</h2>
+            <div class="header-row">
+                <h2 class="heading-two">Testimonials</h2>
                 <div class="testimonials-slider-buttons">
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
@@ -25,7 +28,6 @@ if (!empty($testimonials)): ?>
                                 ?>
                                 <div class="swiper-slide">
                                     <div class="testimonial-card">
-                                        <div class="quote">
                                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -36,9 +38,8 @@ if (!empty($testimonials)): ?>
                                                     stroke="#BC001A" stroke-width="2" stroke-miterlimit="10" />
                                             </svg>
 
-                                        </div>
-                                        <p class="text"><?php echo esc_html($text); ?></p>
-                                        <p class="author"><?php echo esc_html($author); ?></p>
+                                        <p class="heading-four text"><?php echo esc_html($text); ?></p>
+                                        <p class="body-text-three author"><?php echo esc_html($author); ?></p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

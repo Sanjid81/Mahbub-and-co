@@ -15,7 +15,6 @@ $news_button_link = $fields['news_button_link'] ?? '#';
 $insights_button_text = $fields['insights_button_text'] ?? 'Get Started';
 $insights_button_link = $fields['insights_button_link'] ?? '#';
 ?>
-
 <section class="news-insights">
   <div class="container">
     <div class="section-columns">
@@ -29,17 +28,17 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
           <?php if (!empty($news_cards)): ?>
             <?php $first_card = array_shift($news_cards); ?>
             <!-- Card 1 -->
-            <div class="card">
+            <div class="card"data-aos="fade-up">
               <?php if ($first_card['image'] ?? false): ?>
                 <div class="card-image">
                   <?php echo wp_get_attachment_image($first_card['image'], 'full'); ?>
                 </div>
               <?php endif; ?>
-              <div class="card-content" data-aos="fade-up">
-                <p class="meta" data-aos="fade-up"><?php echo esc_html($first_card['meta']); ?></p>
-                <h3 class="heading-three" data-aos="fade-up"><?php echo esc_html($first_card['heading']); ?></h3>
-                <p class="excerpt" data-aos="fade-up"><?php echo esc_html($first_card['excerpt']); ?></p>
-                <a href="<?php echo esc_url($first_card['read_more_link']); ?>" class="read-more" data-aos="fade-up">
+              <div class="card-content" >
+                <p class="meta" ><?php echo esc_html($first_card['meta']); ?></p>
+                <h3 class="heading-three" ><?php echo esc_html($first_card['heading']); ?></h3>
+                <p class="excerpt" ><?php echo esc_html($first_card['excerpt']); ?></p>
+                <a href="<?php echo esc_url($first_card['read_more_link']); ?>" class="read-more" >
                   <?php echo esc_html($first_card['read_more_text']); ?>
                   <span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +60,7 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
 
             <!-- Remaining Cards -->
             <?php if (!empty($news_cards)): ?>
-              <div class="card-grid-inner">
+              <div class="card-grid-inner"data-aos="fade-down">
                 <?php foreach ($news_cards as $card): ?>
                   <div class="card">
                     <?php if ($card['image'] ?? false): ?>
@@ -70,10 +69,10 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
                       </div>
                     <?php endif; ?>
                     <div class="card-content">
-                      <p class="meta" data-aos="fade-up"><?php echo esc_html($card['meta']); ?></p>
-                      <h3 class="heading-three" data-aos="fade-up"><?php echo esc_html($card['heading']); ?></h3>
-                      <p class="excerpt" data-aos="fade-up"><?php echo esc_html($card['excerpt']); ?></p>
-                      <a href="<?php echo esc_url($card['read_more_link']); ?>" class="read-more" data-aos="fade-up">
+                      <p class="meta" ><?php echo esc_html($card['meta']); ?></p>
+                      <h3 class="heading-three" ><?php echo esc_html($card['heading']); ?></h3>
+                      <p class="excerpt" ><?php echo esc_html($card['excerpt']); ?></p>
+                      <a href="<?php echo esc_url($card['read_more_link']); ?>" class="read-more" >
                         <?php echo esc_html($card['read_more_text']); ?>
                         <span>
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,8 +97,8 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
           <?php endif; ?>
         </div>
 
-        <div class="button-wrap" data-aos="fade-up">
-          <a href="<?php echo esc_url($news_button_link); ?>" class="primary-button">
+        <div class="button-wrap" >
+          <a href="<?php echo esc_url($news_button_link); ?>" class="primary-button"data-aos="fade-up">
             <div class="button-text"><?php echo esc_html($news_button_text); ?>
             </div>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,22 +119,23 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
 
       <!-- Insights -->
       <div class="column">
-        <h2 class="heading-two" data-aos="fade-up"><?php echo esc_html($insights_title); ?></h2>
+        <h2 class="heading-two"data-aos="fade-up" >
+          <?php echo esc_html($insights_title); ?></h2>
         <div class="card-grid">
           <?php if (!empty($insights_cards)): ?>
             <?php $first_card = array_shift($insights_cards); ?>
             <!-- Card 1 -->
-            <div class="card">
+            <div class="card"data-aos="fade-up">
               <?php if ($first_card['image'] ?? false): ?>
                 <div class="card-image">
                   <?php echo wp_get_attachment_image($first_card['image'], 'full'); ?>
                 </div>
               <?php endif; ?>
               <div class="card-content">
-                <p class="meta" data-aos="fade-up"><?php echo esc_html($first_card['meta']); ?></p>
-                <h3 class="heading-three" data-aos="fade-up"><?php echo esc_html($first_card['heading']); ?></h3>
-                <p class="excerpt" data-aos="fade-up"><?php echo esc_html($first_card['excerpt']); ?></p>
-                <a href="<?php echo esc_url($first_card['read_more_link']); ?>" class="read-more" data-aos="fade-up">
+                <p class="meta" ><?php echo esc_html($first_card['meta']); ?></p>
+                <h3 class="heading-three" ><?php echo esc_html($first_card['heading']); ?></h3>
+                <p class="excerpt" ><?php echo esc_html($first_card['excerpt']); ?></p>
+                <a href="<?php echo esc_url($first_card['read_more_link']); ?>" class="read-more" >
                   <?php echo esc_html($first_card['read_more_text']); ?>
                   <span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -157,7 +157,7 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
 
             <!-- Remaining Cards -->
             <?php if (!empty($insights_cards)): ?>
-              <div class="card-grid-inner">
+              <div class="card-grid-inner"data-aos="fade-down">
                 <?php foreach ($insights_cards as $card): ?>
                   <div class="card">
                     <?php if ($card['image'] ?? false): ?>
@@ -166,9 +166,9 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
                       </div>
                     <?php endif; ?>
                     <div class="card-content">
-                      <p class="meta" data-aos="fade-up"><?php echo esc_html($card['meta']); ?></p>
-                      <h3 class="heading-three" data-aos="fade-up"><?php echo esc_html($card['heading']); ?></h3>
-                      <p class="excerpt" data-aos="fade-up"><?php echo esc_html($card['excerpt']); ?></p>
+                      <p class="meta"><?php echo esc_html($card['meta']); ?></p>
+                      <h3 class="heading-three"><?php echo esc_html($card['heading']); ?></h3>
+                      <p class="excerpt"><?php echo esc_html($card['excerpt']); ?></p>
                       <a href="<?php echo esc_url($card['read_more_link']); ?>" class="read-more" data-aos="fade-up">
                         <?php echo esc_html($card['read_more_text']); ?>
                         <span>

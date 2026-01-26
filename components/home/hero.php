@@ -11,6 +11,7 @@ $bg_image_url = $bg_image_id
         style="<?php if ($bg_image_url): ?>
             background-image: url('<?php echo esc_url($bg_image_url); ?>');
         <?php endif; ?>">
+    <div class="overlay"></div>
 
         <div class="swiper">
             <div class="swiper-wrapper">
@@ -31,7 +32,7 @@ $bg_image_url = $bg_image_id
                     <div class="swiper-slide">
                         <div class="content-wraper">
                             <div class="slide-content">
-                                <h1 class="slide-title" data-aos="fade-up">
+                                <h1 class="slide-title text-red" data-aos="fade-up">
                                     <?php echo esc_html($title); ?>
                                     <?php if ($highlight_text): ?>
                                         <span><?php echo esc_html($highlight_text); ?></span>

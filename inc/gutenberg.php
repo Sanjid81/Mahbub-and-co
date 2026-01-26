@@ -124,6 +124,8 @@ add_action('carbon_fields_register_fields', function () {
     // .....................Testimonials Section...................
     Block::make('Testimonials Section')
         ->add_fields(array(
+            Field::make('image', 'background_image', 'Background Image'), // NEW
+
             Field::make('complex', 'testimonials', 'Testimonials')
                 ->set_layout('tabbed-horizontal')
                 ->add_fields(array(
@@ -134,10 +136,10 @@ add_action('carbon_fields_register_fields', function () {
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
 
             set_query_var('testimonials', $fields['testimonials'] ?? []);
-
+            set_query_var('testimonials_bg', $fields['background_image'] ?? ''); // NEW
+    
             get_template_part('components/home/home-testimonials');
         });
-
 
     // ......................Accolades.................
 
