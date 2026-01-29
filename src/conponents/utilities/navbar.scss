@@ -1,6 +1,7 @@
 .navbar {
     border-bottom: 1px solid #FFFFFF33;
     background-color: rgba(0, 0, 0, 1);
+    position: relative;
 
     .nav-container {
         max-width: 1920px;
@@ -24,7 +25,7 @@
             .nav-first-half {
                 display: flex;
                 align-items: center;
-                gap: 40px;
+                gap: 60px;
 
                 @media (max-width: 1100px) {
                     gap: 20px;
@@ -33,7 +34,7 @@
                 .logo {
                     img {
                         width: 100%;
-                        height: 62px;
+                        height: 52px;
                         object-fit: contain;
 
                         @media (max-width: 1300px) {
@@ -171,7 +172,7 @@
                 .social-media {
                     display: flex;
                     align-items: center;
-                    gap: 20px;
+                    gap: 6px;
 
                     a {
                         transition: all 0.3s ease;
@@ -223,13 +224,13 @@
             .small-nav-wraper {
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
                 position: absolute;
-                top: 105px;
+                top: 72px;
                 left: 0;
                 width: 100%;
                 background-color: rgba(0, 0, 0, 1);
                 display: flex;
                 flex-direction: column;
-                padding: 12px 30px 40px;
+                padding: 2px 20px 40px;
                 z-index: 9;
                 overflow: hidden;
                 height: calc(100vh - 103px);
@@ -238,9 +239,9 @@
                 visibility: hidden;
                 transition: all 0.4s ease, max-height 0.4s ease;
 
-                @media (max-width: 782px) {
-                    top: 115px;
-                }
+                // @media (max-width: 782px) {
+                //     top: 115px;
+                // }
 
                 &.active {
                     max-height: calc(100vh - 103px);
@@ -387,12 +388,19 @@
 
                                                     a {
                                                         display: inline-flex;
-                                                        // padding: 12px;
-                                                        font-size: 14px;
-                                                        color: #e2d5d5;
                                                         text-decoration: none;
-                                                        transition: color 0.3s;
+                                                        color: rgba(255, 255, 255, 0.8);
                                                         position: relative;
+                                                        font-size: 14px;
+                                                        font-family: var(--font-primary);
+                                                        font-weight: 400;
+                                                        line-height: 140%;
+                                                        letter-spacing: 0;
+
+                                                        @media (max-width: 1030px) {
+                                                            font-size: 12px;
+                                                            line-height: 120%;
+                                                        }
 
                                                         &::before {
                                                             content: "";
@@ -469,7 +477,7 @@
                 .cross {
                     position: absolute;
                     top: -12px;
-                    left: -14px;
+                    left: -26px;
                     transition: opacity 0.3s ease, transform 0.3s ease;
                 }
 
@@ -500,10 +508,12 @@
 
             .hamburger {
                 outline: none;
+                border: none;
+                background: none;
+                padding: 0;
             }
 
             .hamburger:focus {
-                display: none;
                 outline: none;
                 box-shadow: none;
             }

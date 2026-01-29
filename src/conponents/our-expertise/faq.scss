@@ -64,7 +64,7 @@
                     .tailored-paragraph {
                         max-width: 563px;
                         @extend .body-text;
-                        color: var(--light-bg-2);
+                        color: var(--light-bg);
 
                         @media (max-width:1500px) {
                             max-width: 660px;

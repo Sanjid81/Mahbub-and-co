@@ -1,0 +1,185 @@
+.recognition-section {
+    background-color: rgb(247, 247, 247);
+
+    .recognition-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 120px 0;
+        align-items: center;
+
+        @media (max-width:1600px) {
+            padding: 80px 0;
+        }
+
+        @media (max-width:1200px) {
+            padding: 70px 0;
+        }
+
+        .recognition-wraper {
+            padding: 20px;
+            display: flex;
+            gap: 60px;
+            max-width: 1112px;
+            width: 100%;
+            margin: 0 auto;
+            align-items: center;
+            background-color: var(--color-white);
+            border-radius: 20px;
+
+            @media (max-width:1600px) {
+                gap: 40px;
+            }
+
+            @media (max-width:1200px) {
+                gap: 30px;
+            }
+
+            @media (max-width:500px) {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            img {
+                height: 230px;
+                width: 263px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+
+                @media (max-width:1600px) {
+                    height: 200px;
+                    width: 200px;
+                }
+
+                @media (max-width:1200px) {
+                    height: 150px;
+                    width: 150px;
+                }
+            }
+
+            .recongnition-content {
+                max-width: 682px;
+                width: 100%;
+                padding: 62px 62px 62px 0px;
+
+                @media (max-width:1600px) {
+                    padding: 32px 32px 32px 0px;
+                }
+
+                @media (max-width:1200px) {
+                    padding: 20px 20px 20px 0px;
+                }
+
+                @media (max-width:600px) {
+                    padding: 0px;
+                }
+
+                @media (max-width:500px) {
+                    align-items: center;
+                    text-align: center;
+                }
+
+                h5 {
+                    color: var(--dark-normal);
+                    margin-bottom: 20px;
+                }
+
+                p {
+                    color: var(--dark-80);
+                    font-family: var(--font-secondary);
+                }
+            }
+        }
+
+        .primary-button {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            width: fit-content;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+            padding: 6px 70px 6px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 56px;
+            position: relative;
+            margin-top: 20px;
+
+            @media (max-width: 1300px) {
+                height: 48px;
+                padding: 6px 50px 6px 16px;
+                gap: 8px;
+            }
+
+            .button-text {
+                color: var(--dark-normal);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                box-shadow: none;
+            }
+
+            svg {
+                transition: all 0.3s ease;
+                position: absolute;
+                top: 50%;
+                right: 6px;
+                transform: translateY(-50%);
+                transition: right 0.3s ease;
+
+                rect {
+                    transition: fill 0.3s ease;
+                }
+
+                path {
+                    transition: stroke 0.3s ease;
+                }
+
+                @media (max-width: 1300px) {
+                    height: 36px;
+                    width: 36px;
+
+                }
+            }
+
+            &:hover {
+                background-color: var(--primary-red);
+                padding: 6px 32px 6px 70px;
+
+                @media (max-width: 1300px) {
+                    padding: 6px 16px 6px 50px;
+
+                }
+
+                .button-text {
+                    color: #fff;
+                    box-shadow: none;
+
+                }
+
+                svg {
+                    right: calc(100% - 50px);
+
+                    rect {
+                        fill: #fff;
+                    }
+
+                    path {
+                        stroke: var(--primary-red);
+                    }
+
+                    @media (max-width: 1300px) {
+                        right: calc(100% - 42px);
+
+                    }
+                }
+
+            }
+        }
+    }
+
+}

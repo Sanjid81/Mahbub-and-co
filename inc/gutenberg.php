@@ -6,45 +6,9 @@ use Carbon_Fields\Block;
 
 
 
-
-// add_action('carbon_fields_register_fields', function () {
-//     Container::make('theme_options', 'Header Options')
-//         ->set_icon('dashicons-admin-generic') // optional
-//         ->add_fields(array(
-//             Field::make('image', 'site_logo', 'Site Logo'),
-//             Field::make('text', 'facebook_link', 'Facebook URL'),
-//             Field::make('text', 'email_link', 'Email'),
-//             Field::make('text', 'linkedin_link', 'LinkedIn URL'),
-//             Field::make('text', 'button_text', 'Button Text'),
-//             Field::make('text', 'button_link', 'Button Link'),
-//         ));
-// });
-
-// // footer
-
-
-// add_action('carbon_fields_register_fields', 'footer_theme_options');
-// function footer_theme_options()
-// {
-//     Container::make('theme_options', __('Footer Settings'))
-//         ->set_icon('dashicons-editor-quote')
-//         ->add_fields(array(
-//             Field::make('image', 'footer_logo', 'Footer Logo'),
-//             Field::make('image', 'footer_mobile_logo', 'Footer Mobile Logo'),
-//             Field::make('text', 'footer_tagline', 'Footer Tagline'),
-//             Field::make('text', 'footer_address', 'Address'),
-//             Field::make('text', 'footer_email', 'Email'),
-//             Field::make('text', 'footer_copyright', 'Copyright Text'),
-//             Field::make('text', 'footer_site_name', 'Site Name'),
-//             Field::make('text', 'footer_site_url', 'Site URL'),
-//             Field::make('text', 'footer_privacy_policy', 'Privacy Policy Page URL'),
-//             Field::make('text', 'footer_terms_conditions', 'Terms & Conditions Page URL'),
-//         ));
-// }
-
-// .................................................
-
 add_action('carbon_fields_register_fields', function () {
+
+    // =========================================================
     // ............// Home page..................
     // Hero slider
     // .............
@@ -168,17 +132,142 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields(array(
             Field::make('text', 'lead_text', 'Lead Text')
                 ->set_help_text('Use <br> for line breaks if needed'),
+            Field::make('textarea', 'legal_description', __('Description', 'your-textdomain'))
+                ->set_rows(4),
+
+            Field::make('text', 'legal_button_text', __('Button Text', 'your-textdomain'))
+                ->set_default_value('Apply'),
+
+            Field::make('text', 'legal_button_link', __('Button Link (URL)', 'your-textdomain'))
+                ->set_default_value('#'),
+            Field::make('image', 'background_image', 'Background Image')
+                ->set_value_type('url'),
         ))
-        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+        ->set_render_callback(function ($fields) {
             set_query_var('lead_text', $fields['lead_text'] ?? '');
+            set_query_var('legal_description', $fields['legal_description'] ?? '');
+            set_query_var('button_text', $fields['legal_button_text'] ?? '');
+            set_query_var('button_link', $fields['legal_button_link'] ?? '#');
+            set_query_var('bg_image', $fields['background_image'] ?? '');
+
             get_template_part('components/home/legal-solution');
+        });
+
+    // ========================end home page=================================
+
+
+
+
+    // ===================================================
+    // =======================About us page============================
+    // ===================================================
+
+    // ========================about us header===========================
+    Block::make('comon header Section')
+        ->add_fields(array(
+            Field::make('text', 'careers_title', __('Main Title', 'your-textdomain'))
+                ->set_default_value('Careers')
+                ->set_width(50),
+
+            Field::make('textarea', 'careers_description', __('Description', 'your-textdomain'))
+                ->set_rows(4),
+
+            Field::make('text', 'careers_button_text', __('Button Text', 'your-textdomain'))
+                ->set_default_value('Apply'),
+
+            Field::make('text', 'careers_button_link', __('Button Link (URL)', 'your-textdomain'))
+                ->set_default_value('#'),
+        ))
+        ->set_render_callback(function ($fields) {
+
+            set_query_var('careers_title', $fields['careers_title'] ?? 'Careers');
+            set_query_var('careers_description', $fields['careers_description'] ?? '');
+            set_query_var('careers_button_text', $fields['careers_button_text'] ?? 'Apply');
+            set_query_var('careers_button_link', $fields['careers_button_link'] ?? '#');
+
+            get_template_part('components/comon-page-components/comon-header');
         });
 
 
 
-    // ===================Our expertise page========================
-    // ===========================================
+    // =========================================================
+    // single img Section
+    // =========================================================
+    Block::make('Single Image Block', 'single img section')
+        ->add_fields(array(
+            Field::make('image', 'single_image', 'Image')
+        ))
+        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+            include get_template_directory() . '/components/comon-page-components/single-img.php';
+        });
 
+    // ========about text field=============
+    Block::make('About Details Text', 'about-details-text')
+        ->set_description('Add custom content with rich text editor')
+        ->set_category('common')
+        ->add_fields(array(
+            Field::make('rich_text', 'custom_content', 'Content')
+                ->set_help_text('Add heading, paragraph, image etc'),
+        ))
+        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+            set_query_var('custom_content', $fields['custom_content'] ?? '');
+            get_template_part('components/about/about-text-details');
+        });
+
+    // ==================about page slider========================
+    Block::make('About page slider')
+        ->add_fields(array(
+
+            Field::make('complex', 'about_slides', 'About Slides')
+                ->add_fields(array(
+
+                    Field::make('text', 'title', 'Slide Title'),
+
+                    Field::make('rich_text', 'custom_content', 'Content')
+                        ->set_help_text('Add heading, paragraph, image etc'),
+
+                    Field::make('image', 'image', 'Slide Image')
+
+                ))
+                ->set_layout('tabbed-horizontal')
+
+        ))
+        ->set_render_callback(function ($fields) {
+
+            set_query_var('slides', $fields['about_slides'] ?? []);
+
+            get_template_part('components/about/about-slider');
+        });
+
+
+    // =====================about recognition====================
+    Block::make('About Recognition Section')
+        ->add_fields(array(
+
+            Field::make('text', 'section_title', 'Section Title')
+                ->set_default_value('Recognition'),
+
+            Field::make('complex', 'recognition_images', 'Recognition Images')
+                ->add_fields(array(
+                    Field::make('image', 'logo', 'Recognition Logo')
+                ))
+                ->set_layout('tabbed-horizontal')
+
+        ))
+        ->set_render_callback(function ($fields) {
+
+            set_query_var('recognition_title', $fields['section_title'] ?? '');
+            set_query_var('recognition_images', $fields['recognition_images'] ?? []);
+
+            get_template_part('components/about/about-recognition');
+        });
+    // ===========================end about page==============================
+
+
+    // ===================Our expertise page========================
+    // =========================================================
+
+    // =================FAQ Section==========================
     Block::make('FAQ Section')
         ->set_description('Add FAQ section with dynamic team area categories')
         ->set_category('common')
@@ -191,14 +280,16 @@ add_action('carbon_fields_register_fields', function () {
             get_template_part('components/our-expertise/tailored-solution');
         });
 
+    // ==========================end expertise page===============================
 
 
 
 
-
+    // =========================================================
     //// ...........................Our people page..................................
-    //// .............................................................
-    //// .............................................................
+    // =========================================================
+
+    //// ........................Teams Section.....................................
     Block::make('Teams Section')
         ->set_description('Our people page team section')
         ->set_category('common')
@@ -211,14 +302,41 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_default_value('Learn More'),
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
-            // Pass $fields to template
             set_query_var('fields', $fields);
             get_template_part('components/our-people/our-people');
         });
 
+    // =========================end our peopl page================================
 
+    // =========================recognition page================================
 
+    Block::make('Recognition Cards Section')
+        ->add_fields(array(
 
+            Field::make('complex', 'recognition_cards', 'Recognition Cards')
+                ->add_fields(array(
+                    Field::make('image', 'icon', 'Logo / Icon'),
+                    Field::make('text', 'title', 'Title'),
+                    Field::make('textarea', 'description', 'Description')
+                        ->set_rows(3),
+                ))
+                ->set_layout('tabbed-horizontal'),
+
+            Field::make('text', 'load_more_text', 'Load More Text')
+                ->set_default_value('Load More'),
+
+            Field::make('text', 'load_more_link', 'Load More Link')
+                ->set_default_value('#'),
+        ))
+        ->set_render_callback(function ($fields) {
+
+            set_query_var('recognition_cards', $fields['recognition_cards'] ?? []);
+            set_query_var('load_more_text', $fields['load_more_text'] ?? '');
+            set_query_var('load_more_link', $fields['load_more_link'] ?? '#');
+
+            get_template_part('components/recognition/recognition-card');
+        });
+    // =========================end recognition page================================
 
 });
 

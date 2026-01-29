@@ -1,0 +1,40 @@
+<?php
+$title = get_query_var('careers_title', 'Careers');
+$desc = get_query_var('careers_description', '');
+$btn_text = get_query_var('careers_button_text', 'Apply');
+$btn_link = get_query_var('careers_button_link', '#');
+?>
+
+<section class="careers-hero">
+    <div class="container">
+        <div class="careers-content">
+            <h1 class="heading-one">
+                <?php echo esc_html($title); ?>
+            </h1>
+
+            <?php if ($desc): ?>
+                <div class="body-text-two careers-description">
+                    <?php echo wp_kses_post($desc); ?>
+                </div>
+            <?php endif; ?>
+
+            <a href="<?php echo esc_url($btn_link); ?>" class="primary-button">
+                <div class="button-text">
+                    <?php echo esc_html($btn_text); ?>
+                </div>
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="44" height="44" rx="22" fill="#BC001A" />
+                    <g clip-path="url(#clip0_642_270)">
+                        <path d="M16.166 17H26.9993V27.8333" stroke="white" stroke-width="2" stroke-miterlimit="10" />
+                        <path d="M16 28L27 17" stroke="white" stroke-width="2" stroke-miterlimit="10" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_642_270">
+                            <rect width="20" height="20" fill="white" transform="translate(12 12)" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>

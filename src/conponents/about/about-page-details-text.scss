@@ -1,0 +1,73 @@
+.about-details-text {
+    background-color: var(--dark-normal);
+    padding-top: 0px;
+    padding-bottom: 80px;
+
+    @include breakpoint-max(xl) {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .container {
+        margin: 0 auto;
+        width: 100%;
+        padding-left: 405px;
+        padding-right: 405px;
+        max-width: 1920px;
+
+        @include breakpoint-max(3xl) {
+            max-width: 1680px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+
+        @include breakpoint-max(xxl) {
+            max-width: 1440px;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        @include breakpoint-max(xl) {
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+
+        @include breakpoint-max(lg) {
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+
+        @include breakpoint-max(md) {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        @include breakpoint-max(sm) {
+            max-width: 680px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .about-details-content {
+            h2 {
+                color: var(--color-white);
+                margin-bottom: 60px;
+
+                @include breakpoint-max(xl) {
+                    margin-bottom: 30px;
+                }
+            }
+
+            p {
+                margin-bottom: 60px;
+                color: var(--white-80);
+
+                @include breakpoint-max(xl) {
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+
+
+}

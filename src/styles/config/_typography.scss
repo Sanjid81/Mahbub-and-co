@@ -4,6 +4,12 @@
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0;
+
+    @media (max-width: 1030px) {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+    }
 }
 
 .navbar-text {
@@ -23,25 +29,29 @@
     font-size: 24px;
     font-family: var(--font-primary);
     font-weight: 500;
-    line-height: 33px;
+    line-height: 140%;
     letter-spacing: 0;
 
     @media (max-width: 1030px) {
         font-size: 20px;
-        line-height: 16px;
+        line-height: 100%;
     }
 
 }
+
 .lead-text-two {
     font-size: 70px;
     font-family: var(--font-primary);
     font-weight: 400;
-    line-height: 77px;
+    line-height: 110%;
     letter-spacing: -0.32px;
-
+@media (max-width: 1600px) {
+        font-size: 56px;
+        line-height: 100%;
+    }
     @media (max-width: 1030px) {
         font-size: 32px;
-        line-height: 32px;
+        line-height: 100%;
     }
 
 }
@@ -50,38 +60,49 @@
     font-size: 80px;
     font-weight: 600;
     font-family: var(--font-primary);
-    line-height: 72px;
+    line-height: 90%;
     letter-spacing: -3.2px;
-    @media (max-width: 1440px) {
-        font-size: 48px;
+
+    @media (max-width: 1735px) {
+        font-size: 71px;
+        line-height: 80%;
+    }
+
+    @media (max-width: 1445px) {
+        font-size: 40px;
         line-height: 40px;
         letter-spacing: -1.28px;
     }
+
     @media (max-width: 1030px) {
         font-size: 32px;
-        line-height: 32px;
+        line-height: 100%;
         letter-spacing: -1.28px;
     }
 
 }
+
 .heading-two {
     font-size: 56px;
     font-weight: 500;
     font-family: var(--font-primary);
     line-height: 64px;
     letter-spacing: -0.32px;
-    @media (max-width: 1030px) {
+
+    @media (max-width: 1400px) {
         font-weight: 600;
         font-size: 32px;
         line-height: 30px;
     }
 }
+
 .heading-three {
     font-size: 20px;
     font-weight: 500;
     font-family: var(--font-primary);
     line-height: 120%;
     letter-spacing: 0;
+
     @media (max-width: 1030px) {
         font-weight: 500;
         font-size: 16px;
@@ -93,51 +114,55 @@
     font-size: 24px;
     font-weight: 400;
     font-family: var(--font-primary);
-    line-height:120%;
+    line-height: 120%;
     letter-spacing: -2%;
+
     @media (max-width: 1030px) {
         font-size: 20px;
     }
-}   
+}
 
 .heading-five {
     font-size: 32px;
     font-weight: 400;
     font-family: var(--font-primary);
-    line-height: 38.4px;
+    line-height: 120%;
     letter-spacing: -0.32px;
+
     @media (max-width: 1030px) {
         font-size: 20px;
+        line-height: 100%;
     }
-}   
+}
 
 .body-text {
     font-size: 16px;
     font-family: var(--font-primary);
     font-weight: 400;
-    line-height: 24px;
+    line-height: 150%;
     letter-spacing: 0;
 
     @media (max-width: 1030px) {
-        line-height: 20px;
+        line-height: 100%;
     }
 }
 
-.body-text-two{
-     font-size: 18px;
+.body-text-two {
+    font-size: 18px;
     font-family: var(--font-primary);
     font-weight: 400;
-    line-height: 24px;
+    line-height: 160%;
     letter-spacing: 0;
 
+  
     @media (max-width: 1030px) {
         font-size: 16px;
-        line-height: 20px;
+        line-height: 100%;
     }
 }
 
-.body-text-three{
-     font-size: 14px;
+.body-text-three {
+    font-size: 14px;
     font-family: var(--font-primary);
     font-weight: 400;
     line-height: 140%;
@@ -145,14 +170,14 @@
 
     @media (max-width: 1030px) {
         font-size: 12px;
-        line-height: 80%;
+        line-height: 120%;
     }
 }
-.small-text{
-      font-size: 10px;
+
+.small-text {
+    font-size: 10px;
     font-family: var(--font-primary);
     font-weight: 600;
     line-height: 110.00000000000001%;
     letter-spacing: 1px;
 }
-

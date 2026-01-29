@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // -------- Desktop Swiper --------
   const autoSwiper = new Swiper('.company-swiper', {
     loop: true,
-    spaceBetween: 30,
+    spaceBetween: 20,
     slidesPerView: 'auto',
     allowTouchMove: true,
     grabCursor: true,
@@ -10,14 +9,26 @@ document.addEventListener('DOMContentLoaded', function () {
     speed: 10000,
     autoplay: {
       delay: 0,
-      disableOnInteraction: false, // autoplay off hobe na click/swipe korleo
-      reverseDirection: true, // left e scroll hobe
+      disableOnInteraction: false,
+      reverseDirection: true,
     },
     freeMode: true,
     freeModeMomentum: false,
+
+    breakpoints: {
+
+      0: {
+        spaceBetween: 10,
+      },
+      768: {
+        spaceBetween: 10,
+      },
+      1024: {
+        spaceBetween: 20,
+      },
+    },
   });
 
-  // Slide click listener (desktop)
   autoSwiper.slides.forEach(slide => {
     slide.addEventListener('click', () => {
       autoSwiper.slideNext();
@@ -36,11 +47,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   // -------- Desktop Swiper --------
   const autoSwiper_two = new Swiper('.company-swiper-two', {
     loop: true,
-    spaceBetween: 30,
+    spaceBetween: 20,
     slidesPerView: 'auto',
     allowTouchMove: true,
     grabCursor: true,
@@ -48,11 +63,24 @@ document.addEventListener('DOMContentLoaded', function () {
     speed: 10000,
     autoplay: {
       delay: 0,
-      disableOnInteraction: false, // autoplay off hobe na click/swipe korleo
-      reverseDirection: true, // left e scroll hobe
+      disableOnInteraction: false,
+      reverseDirection: false,
+
     },
     freeMode: true,
     freeModeMomentum: false,
+    breakpoints: {
+
+      0: {
+        spaceBetween: 10,
+      },
+      768: {
+        spaceBetween: 10,
+      },
+      1024: {
+        spaceBetween: 20,
+      },
+    },
   });
 
   // Slide click listener (desktop)

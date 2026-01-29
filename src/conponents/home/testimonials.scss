@@ -23,6 +23,14 @@
             padding-bottom: 80px;
             padding-top: 140px;
 
+            @media (max-width:1440px) {
+                padding-top: 80px;
+            }
+
+            @media (max-width:1024px) {
+                padding-top: 20px;
+            }
+
             @media (max-width:500px) {
                 text-align: center;
                 justify-content: center;

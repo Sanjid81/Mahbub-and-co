@@ -5,8 +5,7 @@ $font-body: "Manrope", sans-serif;
     --text-red: rgba(188, 0, 26, 1);
     --dark-red: rgba(88, 0, 12, 1);
     --light-bg: rgba(255, 255, 255, 1);
-    --light-bg-2: rgba(255, 255, 255, 0.8);
-    --dark-bg: #1A1A1A;
+    --white-80: rgba(255, 255, 255, 0.8);
     --dark-normal: rgba(0, 0, 0, 1);
     --dark-60: rgba(0, 0, 0, 0.6);
     --dark-80: rgba(0, 0, 0, 0.8);
@@ -14,8 +13,9 @@ $font-body: "Manrope", sans-serif;
     --color-white: #FFFFFF;
     --gold: #D4AF37;
 
-    // font
+    /* Fonts */
     --font-primary: "Figtree", sans-serif;
+    --font-secondary: "Inter", sans-serif;
 }
 
 

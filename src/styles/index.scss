@@ -1,6 +1,5 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Inter:ital,wght@0,100..900;1,100..900&display=swap");
 // configs
 @import "./config/_variables";
 @import "./config/_typography";
@@ -11,13 +10,19 @@
 // utilities
 @import "../conponents/utilities/footer.scss";
 @import "../conponents/utilities/navbar.scss";
+@import "../conponents/utilities/comon-header.scss";
+@import "../conponents/utilities/single-img.scss";
 // Home components
-
 @import "../conponents/home/hero.scss";
 @import "../conponents/home/news-events.scss";
 @import "../conponents/home/testimonials.scss";
 @import "../conponents/home/accolades.scss";
 @import "../conponents/home/leagal-solution.scss";
+
+// about page
+@import "../conponents/about/about-page-details-text.scss";
+@import "../conponents/about/about-slider.scss";
+@import "../conponents/about/about-recognition.scss";
 
 // our expertise components
 @import "../conponents//our-expertise/faq.scss";
@@ -26,11 +31,17 @@
 // Our people components
 @import "../conponents/our-people/our-people.scss";
 
+// recognition page
+@import "../conponents/recognition/recognition-cards.scss";
 
 // about components
-@import "../conponents/about/about-header.scss";
-@import "../conponents/about/our-story.scss";
-@import "../conponents/about/counter.scss";
-@import "../conponents/about/mission-vission.scss";
-@import "../conponents/about/managing-partner.scss";
+// @import "../conponents/about/about-header.scss";
+// @import "../conponents/about/our-story.scss";
+// @import "../conponents/about/counter.scss";
+// @import "../conponents/about/mission-vission.scss";
+// @import "../conponents/about/managing-partner.scss";
+
+
+
+
 @import "../conponents/our-expertise-details/our-expertise-details.scss";

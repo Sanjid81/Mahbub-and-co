@@ -1,7 +1,8 @@
 .footer {
     background-color: #0d0d0d;
     color: #fff;
-    padding: 60px 0px;
+    padding: 50px 0px;
+    padding-bottom: 40px;
     font-family: "Inter", sans-serif;
 
     .container {
@@ -12,7 +13,7 @@
             grid-template-columns: 2fr 2fr 1fr 2fr;
             gap: 40px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 50px;
+            padding-bottom: 30px;
 
             @media (max-width: 1500px) {
                 grid-template-columns: repeat(2, 1fr);
@@ -34,7 +35,7 @@
 
                 .footer-title {
                     @extend .lead-text;
-                    color: var(--light-bg)
+                    color: var(--light-bg);
                 }
 
                 &:nth-child(2)::after,
@@ -74,7 +75,17 @@
 
                 .logo {
                     display: inline-block;
+                    height: 50px;
+                    width: 155px;
+                    object-fit: cover;
                     margin-bottom: 30px;
+
+                    img {
+                        height: 50px;
+                        width: 155px;
+                        object-fit: cover;
+                        margin-bottom: 30px;
+                    }
                 }
 
                 .mobile-logo {
@@ -93,8 +104,10 @@
                 }
 
                 .footer-text {
+                    max-width: 321px;
+                    width: 100%;
                     @extend .body-text-two;
-                    color: var(--light-bg-2);
+                    color: var(--light-bg);
                     opacity: 80%;
 
                     @media (max-width:900px) {
@@ -105,9 +118,9 @@
             }
 
             .footer-title {
-                font-size: 16px;
-                font-weight: 600;
-                margin-bottom: 15px;
+                @extend .lead-text;
+                color: var(--light-bg);
+                margin-bottom: 24px;
 
                 p {
                     cursor: pointer;
@@ -124,11 +137,12 @@
 
                 li a {
                     @extend .body-text;
-                    color: var(--light-bg-2);
+                    color: var(--light-bg);
                     text-decoration: none;
                     transition: color 0.3s;
                     position: relative;
                     opacity: 80%;
+                    text-wrap: nowrap;
 
 
                     &::before {
@@ -184,7 +198,7 @@
                     margin-bottom: 10px;
                     cursor: pointer;
                     @extend .body-text;
-                    color: var(--light-bg-2);
+                    color: var(--light-bg);
                     opacity: 80%;
 
                     &:hover {
@@ -193,37 +207,48 @@
 
                 }
 
+                .footer-social-links {
+                    display: flex;
+                    gap: 8px;
 
-                .footer-email {
-                    display: inline-block;
-                    margin-right: 10px;
-                    transition: transform 0.3s ease;
+                    .footer-media {
+                        display: inline-block;
+                        transition: transform 0.3s ease;
 
-                    svg {
-                        transition: all 0.3s ease;
+                        a {
+                            transition: all 0.3s ease;
+                            display: flex;
+                            border-radius: 50px;
+                            transition: all 0.3s ease;
+                            svg {
+                                border-radius: 50px;
+                                background-color: transparent;
+                            }
 
-                        rect {
-                            transition: stroke 0.3s ease;
+                            &:hover {
+                                cursor: pointer;
+                                box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
+                                border-radius: 50px;
+
+
+                                svg {
+                                    border-radius: 50px;
+
+                                    rect {
+                                        stroke: var(--text-red);
+                                    }
+
+                                    path {
+                                        fill: var(--light-bg);
+                                    }
+                                }
+                            }
                         }
 
-                        path {
-                            transition: fill 0.3s ease;
-                        }
-                    }
-
-                    &:hover {
-                        transform: translateY(-3px);
-                        cursor: pointer;
-                        box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
-                        // svg rect {
-                        //     stroke: var(--text-red);
-                        // }
-
-                        // svg path {
-                        //     fill: var(--text-red);
-                        // }
+                       
                     }
                 }
+
 
 
                 @media (max-width: 1500px) {
@@ -239,7 +264,7 @@
             align-items: center;
             font-size: 13px;
             @extend .body-text;
-            color: var(--light-bg-2);
+            color: var(--light-bg);
 
             @media (max-width: 600px) {
                 flex-direction: column;
@@ -252,14 +277,14 @@
             .copy-right-text {
                 span {
                     @extend .body-text;
-                    color: var(--light-bg-2);
+                    color: var(--light-bg);
                     opacity: 80%;
 
                 }
 
                 a {
                     @extend .body-text;
-                    color: var(--light-bg-2);
+                    color: var(--light-bg);
                     opacity: 80%;
                     transition: color 0.3s;
                     position: relative;
@@ -298,7 +323,7 @@
                 .privacy-policy {
                     a {
                         @extend .body-text;
-                        color: var(--light-bg-2);
+                        color: var(--light-bg);
                         text-decoration: none;
                         transition: color 0.3s;
                         position: relative;
@@ -331,7 +356,7 @@
                 .terms-conditions {
                     a {
                         @extend .body-text;
-                        color: var(--light-bg-2);
+                        color: var(--light-bg);
                         text-decoration: none;
                         transition: color 0.3s;
                         position: relative;

@@ -1,0 +1,60 @@
+.careers-hero {
+    height: 400px;
+    background-color: var(--dark-normal);
+
+    @media(max-width:900px) {
+        height: 300px;
+    }
+
+    .careers-content {
+        margin-left: 40px;
+        padding: 93px 0;
+        display: flex;
+        flex-direction: column;
+        max-width: 900px;
+        width: 100%;
+
+        @media(max-width:1440px) {
+            margin-left: 10px;
+            padding: 90px 20px;
+        }
+
+        @media(max-width:900px) {
+            margin-left: 10px;
+            padding: 50px 20px;
+        }
+
+        .heading-one {
+            color: rgba(255, 255, 255, 1);
+            margin-bottom: 10px;
+        }
+
+        .careers-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+    }
+
+
+    .btn-apply {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        // background: #c41e3a; // red accent – change to your brand color
+        color: white;
+        padding: 1rem 2.2rem;
+        border-radius: 50px;
+        font-size: 1.25rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: #a0182f;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+
+    }
+}

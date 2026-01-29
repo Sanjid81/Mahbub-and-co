@@ -3,7 +3,7 @@
   width: 100%;
   margin: 0 auto;
   position: relative;
-   background: linear-gradient(180deg, #111111 0%, #000000 100%);
+  background: linear-gradient(180deg, #111111 0%, #000000 100%);
   overflow: auto;
 
   .banner-overlay {
@@ -25,23 +25,22 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 60px;
+    // gap: 60px;
     overflow: hidden !important;
 
     @include breakpoint-max(3xl) {
       padding-bottom: 40px;
-      padding: 80px;
-      gap: 40px;
+      padding: 70px;
     }
 
     @include breakpoint-max(xxl) {
-      padding: 80px 40px;
-      gap: 30px;
+      padding: 70px 40px;
+      gap: 10px;
     }
 
     @include breakpoint-max(sm) {
-      padding: 60px 15px;
-      gap: 30px;
+      padding: 70px 15px;
+      gap: 10px;
     }
 
     .heading-two {
@@ -50,6 +49,11 @@
       align-items: center;
       text-wrap: nowrap;
       color: rgba(255, 255, 255, 1);
+      margin-bottom: 80px;
+
+      @media (max-width: 800px) {
+        margin-bottom: 40px;
+      }
 
 
     }
@@ -156,7 +160,11 @@
     .button-wraper {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
+      margin-top: 80px;
+
+      @media (max-width: 800px) {
+        margin-top: 60px;
+      }
     }
   }
 }

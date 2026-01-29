@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         slidesPerView: 2,
         spaceBetween: 30,
       },
-      1440: {  // desktop
+      1400: {  // desktop
         slidesPerView: 3,
         spaceBetween: 30,
       }
