@@ -18,23 +18,25 @@ $btn_link = get_query_var('careers_button_link', '#');
                 </div>
             <?php endif; ?>
 
-            <a href="<?php echo esc_url($btn_link); ?>" class="primary-button">
-                <div class="button-text">
-                    <?php echo esc_html($btn_text); ?>
-                </div>
-                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="44" height="44" rx="22" fill="#BC001A" />
-                    <g clip-path="url(#clip0_642_270)">
-                        <path d="M16.166 17H26.9993V27.8333" stroke="white" stroke-width="2" stroke-miterlimit="10" />
-                        <path d="M16 28L27 17" stroke="white" stroke-width="2" stroke-miterlimit="10" />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_642_270">
-                            <rect width="20" height="20" fill="white" transform="translate(12 12)" />
-                        </clipPath>
-                    </defs>
-                </svg>
-            </a>
+            <?php if (!empty($btn_text) && !empty($btn_link)): ?>
+                <a href="<?php echo esc_url($btn_link); ?>" class="primary-button">
+                    <div class="button-text">
+                        <?php echo esc_html($btn_text); ?>
+                    </div>
+                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="44" height="44" rx="22" fill="#BC001A" />
+                        <g clip-path="url(#clip0_642_270)">
+                            <path d="M16.166 17H26.9993V27.8333" stroke="white" stroke-width="2" />
+                            <path d="M16 28L27 17" stroke="white" stroke-width="2" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_642_270">
+                                <rect width="20" height="20" fill="white" transform="translate(12 12)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </section>

@@ -1,6 +1,9 @@
 $font-body: "Manrope", sans-serif;
 
 :root {
+   
+            --swiper-wrapper-transition-timing-function: linear !important;
+       
     --primary-red: rgba(150, 0, 20, 1);
     --text-red: rgba(188, 0, 26, 1);
     --dark-red: rgba(88, 0, 12, 1);

@@ -172,11 +172,9 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('textarea', 'careers_description', __('Description', 'your-textdomain'))
                 ->set_rows(4),
 
-            Field::make('text', 'careers_button_text', __('Button Text', 'your-textdomain'))
-                ->set_default_value('Apply'),
+            Field::make('text', 'careers_button_text', __('Button Text', 'your-textdomain')),
 
             Field::make('text', 'careers_button_link', __('Button Link (URL)', 'your-textdomain'))
-                ->set_default_value('#'),
         ))
         ->set_render_callback(function ($fields) {
 

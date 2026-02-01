@@ -195,8 +195,10 @@
 
             .footer-address {
                 p {
-                    margin-bottom: 10px;
-                    cursor: pointer;
+                    max-width: 249px;
+                    width: 100%;
+                    margin-bottom: 20px;
+                    // cursor: pointer;
                     @extend .body-text;
                     color: var(--light-bg);
                     opacity: 80%;
