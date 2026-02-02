@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loop: true,
 
     autoplay: {
-      delay: 2000,
+      delay: 3000,
     },
 
     pagination: {

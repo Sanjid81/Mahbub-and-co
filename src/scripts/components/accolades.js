@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     simulateTouch: true,
     speed: 10000,
     autoplay: {
-      delay: 0,
+      delay: 1,
       disableOnInteraction: false,
       reverseDirection: true,
     },
@@ -100,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
+
+
 
 
 

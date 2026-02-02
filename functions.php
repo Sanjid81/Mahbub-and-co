@@ -54,6 +54,11 @@ function crb_load_carbonfields()
     if (file_exists($cf)) {
         require_once $cf;
     }
+    $cf = get_template_directory() . '/inc/team-details/team-details.php';
+    if (file_exists($cf)) {
+        require_once $cf;
+    }
+ 
 }
 
 
@@ -230,13 +235,24 @@ function mahbub_team_search_ajax()
 add_action('wp_ajax_mahbub_team_search', 'mahbub_team_search_ajax');
 add_action('wp_ajax_nopriv_mahbub_team_search', 'mahbub_team_search_ajax');
 
-// ====================================register custon post=================================================
-
-// =====================================================================================
-// =====================================================================================
-// =====================================================================================
 
 
 
+function enable_jquery_properly()
+{
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'enable_jquery_properly');
 
+
+
+
+/**
+ * Ensure featured image support is enabled
+ */
+add_theme_support('post-thumbnails');
+
+// Add specific thumbnail sizes for team
+add_image_size('team-thumb', 300, 300, true); // Square thumb
+add_image_size('team-large', 600, 400, false); // Large size
 

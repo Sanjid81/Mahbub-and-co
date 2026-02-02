@@ -83,31 +83,21 @@ add_action('carbon_fields_register_fields', function () {
 });
 
 
-// add_action('carbon_fields_register_fields', function () {
 
-//     // ----------------------------
-//     // Global Theme Options for Common Footer Top
-//     // ----------------------------
-//     Container::make('theme_options', 'Common Footer Top Section')
-//         ->add_fields([
-//             Field::make('text', 'lead_text', 'Lead Text')
-//                 ->set_help_text('Use <br> for line breaks'),
-//             Field::make('textarea', 'legal_text', 'Legal Text')
-//                 ->set_help_text('Use <br> for line breaks'),
-//             Field::make('text', 'button_text', 'Button Text')
-//                 ->set_default_value('Learn More'),
-//             Field::make('text', 'button_link', 'Button Link')
-//                 ->set_default_value('#'),
-//         ]);
 
-//     // ----------------------------
-//     // Page-specific checkbox
-//     // ----------------------------
-//     Container::make('post_meta', 'Common Footer Top Display')
-//         ->show_on_post_type('page')
-//         ->add_fields([
-//             Field::make('checkbox', 'enable_common_footer_top_page', 'Enable Common Footer Top Section')
-//                 ->set_option_value('yes')
-//         ]);
 
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

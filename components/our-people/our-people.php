@@ -136,7 +136,7 @@ $terms = get_terms(array(
                                         </p>
                                     </div>
 
-                                    <a href="#" class="mahbub__team-member-btn">
+                                   <a href="<?php the_permalink(); ?>" class="mahbub__team-member-btn">
                                         <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <rect width="38" height="38" rx="19" fill="#FFE6E9" />
