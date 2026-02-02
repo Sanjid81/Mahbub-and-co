@@ -34,14 +34,16 @@
 // recognition page
 @import "../conponents/recognition/recognition-cards.scss";
 
-// about components
-// @import "../conponents/about/about-header.scss";
-// @import "../conponents/about/our-story.scss";
-// @import "../conponents/about/counter.scss";
-// @import "../conponents/about/mission-vission.scss";
-// @import "../conponents/about/managing-partner.scss";
-
-
-
-
+// expertise details
 @import "../conponents/our-expertise-details/our-expertise-details.scss";
+
+// team details
+@import "../conponents/team-details/team-etails-tabs.scss";
+
+
+// insights components
+
+
+// contact us
+@import "../conponents/contact/contact-form.scss";
+@import "../conponents/contact/location-map.scss";

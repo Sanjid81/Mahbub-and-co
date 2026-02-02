@@ -1,11 +1,5 @@
 <?php
-get_header();
-?>
-<?php
-get_header();
-echo '<h1 style="color:red;">Single Team Page Loaded Successfully!</h1>';
-echo '<p>Post ID: ' . get_the_ID() . '</p>';
-echo '<p>Title: ' . get_the_title() . '</p>';
+// Template part: team member details. Included by single-team.php which provides header/footer.
 ?>
 <div class="team-member-single">
 
@@ -51,22 +45,7 @@ echo '<p>Title: ' . get_the_title() . '</p>';
                     <div class="team-member-info-column">
 
                         <h1 class="team-member-name"><?php the_title(); ?></h1>
-                        <div style="background: #fff3cd; padding: 20px; border: 2px solid #ffeeba; margin: 20px 0;">
-                            <strong>Debug Info (এটা পরে delete করো):</strong><br>
-                            Post ID: <?php echo get_the_ID(); ?><br>
-
-                            Designation from Carbon:
-                            <?php
-                            $des_carbon = carbon_get_the_post_meta('team_designation');
-                            var_dump($des_carbon);
-                            ?><br>
-
-                            Designation from normal get_post_meta:
-                            <?php var_dump(get_post_meta(get_the_ID(), 'team_designation', true)); ?><br>
-
-                            Old fallback meta:
-                            <?php var_dump(get_post_meta(get_the_ID(), '_team_member_designation', true)); ?>
-                        </div>
+                        <!-- debug info removed -->
                         <p class="team-member-designation">
                             <?php
                             $des = function_exists('carbon_get_the_post_meta') ? carbon_get_the_post_meta('team_designation') : '';
@@ -124,4 +103,4 @@ echo '<p>Title: ' . get_the_title() . '</p>';
 
 </div>
 
-<?php get_footer(); ?>
+<?php // footer rendered by single-team.php ?>

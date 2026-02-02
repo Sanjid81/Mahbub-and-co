@@ -158,7 +158,6 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
-    // ===================================================
     // =======================About us page============================
     // ===================================================
 
@@ -283,7 +282,6 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
-    // =========================================================
     //// ...........................Our people page..................................
     // =========================================================
 
@@ -306,8 +304,8 @@ add_action('carbon_fields_register_fields', function () {
 
     // =========================end our peopl page================================
 
-    // =========================recognition page================================
 
+    // =========================recognition page================================
     Block::make('Recognition Cards Section')
         ->add_fields(array(
 
@@ -339,6 +337,71 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
+    // ============contact form =======================
+
+    Block::make('Contact Section')
+        ->add_fields([
+
+            // Header
+            Field::make('text', 'contact_title', 'Section Title')
+                ->set_default_value('Get in Touch'),
+
+            Field::make('textarea', 'contact_description', 'Section Description'),
+
+            // Offices (Repeater)
+            Field::make('complex', 'office_addresses', 'Office Addresses')
+                ->add_fields([
+                    Field::make('text', 'office_title', 'Office Title'),
+                    Field::make('textarea', 'office_address', 'Office Address')
+                        ->set_help_text('Use line breaks for new lines'),
+                ]),
+
+            // Email
+            Field::make('text', 'contact_email', 'Email Address'),
+
+            // Office Hours
+            Field::make('text', 'office_hours_title', 'Office Hours Title')
+                ->set_default_value('Office Hours'),
+
+            Field::make('text', 'office_time', 'Office Time'),
+            Field::make('text', 'office_days', 'Office Days'),
+
+            // Contact Form 7 Shortcode
+            Field::make('text', 'contact_form_shortcode', 'Contact Form 7 Shortcode')
+                ->set_help_text('Example: [contact-form-7 id="123" title="Contact form"]'),
+
+        ])
+        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+            set_query_var('fields', $fields);
+            get_template_part('components/contact-us/contact-form');
+        });
+
+
+
+    // ===========contact location ==================
+    Block::make(__('Dynamic Google Map'))
+        ->set_icon('location')
+        ->set_category('custom')
+        ->set_description(__('Google Maps iframe embed – paste full iframe code', 'your-text-domain'))
+
+        ->add_fields([
+            Field::make('textarea', 'map_iframe', __('Google Maps Embed Iframe', 'your-text-domain'))
+                ->set_rows(6)
+                ->set_help_text(__('Paste the complete <iframe>...</iframe> code from Google Maps embed option.'))
+        ])
+
+        ->set_render_callback(function ($fields, $attributes) {
+            set_query_var('map_fields', $fields);
+            set_query_var('map_attributes', $attributes);
+
+            $template_path = get_template_directory() . '/components/contact-us/location-map.php';
+
+            if (file_exists($template_path)) {
+                include $template_path;
+            } else {
+                echo '<p style="color:#e74c3c; padding:2rem; text-align:center;">Template file missing: ' . esc_html(basename($template_path)) . '</p>';
+            }
+        });
 
 
 
@@ -356,10 +419,6 @@ add_action('carbon_fields_register_fields', function () {
 
 
 
-
-
-
-    
 });
 
 

@@ -7,6 +7,7 @@ import "../scripts/components/accolades";
 import "../scripts/components/navbar";
 import "../scripts/components/about-counter";
 import  "./components/our-expertise/faq";
+import  "./components/team-details/team-details-tabs";
 
 
 
