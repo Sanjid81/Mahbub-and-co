@@ -62,6 +62,10 @@ function crb_load_carbonfields()
     if (file_exists($cf)) {
         require_once $cf;
     }
+    $cf = get_template_directory() . '/inc/distribute-insights-categories.php';
+    if (file_exists($cf)) {
+        require_once $cf;
+    }
   
  
 }

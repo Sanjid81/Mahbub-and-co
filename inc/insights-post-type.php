@@ -60,4 +60,26 @@ function flush_rewrite_rules_for_insights()
 }
 add_action('after_switch_theme', 'flush_rewrite_rules_for_insights');
 
+/**
+ * Create default insights categories
+ */
+function create_default_insights_categories()
+{
+    // Check if terms already exist
+    if (!term_exists('Insights', 'insights_category')) {
+        wp_insert_term('Insights', 'insights_category', array(
+            'slug' => 'insights',
+            'description' => 'Insights articles and thought leadership'
+        ));
+    }
+
+    if (!term_exists('News and Events', 'insights_category')) {
+        wp_insert_term('News and Events', 'insights_category', array(
+            'slug' => 'news-and-events',
+            'description' => 'News and events'
+        ));
+    }
+}
+add_action('after_switch_theme', 'create_default_insights_categories');
+
 // NO WHITESPACE BELOW THIS LINE
