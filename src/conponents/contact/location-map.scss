@@ -1,12 +1,10 @@
 .dynamic-google-map-block {
-    background-color: var(--dark-normal);
-    padding-top: 120px;
-    padding-bottom: 175px;
-    position: relative;
-    z-index: 10;
+    background-color: #F7F7F7;
+    padding-top: 62px;
+    padding-bottom: 120px;
 
     @media (max-width: 1400px) {
-        padding-bottom: 80px;
+        padding-bottom: 70px;
         padding-top: 20px;
     }
 
@@ -22,8 +20,9 @@
 
 .dynamic-google-map-block .map-container {
     width: 100%;
-    height: 800px;
+    height: 827px;
     overflow: hidden;
+    border-radius: 12px;
 }
 
 @media (max-width: 1400px) {
