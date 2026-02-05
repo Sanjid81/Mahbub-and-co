@@ -13,7 +13,7 @@ $bg_image_url = $bg_image_id
         <?php endif; ?>">
     <div class="overlay"></div>
 
-        <div class="swiper">
+        <div class="hero-swiper">
             <div class="swiper-wrapper">
                 <?php foreach ($slides as $slide):
 

@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Archive template for insights post type with dynamic category tabs
@@ -14,7 +13,7 @@ get_header();
     // ────────────────────────────────────────────────
     $terms = get_terms([
         'taxonomy' => 'insights_category',
-        'hide_empty' => false,          
+        'hide_empty' => false,
         'orderby' => 'name',
         'order' => 'ASC',
     ]);
@@ -68,7 +67,7 @@ get_header();
 
                         $posts_query = new WP_Query([
                             'post_type' => 'insights',
-                            'posts_per_page' => -1,               
+                            'posts_per_page' => -1,
                             'orderby' => 'date',
                             'order' => 'DESC',
                             'tax_query' => [
@@ -123,7 +122,7 @@ get_header();
                                                     if ($terms && !is_wp_error($terms) && !empty($terms)) {
                                                         $first_term = $terms[0];
                                                         echo '<span class="category-badge meta-category">' . esc_html($first_term->name) . '</span>';
-                                                        echo ' • '; 
+                                                        echo ' • ';
                                                     }
                                                     ?>
 

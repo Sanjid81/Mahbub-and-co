@@ -26,48 +26,49 @@ add_action('after_setup_theme', 'theme_setup_supports');
 /**
  * Load Carbon Fields
  */
+/**
+ * Load Carbon Fields + all custom blocks & fields
+ */
 add_action('after_setup_theme', 'crb_load_carbonfields');
 function crb_load_carbonfields()
 {
-    if (file_exists(get_template_directory() . '/vendor/autoload.php')) {
-        require_once(get_template_directory() . '/vendor/autoload.php');
+    // 1. Composer autoload (vendor/autoload.php)
+    $autoload = get_template_directory() . '/vendor/autoload.php';
+    if (file_exists($autoload)) {
+        require_once $autoload;
     }
-
     if (class_exists('\Carbon_Fields\Carbon_Fields')) {
         \Carbon_Fields\Carbon_Fields::boot();
+
+        if (is_admin()) {
+            add_action('admin_notices', function () {
+                echo '<div class="notice notice-success is-dismissible"><p><strong>Carbon Fields LOADED successfully!</strong></p></div>';
+            });
+        }
     }
 
-    // Load custom fields & block definitions
-    $cf = get_template_directory() . '/inc/gutenberg.php';
-    if (file_exists($cf)) {
-        require_once $cf;
+    $files = [
+        '/inc/gutenberg.php',               
+        '/inc/theme-option.php',
+        '/inc/team-post-type.php',
+        '/inc/expertise-area.php',
+        '/inc/team-details/team-details.php',
+        '/inc/insights-post-type.php',
+        '/inc/distribute-insights-categories.php',
+    ];
+
+    foreach ($files as $file) {
+        $path = get_template_directory() . $file;
+        if (file_exists($path)) {
+            require_once $path;
+        } else {
+            if (is_admin()) {
+                add_action('admin_notices', function () use ($file) {
+                    echo '<div class="notice notice-error is-dismissible"><p><strong>Missing file:</strong> ' . esc_html($file) . '</p></div>';
+                });
+            }
+        }
     }
-    $cf = get_template_directory() . '/inc/theme-option.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-    $cf = get_template_directory() . '/inc/team-post-type.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-    $cf = get_template_directory() . '/inc/expertise-area.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-    $cf = get_template_directory() . '/inc/team-details/team-details.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-    $cf = get_template_directory() . '/inc/insights-post-type.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-    $cf = get_template_directory() . '/inc/distribute-insights-categories.php';
-    if (file_exists($cf)) {
-        require_once $cf;
-    }
-  
- 
 }
 
 

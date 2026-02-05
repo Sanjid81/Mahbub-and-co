@@ -1,228 +1,558 @@
+// .insights-section {
+//     position: relative;
+//     overflow: hidden;
+//     max-height: 835px;
+//     height: 100%;
+
+//     .overlay {
+//         position: absolute;
+//         inset: 0;
+//         background: linear-gradient(to bottom, rgba(90, 25, 25, 1), rgba(0, 0, 0, 0.75));
+//         z-index: 1;
+//     }
+
+//     .container {
+//         position: relative;
+//         z-index: 2;
+
+//         /* Header with title + nav buttons */
+//         .header-row {
+//             display: flex;
+//             align-items: center;
+//             justify-content: space-between;
+//             padding-bottom: 80px;
+//             padding-top: 140px;
+
+//             @media (max-width:1440px) {
+//                 padding-top: 80px;
+//             }
+
+//             @media (max-width:1024px) {
+//                 padding-top: 20px;
+//             }
+
+//             @media (max-width:500px) {
+//                 text-align: center;
+//                 justify-content: center;
+//             }
+
+//             h2 {
+//                 color: var(--color-white);
+
+//                 @media (max-width:500px) {
+//                     text-align: center;
+//                 }
+//             }
+
+//             .insights-slider-buttons {
+//                 display: flex;
+//                 gap: 10px;
+//                 margin-top: 5px;
+
+//                 .swiper-button-next,
+//                 .swiper-button-prev {
+//                     position: static;
+//                     width: 48px;
+//                     height: 48px;
+//                     border-radius: 50%;
+//                     background: rgba(255, 255, 255, 0.15);
+//                     color: #fff;
+//                     transition: background 0.3s ease;
+
+//                     &::after {
+//                         font-size: 16px;
+//                         font-weight: bold;
+//                     }
+
+//                     &:hover {
+//                         background: rgba(255, 255, 255, 0.4);
+//                     }
+//                 }
+
+//                 @media (max-width: 500px) {
+//                     display: none;
+
+//                 }
+//             }
+
+
+//             /* Responsive */
+//             @media (max-width: 1024px) {
+//                 .header-row {
+//                     flex-direction: column;
+//                     gap: 1rem;
+//                     text-align: center;
+//                 }
+//             }
+
+//         }
+
+//         .testimonials-slider {
+
+//             /* Swiper layout */
+//             .swiper {
+//                 padding-bottom: 208px;
+//                 height: 100%;
+//                 width: 100%;
+//                 position: relative;
+
+//                 @media (max-width: 1030px) {
+//                     padding-bottom: 130px;
+//                 }
+
+//                 .swiper-slide {
+//                     display: flex;
+//                     justify-content: center;
+//                 }
+
+//                 .testimonial-card {
+//                     background: #fff;
+//                     border-radius: 20px;
+//                     padding: 40px;
+//                     max-width: 540px;
+//                     // max-height: 343px;
+//                     height: 100%;
+//                     align-items: stretch;
+
+//                     @media (max-width:800px) {
+//                         padding: 20px;
+//                     }
+
+//                     svg {
+//                         margin-bottom: 40px;
+
+//                         @media (max-width:1400px) {
+//                             margin-bottom: 20px;
+//                             width: 50px;
+//                             height: 50px;
+//                         }
+//                     }
+
+//                     .text {
+//                         line-height: 120%;
+//                         color: var(--dark-60);
+//                         margin-bottom: 30px;
+//                     }
+
+//                     .author {
+//                         color: var(--dark-60);
+//                     }
+
+
+
+//                 }
+
+
+
+
+//             }
+
+//             /* Pagination bullets with progress animation */
+//             .swiper-pagination {
+//                 position: absolute;
+//                 left: 50%;
+//                 bottom: 140px;
+//                 transform: translateX(-50%);
+//                 display: flex;
+//                 align-items: center;
+//                 justify-content: center;
+//                 gap: 6px;
+//                 z-index: 50;
+//                 // bottom: 10px;
+
+//                 @media (max-width: 1030px) {
+//                     bottom: 70px;
+//                 }
+
+//                 .swiper-pagination-bullet {
+//                     width: 10px;
+//                     height: 10px;
+//                     border: 2px solid white;
+//                     border-radius: 50%;
+//                     background: transparent;
+//                     opacity: 1;
+//                     position: relative;
+//                     overflow: hidden;
+//                     transition: all 0.3s ease;
+//                     cursor: pointer;
+
+//                     &::after {
+//                         content: "";
+//                         position: absolute;
+//                         top: 50%;
+//                         left: 4px;
+//                         height: 4px;
+//                         width: 0%;
+//                         background: #fff;
+//                         border-radius: 2px;
+//                         transform: translateY(-50%);
+//                         transition: width 0s;
+//                     }
+
+//                     &-active {
+//                         width: 28px;
+//                         border-radius: 20px;
+
+//                         &::after {
+//                             animation: bulletFill 2s linear forwards;
+//                         }
+//                     }
+//                 }
+//             }
+
+//             /* Fill animation */
+//             @keyframes bulletFill {
+//                 0% {
+//                     width: 0%;
+//                 }
+
+//                 100% {
+//                     width: calc(100% - 8px);
+//                 }
+//             }
+
+//             /* Responsive */
+//             @media (max-width: 768px) {
+
+
+//                 .swiper-pagination-bullet-active {
+//                     width: 22px !important;
+//                 }
+//             }
+
+
+//         }
+//     }
+
+
+// }
+
+
+
+
+
+// Insights Slider Styles
 .insights-section {
     position: relative;
-    overflow: hidden;
-    max-height: 835px;
-    height: 100%;
+    padding: 80px 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 600px;
 
     .overlay {
         position: absolute;
-        inset: 0;
-        background: linear-gradient(to bottom, rgba(90, 25, 25, 1), rgba(0, 0, 0, 0.75));
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
         z-index: 1;
     }
 
     .container {
         position: relative;
         z-index: 2;
+        max-width: 1920px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 20px;
+        padding-left: 120px;
+    }
 
-        /* Header with title + nav buttons */
-        .header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 80px;
-            padding-top: 140px;
+    .header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
 
-            @media (max-width:1440px) {
-                padding-top: 80px;
-            }
-
-            @media (max-width:1024px) {
-                padding-top: 20px;
-            }
-
-            @media (max-width:500px) {
-                text-align: center;
-                justify-content: center;
-            }
-
-            h2 {
-                color: var(--color-white);
-
-                @media (max-width:500px) {
-                    text-align: center;
-                }
-            }
-
-            .insights-slider-buttons {
-                display: flex;
-                gap: 10px;
-                margin-top: 5px;
-
-                .swiper-button-next,
-                .swiper-button-prev {
-                    position: static;
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.15);
-                    color: #fff;
-                    transition: background 0.3s ease;
-
-                    &::after {
-                        font-size: 16px;
-                        font-weight: bold;
-                    }
-
-                    &:hover {
-                        background: rgba(255, 255, 255, 0.4);
-                    }
-                }
-
-                @media (max-width: 500px) {
-                    display: none;
-
-                }
-            }
-
-
-            /* Responsive */
-            @media (max-width: 1024px) {
-                .header-row {
-                    flex-direction: column;
-                    gap: 1rem;
-                    text-align: center;
-                }
-            }
-
+        .heading-two {
+            color: #fff;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
         }
 
-        .testimonials-slider {
+        .insights-slider-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
 
-            /* Swiper layout */
-            .swiper {
-                padding-bottom: 208px;
-                height: 100%;
-                width: 100%;
-                position: relative;
-
-                @media (max-width: 1030px) {
-                    padding-bottom: 130px;
-                }
-
-                .swiper-slide {
-                    display: flex;
-                    justify-content: center;
-                }
-
-                .testimonial-card {
-                    background: #fff;
-                    border-radius: 20px;
-                    padding: 40px;
-                    max-width: 540px;
-                    // max-height: 343px;
-                    height: 100%;
-                    align-items: stretch;
-
-                    @media (max-width:800px) {
-                        padding: 20px;
-                    }
-
-                    svg {
-                        margin-bottom: 40px;
-
-                        @media (max-width:1400px) {
-                            margin-bottom: 20px;
-                            width: 50px;
-                            height: 50px;
-                        }
-                    }
-
-                    .text {
-                        line-height: 120%;
-                        color: var(--dark-60);
-                        margin-bottom: 30px;
-                    }
-
-                    .author {
-                        color: var(--dark-60);
-                    }
-
-
-
-                }
-
-
-
-
-            }
-
-            /* Pagination bullets with progress animation */
-            .swiper-pagination {
-                position: absolute;
-                left: 50%;
-                bottom: 140px;
-                transform: translateX(-50%);
+            .swiper-button-prev,
+            .swiper-button-next {
+                position: static;
+                width: 50px;
+                height: 50px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                margin: 0;
+                cursor: pointer;
+                transition: all 0.3s ease;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 6px;
-                z-index: 50;
-                // bottom: 10px;
 
-                @media (max-width: 1030px) {
-                    bottom: 70px;
+                &::after {
+                    font-size: 20px;
+                    color: #fff;
+                    font-weight: bold;
                 }
 
-                .swiper-pagination-bullet {
-                    width: 10px;
-                    height: 10px;
-                    border: 2px solid white;
-                    border-radius: 50%;
-                    background: transparent;
-                    opacity: 1;
-                    position: relative;
-                    overflow: hidden;
-                    transition: all 0.3s ease;
-                    cursor: pointer;
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                    border-color: rgba(255, 255, 255, 0.5);
+                }
 
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        top: 50%;
-                        left: 4px;
-                        height: 4px;
-                        width: 0%;
-                        background: #fff;
-                        border-radius: 2px;
-                        transform: translateY(-50%);
-                        transition: width 0s;
-                    }
-
-                    &-active {
-                        width: 28px;
-                        border-radius: 20px;
-
-                        &::after {
-                            animation: bulletFill 2s linear forwards;
-                        }
-                    }
+                &.swiper-button-disabled {
+                    opacity: 0.4;
+                    cursor: not-allowed;
                 }
             }
-
-            /* Fill animation */
-            @keyframes bulletFill {
-                0% {
-                    width: 0%;
-                }
-
-                100% {
-                    width: calc(100% - 8px);
-                }
-            }
-
-            /* Responsive */
-            @media (max-width: 768px) {
-
-
-                .swiper-pagination-bullet-active {
-                    width: 22px !important;
-                }
-            }
-
-
         }
     }
 
+    .insights-slider {
+        .swiper {
+            overflow: hidden;
+            padding-bottom: 60px;
+        }
 
+        .swiper-slide {
+            height: auto;
+            opacity: 0.7;
+            transition: all 0.4s ease;
+            transform: scale(0.95);
+
+            // &.swiper-slide-active {
+            //     opacity: 1;
+            //     transform: scale(1);
+            // }
+        }
+
+        .insight-card-link {
+            text-decoration: none;
+            display: block;
+            height: 100%;
+        }
+
+        .insight-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            max-width: 729px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            }
+
+            .card-thumbnail {
+                position: relative;
+                width: 100%;
+                height: 471px;
+                overflow: hidden;
+                background: #f0f0f0;
+
+                .thumbnail-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.4s ease;
+                }
+
+                &:hover .thumbnail-img {
+                    transform: scale(1.05);
+                }
+            }
+
+            .insights-slider-card-content {
+                position: absolute;
+                background-color: #666;
+                width: fit-content;
+                overflow: hidden;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+
+                .insight-title {
+                    text-wrap: wrap;
+                    font-size: 40px;
+                    font-family: var(--font-primary);
+                    font-weight: 500;
+                    line-height: 48px;
+                    letter-spacing: 0;
+                    color: rgba(255, 255, 255, 1);
+
+                    @media (max-width: 1030px) {
+                        font-size: 30px;
+                        font-weight: 500;
+                        line-height: 38px;
+                    }
+
+                }
+
+                .insights-slider-card-meta {
+                    font-size: 0.875rem;
+                    margin-bottom: 10px;
+                    color: #faf8f8;
+
+                    .category-badge {
+                        background-color: transparent;
+                        padding: 0;
+                    }
+                }
+
+
+
+            }
+
+        }
+
+        .swiper-pagination {
+            position: absolute;
+            bottom: 40px !important;
+            left: 0;
+            // transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            z-index: 10;
+
+            @media (max-width: 1030px) {
+                bottom: 40px;
+            }
+
+            .swiper-pagination-bullet {
+                width: 10px;
+                height: 10px;
+                border: 2px solid #fff;
+                border-radius: 50%;
+                background: transparent;
+                opacity: 1;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+                cursor: pointer;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 4px;
+                    height: 4px;
+                    width: 0%;
+                    background: #fff;
+                    border-radius: 2px;
+                    transform: translateY(-50%);
+                    transition: width 0s;
+                }
+
+                &-active {
+                    width: 28px;
+                    border-radius: 20px;
+
+                    &::after {
+                        animation: bulletFill 2s linear forwards;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Responsive styles
+@media (max-width: 1024px) {
+    .insights-section {
+        padding: 60px 0;
+
+        .header-row {
+            margin-bottom: 40px;
+
+            .heading-two {
+                font-size: 38px;
+            }
+
+            .insights-slider-buttons {
+
+                .swiper-button-prev,
+                .swiper-button-next {
+                    width: 45px;
+                    height: 45px;
+
+                    &::after {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+
+        .insights-slider {
+            .insight-card {
+                .card-thumbnail {
+                    height: 240px;
+                }
+
+                .insight-title {
+                    font-size: 18px;
+                    padding: 20px 20px 12px;
+                    min-height: 70px;
+                }
+
+                .insight-date,
+                .insight-excerpt,
+                .insight-author {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+
+                .insight-author {
+                    padding-bottom: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .insights-section {
+        padding: 40px 0;
+
+        .header-row {
+            margin-bottom: 30px;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+
+            .heading-two {
+                font-size: 32px;
+            }
+        }
+
+        .insights-slider {
+            .swiper {
+                padding-bottom: 50px;
+            }
+
+            .insight-card {
+                .card-thumbnail {
+                    height: 200px;
+                }
+
+                .insight-title {
+                    font-size: 17px;
+                    min-height: auto;
+                }
+            }
+        }
+    }
 }
