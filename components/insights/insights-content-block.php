@@ -150,16 +150,29 @@ if ($use_tabs) {
                                         <div class="insights-card-content">
                                             <div class="insights-card-meta">
                                                 <?php
+                                                // Category Badge
                                                 $terms = get_the_terms(get_the_ID(), 'insights_category');
                                                 if ($terms && !is_wp_error($terms) && !empty($terms)) {
                                                     echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
                                                 }
                                                 ?>
+
                                                 <div class="circle"></div>
+
+                                                <?php
+                                                $custom_date = carbon_get_the_post_meta('insights_custom_publish_date');
+
+                                                if ($custom_date) {
+                                                    $display_date = date('M j, Y', strtotime($custom_date));
+                                                } else {
+                                                    $display_date = get_the_date('M j, Y');
+                                                }
+                                                ?>
                                                 <span class="insights-card-date">
-                                                    <?php echo esc_html(get_the_date('M j, Y')); ?>
+                                                    <?php echo esc_html($display_date); ?>
                                                 </span>
                                             </div>
+
 
                                             <h3 class="insights-card-title">
                                                 <a href="<?php the_permalink(); ?>">

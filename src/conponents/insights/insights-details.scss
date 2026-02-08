@@ -1,0 +1,413 @@
+// ===========================
+// Insights Single/Details Page
+// ===========================
+.insights-single-page {
+    padding-top: 80px;
+    padding-bottom: 116px;
+    background-color: #F7F7F7;
+
+    .insights-single-wrapper {
+        padding: 0 120px;
+
+        @media (max-width:1600px) {
+            padding: 0 80px;
+        }
+
+        @media (max-width:1200px) {
+            padding: 0 30px;
+        }
+
+        .back-btn {
+            color: var(--dark-normal);
+            @extend .navbar-text;
+            font-weight: 400;
+            width: fit-content;
+            border: 0;
+            margin-bottom: 30px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 320px;
+            padding: 6px 16px;
+
+            svg {
+
+                margin-right: 6px;
+            }
+        }
+
+        .insights-single-container {
+            max-width: 902px;
+            width: 100%;
+            margin: 0 auto;
+
+            .insights-featured-image {
+                width: 100%;
+                height: auto;
+                margin-bottom: 2rem;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                }
+            }
+
+            .insights-single-article {
+
+                .insights-hero-content {
+                    .insights-details-card-meta {
+                        display: flex;
+                        justify-content: space-between;
+
+                        @media (max-width: 660px) {
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            gap: 20px;
+                        }
+
+                        .category-badge-and-date {
+                            display: flex;
+                            gap: 10px;
+                            align-items: center;
+                            justify-content: center;
+
+                            .circle {
+                                width: 4px;
+                                height: 4px;
+                                background-color: rgba(217, 217, 217, 1);
+                                border-radius: 50%;
+                            }
+
+                            .category-badge {
+                                color: var(--dark-80);
+                                text-transform: uppercase;
+                                @extend .small-text;
+                            }
+
+                            .insights-card-date {
+                                color: var(--dark-80);
+                                text-transform: uppercase;
+                                @extend .small-text;
+                            }
+
+                        }
+
+
+
+                        .social-media-links-container {
+                            display: flex;
+                            align-items: center;
+                            gap: 20px;
+
+                            span {
+                                color: var(--dark-80);
+                                text-transform: uppercase;
+                                @extend .small-text;
+                            }
+
+                            .social-media-links {
+                                display: flex;
+                                gap: 6px;
+                            }
+                        }
+
+                    }
+
+                    .insights-single-title {
+                        @extend .heading-two;
+                        color: var(--dark-normal);
+                        margin-bottom: 24px;
+                    }
+                }
+
+                .insights-single-content-wrapper-container {
+                    .insights-authors-section {
+                        display: flex;
+                        gap: 16px;
+                        align-items: center;
+                        margin-bottom: 24px;
+
+                        span {
+                            color: var(--dark-80);
+                            text-transform: uppercase;
+                            @extend .small-text;
+                        }
+
+                        .authors-grid {
+                            display: flex;
+                            gap: 16px;
+
+                            .author-card {
+                                display: flex;
+                                gap: 8px;
+                                align-items: center;
+
+                                .author-avatar {
+                                    height: 28px;
+                                    width: 28px;
+                                    object-fit: contain;
+                                }
+
+                                .author-name {
+                                    @extend .body-text-three;
+                                    line-height: 18px;
+                                    color: var(--dark-normal);
+                                }
+                            }
+                        }
+                    }
+
+                    .insights-main-content {
+
+                        .insights-details-content {
+                            .insights-main-content {
+                                p {
+                                    font-size: 16px;
+                                    font-family: var(--font-primary);
+                                    font-weight: 400;
+                                    line-height: 24px;
+                                    letter-spacing: 0;
+                                    margin-bottom: 16px;
+                                    color: var(--dark-80);
+
+                                    @media (max-width: 1030px) {
+                                        line-height: 20px;
+                                    }
+                                }
+
+                                p {
+                                    img {
+                                        margin-top: 45px;
+                                        border-radius: 12px;
+                                        min-height: 300px;
+                                        margin-bottom: 10px;
+                                    }
+                                }
+
+                                h5 {
+                                    font-size: 32px;
+                                    font-weight: 400;
+                                    font-family: var(--font-primary);
+                                    line-height: 120%;
+                                    letter-spacing: -0.32px;
+                                    color: var(--dark-normal);
+                                    margin-bottom: 16px;
+
+                                    @media (max-width: 1030px) {
+                                        font-size: 20px;
+                                        line-height: 100%;
+                                    }
+                                }
+
+                                h3 {
+                                    font-size: 24px;
+                                    font-weight: 500;
+                                    font-family: var(--font-primary);
+                                    line-height: 140%;
+                                    letter-spacing: 0;
+                                    color: var(--dark-normal);
+                                    margin-bottom: 16px;
+
+                                    @media (max-width: 1030px) {
+                                        font-size: 20px;
+                                    }
+                                }
+
+                                ul {
+                                    li {
+                                        list-style: none;
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+            // ===========================
+            // Related Author Posts
+            // ===========================
+
+            .insights-related-author-posts {
+                padding: 3rem 0;
+                border-top: 2px solid #eee;
+                border-bottom: 2px solid #eee;
+                margin: 3rem 0;
+            }
+
+            .insights-related-title {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 2rem;
+                color: #1a1a1a;
+            }
+
+            .author-posts-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .author-post-card {
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                border: 1px solid #eee;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                }
+            }
+
+            .author-post-image {
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+                background: #f5f5f5;
+
+                a {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.3s ease;
+                }
+
+                &:hover img {
+                    transform: scale(1.1);
+                }
+            }
+
+            .author-post-info {
+                padding: 1rem;
+            }
+
+            .author-post-title {
+                font-size: 1rem;
+                font-weight: 600;
+                margin: 0 0 0.5rem 0;
+
+                a {
+                    color: #1a1a1a;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                        color: #2563eb;
+                    }
+                }
+            }
+
+            .author-post-date {
+                font-size: 0.85rem;
+                color: #999;
+            }
+
+            .insights-not-found {
+                text-align: center;
+                padding: 4rem 2rem;
+
+                h2 {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                    color: #333;
+                }
+
+                p {
+                    color: #666;
+                    font-size: 1.05rem;
+                }
+            }
+
+            // ===========================
+            // Insights Content Block
+            // ===========================
+
+            .insights-content-block {
+                margin: 2rem 0;
+            }
+
+            .insights-main-text {
+                font-size: 1.05rem;
+                line-height: 1.8;
+                color: #333;
+                margin-bottom: 2rem;
+            }
+
+            .insights-section {
+                margin-bottom: 3rem;
+                padding-bottom: 2rem;
+                border-bottom: 1px solid #eee;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+
+            .insights-section-title {
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin: 0 0 1rem 0;
+                color: #1a1a1a;
+            }
+
+            .insights-section-image {
+                margin: 1.5rem 0;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .insights-section-img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            .insights-section-text {
+                font-size: 1.05rem;
+                line-height: 1.8;
+                color: #333;
+
+                p {
+                    margin-bottom: 1rem;
+                }
+
+                ul,
+                ol {
+                    margin: 1rem 0;
+                    padding-left: 2rem;
+
+                    li {
+                        margin-bottom: 0.5rem;
+                    }
+                }
+            }
+
+
+
+        }
+
+    }
+}

@@ -394,3 +394,79 @@ function load_more_insights_handler()
     wp_send_json_success(['html' => $html]);
     wp_die();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//***************** */ post author**********************
+// Custom Author for Insights
+// Custom Author Slug for Insights (using custom name from Carbon Fields)
+add_filter('query_vars', function ($vars) {
+    $vars[] = 'insights_author_slug';
+    return $vars;
+});
+
+add_action('init', function () {
+    add_rewrite_rule(
+        '^author/([^/]+)/?$',
+        'index.php?insights_author_slug=$matches[1]',
+        'top'
+    );
+});
+
+add_action('template_redirect', function () {
+    if ($author_slug = get_query_var('insights_author_slug')) {
+        $template = locate_template('author-insights.php');
+        if ($template) {
+            load_template($template);
+            exit;
+        } else {
+            // Fallback to 404 if template missing
+            global $wp_query;
+            $wp_query->set_404();
+            status_header(404);
+            nocache_headers();
+        }
+    }
+});
+
+// Optional: flush rewrite rules when theme is activated/switched
+add_action('after_switch_theme', function () {
+    flush_rewrite_rules();
+});
+
+
+
+
+
+/**
+ * Display Insights Top Slider
+ *
+ * @param array $args Optional override values
+ */
+function display_insights_top_slider($args = [])
+{
+    $defaults = [
+        'background_image' => 0,
+        'heading' => 'Featured Insights',
+        'slides_count' => 5,
+        'insights_category' => '',
+    ];
+
+    $fields = wp_parse_args($args, $defaults);
+
+    set_query_var('insights_slider_fields', $fields);
+    get_template_part('components/insights/insights-top-slider');
+}

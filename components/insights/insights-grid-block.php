@@ -19,7 +19,6 @@ Block::make('Insights Grid Block', 'insights-grid-display')
                 '' => 'All Categories (show tabs)',
                 'insights' => 'Insights Only',
                 'news-and-events' => 'News & Events Only',
-                // আরও ক্যাটাগরি থাকলে এখানে যোগ করতে পারো
             ])
             ->set_default_value(''),
 
@@ -27,7 +26,7 @@ Block::make('Insights Grid Block', 'insights-grid-display')
             ->add_options([
                 '3' => '3 Columns',
                 '2' => '2 Columns',
-                '4' => '4 Columns', // চাইলে আরও অপশন যোগ করতে পারো
+                '4' => '4 Columns', 
             ])
             ->set_default_value('3'),
 
@@ -50,7 +49,6 @@ Block::make('Insights Grid Block', 'insights-grid-display')
     ])
     ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
 
-        // Block-এর জন্য query args তৈরি
         $query_args = [
             'post_type'      => 'insights',
             'posts_per_page' => (int) ($fields['insights_posts_per_page'] ?? 6),
@@ -58,7 +56,6 @@ Block::make('Insights Grid Block', 'insights-grid-display')
             'order'          => 'DESC',
         ];
 
-        // ক্যাটাগরি ফিল্টার থাকলে
         if (!empty($fields['insights_category_filter'])) {
             $query_args['tax_query'] = [
                 [
@@ -69,7 +66,6 @@ Block::make('Insights Grid Block', 'insights-grid-display')
             ];
         }
 
-        // reusable part-এর জন্য query vars সেট করা
         set_query_var('insights_grid_title', $fields['insights_grid_title'] ?: 'Our Insights');
         set_query_var('insights_posts_per_page', $query_args['posts_per_page']);
         set_query_var('insights_category_filter', $fields['insights_category_filter'] ?? '');
@@ -78,6 +74,5 @@ Block::make('Insights Grid Block', 'insights-grid-display')
         set_query_var('load_more_text', $fields['load_more_text'] ?? 'Load More');
         set_query_var('load_more_link', $fields['load_more_link'] ?? '');
 
-        // reusable component লোড করা
         get_template_part('components/insights/insights-content-block');
     }); 

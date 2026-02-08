@@ -82,4 +82,31 @@ function create_default_insights_categories()
 }
 add_action('after_switch_theme', 'create_default_insights_categories');
 
-// NO WHITESPACE BELOW THIS LINE
+
+
+
+
+// *************************post date and social media*********************************
+add_action('carbon_fields_register_fields', 'crb_attach_insights_custom_date_and_social', 100);
+
+function crb_attach_insights_custom_date_and_social()
+{
+    if (!class_exists('Carbon_Fields\\Container')) {
+        return; 
+    }
+
+    \Carbon_Fields\Container::make('post_meta', 'Custom Publish Date & Social Links')
+        ->where('post_type', '=', 'insights')
+        ->add_fields(array(
+
+            \Carbon_Fields\Field::make('date', 'insights_custom_publish_date', 'Custom Publish Date')
+                ->set_storage_format('Y-m-d')
+                ->set_input_format('Y-m-d', 'Y-m-d'),
+
+            \Carbon_Fields\Field::make('text', 'insights_facebook_link', 'Facebook Link')
+                ->set_attribute('placeholder', 'https://facebook.com/yourpage'),
+
+            \Carbon_Fields\Field::make('text', 'insights_linkedin_link', 'LinkedIn Link')
+                ->set_attribute('placeholder', 'https://linkedin.com/in/yourprofile'),
+        ));
+}

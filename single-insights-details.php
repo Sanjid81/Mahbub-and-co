@@ -1,161 +1,239 @@
 <?php
 /**
- * Template part: Insight details. Included by single-insights.php
+ * Template part: Insight Single Details
+ * Included by single-insights.php
  */
 ?>
-<div class="insights-single-wrapper">
-    <?php if (have_posts()):
-        while (have_posts()):
-            the_post();
-            $author_id = get_the_author_meta('ID');
-            $author_name = get_the_author_meta('display_name', $author_id);
-            ?>
 
-            <article class="insights-single-article">
+<div class="insights-single-page">
+    <div class="insights-single-wrapper">
+        <button class="back-btn" onclick="history.back()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12.4693 6.99962C12.4693 7.17366 12.4001 7.34058 12.2771 7.46365C12.154 7.58672 11.9871 7.65587 11.813 7.65587H3.77396L6.59145 10.4728C6.71474 10.5961 6.784 10.7633 6.784 10.9377C6.784 11.112 6.71474 11.2792 6.59145 11.4025C6.46817 11.5258 6.30096 11.5951 6.12661 11.5951C5.95226 11.5951 5.78505 11.5258 5.66177 11.4025L1.72427 7.46501C1.66309 7.40404 1.61454 7.33159 1.58142 7.25182C1.5483 7.17206 1.53125 7.08653 1.53125 7.00016C1.53125 6.91379 1.5483 6.82827 1.58142 6.7485C1.61454 6.66873 1.66309 6.59629 1.72427 6.53532L5.66177 2.59782C5.72281 2.53677 5.79528 2.48835 5.87504 2.45531C5.9548 2.42228 6.04028 2.40527 6.12661 2.40527C6.21294 2.40527 6.29843 2.42228 6.37818 2.45531C6.45794 2.48835 6.53041 2.53677 6.59145 2.59782C6.6525 2.65886 6.70092 2.73133 6.73396 2.81109C6.767 2.89085 6.784 2.97633 6.784 3.06266C6.784 3.14899 6.767 3.23448 6.73396 3.31423C6.70092 3.39399 6.6525 3.46646 6.59145 3.52751L3.77396 6.34337H11.813C11.9871 6.34337 12.154 6.41251 12.2771 6.53558C12.4001 6.65865 12.4693 6.82557 12.4693 6.99962Z"
+                    fill="black" />
+            </svg>
 
-                <!-- Featured Image -->
-                <div class="insights-featured-image">
-                    <?php if (has_post_thumbnail()): ?>
-                        <?php the_post_thumbnail('full', array('class' => 'insights-hero-img', 'alt' => get_the_title())); ?>
-                    <?php else: ?>
-                        <img src="<?php echo esc_url(get_template_directory_uri()); ?>/dist/img/placeholder.jpg"
-                            alt="No image" class="insights-hero-img">
-                    <?php endif; ?>
-                </div>
+            Back </button>
+        <div class="insights-single-container">
+            <?php if (have_posts()): ?>
+                <?php while (have_posts()):
+                    the_post(); ?>
 
-                <div class="insights-single-content-wrapper">
-
-                    <!-- Category & Meta Info -->
-                    <div class="insights-meta-info">
-                        <?php
-                        $terms = get_the_terms(get_the_ID(), 'insights_category');
-                        if ($terms && !is_wp_error($terms)) {
-                            echo '<div class="insights-categories">';
-                            foreach ($terms as $term) {
-                                echo '<a href="' . esc_url(get_term_link($term)) . '" class="insights-category-tag">' . esc_html($term->name) . '</a>';
-                            }
-                            echo '</div>';
-                        }
-                        ?>
-                        <div class="insights-date">
-                            <?php echo esc_html(get_the_date('F j, Y')); ?>
-                        </div>
-                    </div>
-
-                    <!-- Title -->
-                    <h1 class="insights-single-title"><?php the_title(); ?></h1>
-
-                    <!-- Excerpt -->
-                    <?php if (has_excerpt()): ?>
-                        <div class="insights-excerpt"><?php the_excerpt(); ?></div>
-                    <?php endif; ?>
-
-                    <!-- Author Box -->
-                    <div class="insights-author-box">
-                        <div class="insights-author-image">
-                            <?php
-                            $author_custom_img = function_exists('carbon_get_the_post_meta') 
-                                ? carbon_get_the_post_meta('insights_author_image') 
-                                : '';
-                            
-                            if ($author_custom_img):
-                                ?>
-                                <img src="<?php echo esc_url($author_custom_img); ?>" 
-                                    alt="<?php echo esc_attr($author_name); ?>" 
-                                    class="insights-author-avatar">
-                            <?php else:
-                                echo get_avatar($author_id, 120, '', $author_name, array('class' => 'insights-author-avatar'));
-                            endif;
-                            ?>
-                        </div>
-                        <div class="insights-author-details">
-                            <h4 class="insights-author-name">
-                                <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="insights-author-link">
-                                    <?php
-                                    $custom_author_name = function_exists('carbon_get_the_post_meta') 
-                                        ? carbon_get_the_post_meta('insights_author_name') 
-                                        : '';
-                                    
-                                    echo esc_html($custom_author_name ?: $author_name);
-                                    ?>
-                                </a>
-                            </h4>
-                            <p class="insights-author-bio">
-                                <?php
-                                $custom_author_bio = function_exists('carbon_get_the_post_meta') 
-                                    ? carbon_get_the_post_meta('insights_author_bio') 
-                                    : '';
-                                
-                                if ($custom_author_bio):
-                                    echo wp_kses_post($custom_author_bio);
-                                else:
-                                    echo wp_kses_post(get_the_author_meta('description', $author_id));
-                                endif;
-                                ?>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Main Content -->
-                <div class="insights-main-content">
-                    <?php the_content(); ?>
-                </div>
-
-                <!-- Related Posts by Author -->
-                <div class="insights-related-author-posts">
-                    <h3 class="insights-related-title">More from <?php echo esc_html($author_name); ?></h3>
                     <?php
-                    $author_posts = new WP_Query(array(
-                        'post_type' => 'insights',
-                        'author' => $author_id,
-                        'posts_per_page' => 3,
-                        'post__not_in' => array(get_the_ID()),
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    ));
+                    // Author Info
+                    $author_id = get_the_author_meta('ID');
+                    $author_name = get_the_author_meta('display_name', $author_id);
+                    $author_link = get_author_posts_url($author_id);
 
-                    if ($author_posts->have_posts()): ?>
-                        <div class="author-posts-grid">
-                            <?php
-                            while ($author_posts->have_posts()):
-                                $author_posts->the_post();
-                                ?>
-                                <div class="author-post-card">
-                                    <div class="author-post-image">
-                                        <a href="<?php the_permalink(); ?>">
-                                            <?php
-                                            if (has_post_thumbnail()) {
-                                                the_post_thumbnail('medium', array('alt' => get_the_title()));
-                                            } else {
-                                                echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image">';
-                                            }
-                                            ?>
-                                        </a>
-                                    </div>
-                                    <div class="author-post-info">
-                                        <h4 class="author-post-title">
-                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                        </h4>
-                                        <div class="author-post-date">
-                                            <?php echo esc_html(get_the_date('F j, Y')); ?>
+                    // Custom Author Fields (Carbon)
+                    $custom_author_name = carbon_get_the_post_meta('insights_author_name') ?: '';
+                    $custom_author_bio = carbon_get_the_post_meta('insights_author_bio') ?: '';
+                    $custom_author_image = carbon_get_the_post_meta('insights_author_image') ?: '';
+
+                    // Custom author link (using slug)
+                    $custom_author_slug = sanitize_title($custom_author_name ?: $author_name);
+                    $custom_author_link = home_url('/author/' . $custom_author_slug);
+                    ?>
+
+                    <article class="insights-single-article">
+
+
+
+
+                        <div class="insights-hero-content">
+                            <!-- Meta: Category + Date + Social Links -->
+                            <div class="insights-details-card-meta">
+                                <!-- Category -->
+                                <div class="category-badge-and-date">
+                                    <?php
+                                    $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                    if ($terms && !is_wp_error($terms) && !empty($terms)) {
+                                        echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
+                                    }
+                                    ?>
+
+                                    <div class="circle"></div>
+
+                                    <!-- Date (Custom or Default) -->
+                                    <?php
+                                    $custom_date = carbon_get_the_post_meta('insights_custom_publish_date');
+                                    $display_date = $custom_date ? date('M j, Y', strtotime($custom_date)) : get_the_date('M j, Y');
+                                    ?>
+                                    <span class="insights-card-date">
+                                        <?php echo esc_html($display_date); ?>
+                                    </span>
+                                </div>
+
+                                <!-- Social Media Links -->
+                                <?php
+                                $fb_link = carbon_get_the_post_meta('insights_facebook_link');
+                                $li_link = carbon_get_the_post_meta('insights_linkedin_link');
+
+                                if ($fb_link || $li_link): ?>
+                                    <div class="social-media-links-container">
+                                        <span>SHARE</span>
+                                        <div class="social-media-links">
+                                            <?php if ($fb_link): ?>
+                                                <a href="<?php echo esc_url($fb_link); ?>" target="_blank" rel="noopener noreferrer"
+                                                    class="social-icon social-facebook" title="Facebook">
+                                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
+                                                            stroke-opacity="0.1" />
+                                                        <path
+                                                            d="M23.1598 20.0485L23.6556 16.8155H20.5537V14.7175C20.5537 13.833 20.987 12.9709 22.3764 12.9709H23.7867V10.2185C23.7867 10.2185 22.5068 10 21.2831 10C18.7283 10 17.0586 11.5484 17.0586 14.3515V16.8155H14.2188V20.0485H17.0586V27.8641C17.628 27.9535 18.2116 28 18.8061 28C19.4007 28 19.9843 27.9535 20.5537 27.8641V20.0485H23.1598Z"
+                                                            fill="black" fill-opacity="0.6" />
+                                                    </svg>
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if ($li_link): ?>
+                                                <a href="<?php echo esc_url($li_link); ?>" target="_blank" rel="noopener noreferrer"
+                                                    class="social-icon social-linkedin" title="LinkedIn">
+                                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
+                                                            stroke-opacity="0.1" />
+                                                        <g clip-path="url(#clip0_927_13025)">
+                                                            <path
+                                                                d="M28 20.9445V27.5988H24.1414V21.3923C24.1414 19.8313 23.5847 18.7683 22.1869 18.7683C21.1197 18.7683 20.4878 19.484 20.2074 20.1787C20.107 20.4256 20.0777 20.773 20.0777 21.1203V27.603H16.219C16.219 27.603 16.2692 17.0859 16.219 15.9978H20.0777V17.6425C20.0693 17.6551 20.0609 17.6676 20.0525 17.6802H20.0777V17.6425C20.5924 16.8515 21.5048 15.7258 23.5555 15.7258C26.0958 15.7216 28 17.383 28 20.9445ZM12.1846 10.4023C10.8621 10.4023 10 11.2687 10 12.407C10 13.5202 10.837 14.4116 12.1344 14.4116H12.1595C13.5071 14.4116 14.3441 13.5202 14.3441 12.407C14.3148 11.2687 13.5029 10.4023 12.1846 10.4023ZM10.2302 27.603H14.0888V15.9936H10.2302V27.603Z"
+                                                                fill="black" fill-opacity="0.6" />
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="clip0_927_13025">
+                                                                <rect width="18" height="18" fill="white"
+                                                                    transform="translate(10 10)" />
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>
+                                                </a>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                </div>
-                            <?php endwhile; ?>
+                                <?php endif; ?>
+                            </div>
+                            <h1 class="insights-single-title">
+                                <?php the_title(); ?>
+                            </h1>
+
+
                         </div>
-                    <?php endif;
-                    wp_reset_postdata(); ?>
+
+                        <div class="insights-single-content-wrapper-container">
+
+                            <!-- Multiple Authors Section -->
+                            <div class="insights-authors-section">
+
+                                <?php
+                                $authors = carbon_get_the_post_meta('insights_authors') ?: [];
+
+                                if (!empty($authors)): ?>
+                                    <span>Author :</span>
+                                    <div class="authors-grid">
+                                        <?php foreach ($authors as $author):
+                                            $name = $author['author_name'] ?: 'Unknown Author';
+                                            $image = $author['author_image'] ?: '';
+                                            $bio = $author['author_bio'] ?: '';
+                                            $fb = $author['facebook_link'] ?: '';
+                                            $li = $author['linkedin_link'] ?: '';
+                                            ?>
+                                            <div class="author-card">
+                                                <?php if ($image): ?>
+                                                    <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($name); ?>"
+                                                        class="author-avatar">
+                                                <?php endif; ?>
+
+                                                <h4 class="author-name">
+                                                    <?php echo esc_html($name); ?>
+                                                </h4>
+
+
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                <?php endif; ?>
+                            </div>
+
+
+                            <!-- Main Content -->
+                            <div class="insights-main-content">
+                                <?php the_content(); ?>
+                            </div>
+
+                            <!-- Related Posts -->
+                            <section class="insights-related-author-posts">
+                                <h3 class="insights-related-title">
+                                    More from
+                                    <?php echo esc_html($custom_author_name ?: $author_name); ?>
+                                </h3>
+
+                                <?php
+                                $related_args = [
+                                    'post_type' => 'insights',
+                                    'posts_per_page' => 3,
+                                    'post__not_in' => [get_the_ID()],
+                                    'orderby' => 'date',
+                                    'order' => 'DESC',
+                                    'meta_query' => [
+                                        [
+                                            'key' => '_insights_author_name',
+                                            'value' => $custom_author_name,
+                                            'compare' => '=',
+                                        ]
+                                    ]
+                                ];
+
+                                $related_query = new WP_Query($related_args);
+
+                                if ($related_query->have_posts()): ?>
+                                    <div class="author-posts-grid">
+                                        <?php while ($related_query->have_posts()):
+                                            $related_query->the_post(); ?>
+                                            <div class="author-post-card">
+                                                <div class="author-post-image">
+                                                    <a href="<?php the_permalink(); ?>">
+                                                        <?php
+                                                        if (has_post_thumbnail()) {
+                                                            the_post_thumbnail('medium', ['alt' => get_the_title()]);
+                                                        } else {
+                                                            echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image">';
+                                                        }
+                                                        ?>
+                                                    </a>
+                                                </div>
+                                                <div class="author-post-info">
+                                                    <h4 class="author-post-title">
+                                                        <a href="<?php the_permalink(); ?>">
+                                                            <?php the_title(); ?>
+                                                        </a>
+                                                    </h4>
+                                                    <div class="author-post-date">
+                                                        <?php echo esc_html(get_the_date('F j, Y')); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endwhile; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <p>No other insights from this author at the moment.</p>
+                                <?php endif; ?>
+                                <?php wp_reset_postdata(); ?>
+                            </section>
+
+                        </div>
+
+                    </article>
+
+                <?php endwhile; ?>
+            <?php else: ?>
+                <div class="insights-not-found">
+                    <h2>Insight not found</h2>
+                    <p>Sorry, the requested insight could not be found.</p>
                 </div>
+            <?php endif; ?>
 
-            </article>
-
-        <?php endwhile;
-    else: ?>
-        <div class="insights-not-found">
-            <h2>Insight not found</h2>
-            <p>Sorry, the requested insight could not be found.</p>
         </div>
-    <?php endif; ?>
+    </div>
 </div>

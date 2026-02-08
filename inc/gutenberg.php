@@ -410,34 +410,41 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields(array(
             Field::make('rich_text', 'insights_content', 'Content')
                 ->set_help_text('Add custom content for this insight'),
-            Field::make('complex', 'insights_sections', 'Content Sections')
-                ->set_layout('tabbed-horizontal')
-                ->add_fields(array(
-                    Field::make('text', 'section_title', 'Section Title'),
-                    Field::make('rich_text', 'section_content', 'Section Content'),
-                    Field::make('image', 'section_image', 'Section Image'),
-                )),
+         
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
             set_query_var('insights_details_fields', $fields);
-            get_template_part('components/insights/insights-content-block');
+            get_template_part('components/insights/insights-details-page');
         });
 
     // =========================================================
     // Insights Author Info Fields
     // =========================================================
-    Container::make('post_meta', 'insights_author_meta', 'Author Information')
+    Container::make('post_meta', 'insights_authors_meta', 'Authors Information (Multiple)')
         ->where('post_type', '=', 'insights')
         ->add_fields(array(
-            Field::make('text', 'insights_author_name', 'Author Name')
-                ->set_help_text('Display name of the author'),
-            Field::make('textarea', 'insights_author_bio', 'Author Bio')
-                ->set_rows(3)
-                ->set_help_text('Short biography of the author'),
-            Field::make('image', 'insights_author_image', 'Author Image')
-                ->set_help_text('Upload author profile picture'),
-        ));
+            Field::make('complex', 'insights_authors', 'Add Authors')
+                ->set_layout('tabbed-horizontal')          
+                ->set_collapsed(true)                      
+                ->set_max(5)                                
+                ->add_fields(array(
+                    Field::make('text', 'author_name', 'Author Name')
+                        ->set_required(true),
 
+                    Field::make('textarea', 'author_bio', 'Author Bio / Description')
+                        ->set_rows(3),
+
+                    Field::make('image', 'author_image', 'Author Image')
+                        ->set_value_type('url'),
+
+                    Field::make('text', 'facebook_link', 'Facebook Link')
+                        ->set_attribute('placeholder', 'https://facebook.com/username'),
+
+                    Field::make('text', 'linkedin_link', 'LinkedIn Link')
+                        ->set_attribute('placeholder', 'https://linkedin.com/in/username'),
+                ))
+        ));
+        
     // =========================================================
     // Insights page - Display insights posts
     // =========================================================
@@ -445,7 +452,6 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields(array(
             Field::make('text', 'insights_grid_title', 'Section Title')
                 ->set_default_value('Our Insights'),
-
             Field::make('text', 'load_more_text', 'Load More Button Text')
                 ->set_default_value('Load More'),
             Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
@@ -485,8 +491,8 @@ add_action('carbon_fields_register_fields', function () {
             set_query_var('insights_posts_per_page', $args['posts_per_page']);
             set_query_var('insights_category_filter', $fields['insights_category_filter']);
             set_query_var('insights_grid_layout', $fields['insights_grid_layout'] ?? '3');
-            set_query_var('show_load_more', true); 
-    
+            set_query_var('show_load_more', true);
+
             get_template_part('components/insights/insights-content-block');
         });
 
@@ -520,11 +526,18 @@ add_action('carbon_fields_register_fields', function () {
                     return $options;
                 }),
         ])
-        ->set_render_callback(function ($fields) {
+        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
 
-            set_query_var('insights_slider_fields', $fields);
+            $slider_fields = is_array($fields) ? $fields : [];
 
-            include locate_template('components/insights/insights-top-slider.php');
+            set_query_var('insights_slider_fields', $slider_fields);
+
+            $template = locate_template('components/insights/insights-top-slider.php');
+            if ($template) {
+                include $template;
+            } else {
+                echo '<!-- Template not found: insights-top-slider.php -->';
+            }
         });
 
 });
