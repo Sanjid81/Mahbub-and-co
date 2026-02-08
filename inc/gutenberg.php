@@ -442,46 +442,52 @@ add_action('carbon_fields_register_fields', function () {
     // Insights page - Display insights posts
     // =========================================================
     Block::make('Insights Grid Block', 'insights-grid-display')
-    ->add_fields(array(
-        Field::make('text', 'insights_grid_title', 'Section Title')
-            ->set_default_value('Our Insights'),
-        Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
-            ->set_default_value(6),
-        Field::make('select', 'insights_category_filter', 'Filter by Category')
-            ->add_options(array(
-                '' => 'All Categories',
-                'insights' => 'Insights',
-                'news-and-events' => 'News and Events',
-            ))
-            ->set_default_value(''),
-        Field::make('select', 'insights_grid_layout', 'Grid Layout')
-            ->add_options(array(
-                '3' => '3 Columns',
-                '2' => '2 Columns',
-            ))
-            ->set_default_value('3'),
-    ))
+        ->add_fields(array(
+            Field::make('text', 'insights_grid_title', 'Section Title')
+                ->set_default_value('Our Insights'),
+
+            Field::make('text', 'load_more_text', 'Load More Button Text')
+                ->set_default_value('Load More'),
+            Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
+                ->set_default_value(6),
+            Field::make('select', 'insights_category_filter', 'Filter by Category')
+                ->add_options(array(
+                    '' => 'All Categories',
+                    'insights' => 'Insights',
+                    'news-and-events' => 'News and Events',
+                ))
+                ->set_default_value(''),
+            Field::make('select', 'insights_grid_layout', 'Grid Layout')
+                ->add_options(array(
+                    '3' => '3 Columns',
+                    '2' => '2 Columns',
+                ))
+                ->set_default_value('3'),
+        ))
         ->set_render_callback(function ($fields) {
-            $args = array(
+
+            $args = [
                 'posts_per_page' => $fields['insights_posts_per_page'] ?? 6,
                 'post_type' => 'insights',
-            );
+            ];
 
             if (!empty($fields['insights_category_filter'])) {
-                $args['tax_query'] = array(
-                    array(
+                $args['tax_query'] = [
+                    [
                         'taxonomy' => 'insights_category',
                         'field' => 'slug',
                         'terms' => $fields['insights_category_filter'],
-                    )
-                );
+                    ]
+                ];
             }
 
-            set_query_var('insights_grid_title', $fields['insights_grid_title']);
-            set_query_var('insights_grid_layout', $fields['insights_grid_layout']);
-            set_query_var('args', $args);
-
-            get_template_part('components/insights/insights-grid-block');
+            set_query_var('insights_grid_title', $fields['insights_grid_title'] ?: 'Our Insights');
+            set_query_var('insights_posts_per_page', $args['posts_per_page']);
+            set_query_var('insights_category_filter', $fields['insights_category_filter']);
+            set_query_var('insights_grid_layout', $fields['insights_grid_layout'] ?? '3');
+            set_query_var('show_load_more', true); 
+    
+            get_template_part('components/insights/insights-content-block');
         });
 
 
@@ -491,7 +497,8 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields([
             Field::make('image', 'background_image', 'Background Image')
                 ->set_value_type('id'),
-
+            Field::make('text', 'heading', 'Section Heading')
+                ->set_default_value('Featured Insights'),
             Field::make('number', 'slides_count', 'Number of Slides')
                 ->set_default_value(5),
 

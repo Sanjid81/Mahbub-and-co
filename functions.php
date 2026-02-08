@@ -266,3 +266,131 @@ add_theme_support('post-thumbnails');
 add_image_size('team-thumb', 300, 300, true); // Square thumb
 add_image_size('team-large', 600, 400, false); // Large size
 
+
+
+
+
+// **************************************************************8
+// Insights Load More
+wp_enqueue_script(
+    'insights-load-more',
+    get_template_directory_uri() . '/src/scripts/components/insights/insights-load-more.js',
+    array('jquery'),
+    '1.0.1',
+    true
+);
+
+wp_localize_script(
+    'insights-load-more',
+    'insightsAjax',
+    array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('insights_load_more_nonce'),
+    )
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==================================== Insights Load More AJAX ====================================
+
+add_action('wp_ajax_load_more_insights', 'load_more_insights_handler');
+add_action('wp_ajax_nopriv_load_more_insights', 'load_more_insights_handler');
+
+function load_more_insights_handler()
+{
+
+    check_ajax_referer('insights_load_more_nonce', 'nonce');
+
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
+    $ppp = isset($_POST['ppp']) ? intval($_POST['ppp']) : 6;
+    $category_slug = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
+
+    $args = [
+        'post_type' => 'insights',
+        'posts_per_page' => $ppp,
+        'offset' => $offset,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => 'publish',
+    ];
+
+    if (!empty($category_slug) && $category_slug !== 'all') {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => 'insights_category',
+                'field' => 'slug',
+                'terms' => $category_slug,
+            ]
+        ];
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post(); ?>
+
+                        <div class="insights-card">
+                            <div class="insights-card-image">
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php
+                                    if (has_post_thumbnail()) {
+                                        the_post_thumbnail('medium', ['class' => 'insights-card-img', 'alt' => get_the_title()]);
+                                    } else {
+                                        echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image" class="insights-card-img">';
+                                    }
+                                    ?>
+                                </a>
+                            </div>
+
+                            <div class="insights-card-content">
+                                <div class="insights-card-meta">
+                                    <?php
+                                    $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                    if ($terms && !is_wp_error($terms) && !empty($terms)) {
+                                        echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
+                                    }
+                                    ?>
+                                    <div class="circle"></div>
+                                    <span class="insights-card-date"><?php echo esc_html(get_the_date('M j, Y')); ?></span>
+                                </div>
+
+                                <h3 class="insights-card-title">
+                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                </h3>
+
+                                <?php if (has_excerpt()): ?>
+                                        <div class="insights-card-excerpt">
+                                            <?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?>
+                                        </div>
+                                <?php endif; ?>
+
+                                <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More</a>
+                            </div>
+                        </div>
+
+                        <?php
+        }
+    }
+
+    $html = ob_get_clean();
+    wp_reset_postdata();
+
+    wp_send_json_success(['html' => $html]);
+    wp_die();
+}

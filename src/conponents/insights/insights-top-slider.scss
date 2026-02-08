@@ -1,244 +1,11 @@
-// .insights-section {
-//     position: relative;
-//     overflow: hidden;
-//     max-height: 835px;
-//     height: 100%;
-
-//     .overlay {
-//         position: absolute;
-//         inset: 0;
-//         background: linear-gradient(to bottom, rgba(90, 25, 25, 1), rgba(0, 0, 0, 0.75));
-//         z-index: 1;
-//     }
-
-//     .container {
-//         position: relative;
-//         z-index: 2;
-
-//         /* Header with title + nav buttons */
-//         .header-row {
-//             display: flex;
-//             align-items: center;
-//             justify-content: space-between;
-//             padding-bottom: 80px;
-//             padding-top: 140px;
-
-//             @media (max-width:1440px) {
-//                 padding-top: 80px;
-//             }
-
-//             @media (max-width:1024px) {
-//                 padding-top: 20px;
-//             }
-
-//             @media (max-width:500px) {
-//                 text-align: center;
-//                 justify-content: center;
-//             }
-
-//             h2 {
-//                 color: var(--color-white);
-
-//                 @media (max-width:500px) {
-//                     text-align: center;
-//                 }
-//             }
-
-//             .insights-slider-buttons {
-//                 display: flex;
-//                 gap: 10px;
-//                 margin-top: 5px;
-
-//                 .swiper-button-next,
-//                 .swiper-button-prev {
-//                     position: static;
-//                     width: 48px;
-//                     height: 48px;
-//                     border-radius: 50%;
-//                     background: rgba(255, 255, 255, 0.15);
-//                     color: #fff;
-//                     transition: background 0.3s ease;
-
-//                     &::after {
-//                         font-size: 16px;
-//                         font-weight: bold;
-//                     }
-
-//                     &:hover {
-//                         background: rgba(255, 255, 255, 0.4);
-//                     }
-//                 }
-
-//                 @media (max-width: 500px) {
-//                     display: none;
-
-//                 }
-//             }
-
-
-//             /* Responsive */
-//             @media (max-width: 1024px) {
-//                 .header-row {
-//                     flex-direction: column;
-//                     gap: 1rem;
-//                     text-align: center;
-//                 }
-//             }
-
-//         }
-
-//         .testimonials-slider {
-
-//             /* Swiper layout */
-//             .swiper {
-//                 padding-bottom: 208px;
-//                 height: 100%;
-//                 width: 100%;
-//                 position: relative;
-
-//                 @media (max-width: 1030px) {
-//                     padding-bottom: 130px;
-//                 }
-
-//                 .swiper-slide {
-//                     display: flex;
-//                     justify-content: center;
-//                 }
-
-//                 .testimonial-card {
-//                     background: #fff;
-//                     border-radius: 20px;
-//                     padding: 40px;
-//                     max-width: 540px;
-//                     // max-height: 343px;
-//                     height: 100%;
-//                     align-items: stretch;
-
-//                     @media (max-width:800px) {
-//                         padding: 20px;
-//                     }
-
-//                     svg {
-//                         margin-bottom: 40px;
-
-//                         @media (max-width:1400px) {
-//                             margin-bottom: 20px;
-//                             width: 50px;
-//                             height: 50px;
-//                         }
-//                     }
-
-//                     .text {
-//                         line-height: 120%;
-//                         color: var(--dark-60);
-//                         margin-bottom: 30px;
-//                     }
-
-//                     .author {
-//                         color: var(--dark-60);
-//                     }
-
-
-
-//                 }
-
-
-
-
-//             }
-
-//             /* Pagination bullets with progress animation */
-//             .swiper-pagination {
-//                 position: absolute;
-//                 left: 50%;
-//                 bottom: 140px;
-//                 transform: translateX(-50%);
-//                 display: flex;
-//                 align-items: center;
-//                 justify-content: center;
-//                 gap: 6px;
-//                 z-index: 50;
-//                 // bottom: 10px;
-
-//                 @media (max-width: 1030px) {
-//                     bottom: 70px;
-//                 }
-
-//                 .swiper-pagination-bullet {
-//                     width: 10px;
-//                     height: 10px;
-//                     border: 2px solid white;
-//                     border-radius: 50%;
-//                     background: transparent;
-//                     opacity: 1;
-//                     position: relative;
-//                     overflow: hidden;
-//                     transition: all 0.3s ease;
-//                     cursor: pointer;
-
-//                     &::after {
-//                         content: "";
-//                         position: absolute;
-//                         top: 50%;
-//                         left: 4px;
-//                         height: 4px;
-//                         width: 0%;
-//                         background: #fff;
-//                         border-radius: 2px;
-//                         transform: translateY(-50%);
-//                         transition: width 0s;
-//                     }
-
-//                     &-active {
-//                         width: 28px;
-//                         border-radius: 20px;
-
-//                         &::after {
-//                             animation: bulletFill 2s linear forwards;
-//                         }
-//                     }
-//                 }
-//             }
-
-//             /* Fill animation */
-//             @keyframes bulletFill {
-//                 0% {
-//                     width: 0%;
-//                 }
-
-//                 100% {
-//                     width: calc(100% - 8px);
-//                 }
-//             }
-
-//             /* Responsive */
-//             @media (max-width: 768px) {
-
-
-//                 .swiper-pagination-bullet-active {
-//                     width: 22px !important;
-//                 }
-//             }
-
-
-//         }
-//     }
-
-
-// }
-
-
-
-
-
 // Insights Slider Styles
-.insights-section {
+.insights-slider-section {
     position: relative;
-    padding: 80px 0;
+    padding: 100px 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 600px;
+
 
     .overlay {
         position: absolute;
@@ -256,35 +23,50 @@
         max-width: 1920px;
         width: 100%;
         margin: 0 auto;
-        padding: 0 20px;
-        padding-left: 120px;
+        padding: 0 0px 0px 140px;
+
+        // padding-left: 120px;
+        @media (max-width:1600px) {
+            padding: 0 0px 0 80px;
+        }
+
+        @media (max-width:1200px) {
+            padding: 0 0px 0 30px;
+        }
     }
 
     .header-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
+        padding: 0 140px 0 0px;
+        width: 100%;
 
-        .heading-two {
-            color: #fff;
-            font-size: 48px;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.5px;
+        @media (max-width:1600px) {
+            padding: 0 80px;
+        }
+
+        @media (max-width:1200px) {
+            padding: 0 40px;
+        }
+
+        .heading-one {
+            color: var(--color-white);
+
         }
 
         .insights-slider-buttons {
             display: flex;
-            gap: 15px;
+            gap: 8px;
             align-items: center;
 
             .swiper-button-prev,
             .swiper-button-next {
                 position: static;
-                width: 50px;
-                height: 50px;
-                background: rgba(255, 255, 255, 0.1);
+                width: 48px;
+                height: 48px;
+                background: transparent;
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 border-radius: 50%;
                 margin: 0;
@@ -316,7 +98,7 @@
     .insights-slider {
         .swiper {
             overflow: hidden;
-            padding-bottom: 60px;
+            padding-bottom: 78px;
         }
 
         .swiper-slide {
@@ -376,7 +158,6 @@
 
             .insights-slider-card-content {
                 position: absolute;
-                background-color: #666;
                 width: fit-content;
                 overflow: hidden;
                 bottom: 20px;

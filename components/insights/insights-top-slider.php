@@ -1,5 +1,8 @@
 <?php
 $fields = get_query_var('insights_slider_fields', []);
+$heading = !empty($fields['heading'])
+    ? $fields['heading']
+    : 'Featured Insights';
 $bg_id = $fields['background_image'] ?? 0;
 $count = !empty($fields['slides_count']) ? (int) $fields['slides_count'] : 5;
 $cat = $fields['insights_category'] ?? '';
@@ -28,12 +31,13 @@ if (!empty($cat)) {
 $query = new WP_Query($args);
 ?>
 
-<section class="insights-section" <?php if ($bg_url)
+<section class="insights-slider-section" <?php if ($bg_url)
     echo "style='background-image:url({$bg_url});'"; ?>>
     <div class="overlay"></div>
     <div class="container">
         <div class="header-row">
-            <h2 class="heading-two">Insights</h2>
+            <h2 class="heading-one"><?php echo esc_html($heading); ?></h2>
+
             <div class="insights-slider-buttons">
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>

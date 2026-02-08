@@ -1,190 +1,83 @@
 <?php
 /**
- * Archive template for insights post type with dynamic category tabs
+ * Gutenberg Block: Insights Grid Display
+ * Uses the reusable insights-grid-display.php component
  */
-get_header();
-?>
 
-<div class="insights-archive-section">
+Block::make('Insights Grid Block', 'insights-grid-display')
+    ->add_fields([
+        Field::make('text', 'insights_grid_title', 'Section Title')
+            ->set_default_value('Our Insights'),
 
-    <?php
-    // ────────────────────────────────────────────────
-    // Load categories dynamically from taxonomy
-    // ────────────────────────────────────────────────
-    $terms = get_terms([
-        'taxonomy' => 'insights_category',
-        'hide_empty' => false,
-        'orderby' => 'name',
-        'order' => 'ASC',
-    ]);
+        Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
+            ->set_default_value(6)
+            ->set_min(1)
+            ->set_max(20),
 
-    $categories = [];
+        Field::make('select', 'insights_category_filter', 'Filter by Category')
+            ->add_options([
+                '' => 'All Categories (show tabs)',
+                'insights' => 'Insights Only',
+                'news-and-events' => 'News & Events Only',
+                // আরও ক্যাটাগরি থাকলে এখানে যোগ করতে পারো
+            ])
+            ->set_default_value(''),
 
-    if (!empty($terms) && !is_wp_error($terms)) {
-        foreach ($terms as $term) {
-            $categories[$term->slug] = $term->name;
-        }
-    }
+        Field::make('select', 'insights_grid_layout', 'Grid Layout')
+            ->add_options([
+                '3' => '3 Columns',
+                '2' => '2 Columns',
+                '4' => '4 Columns', // চাইলে আরও অপশন যোগ করতে পারো
+            ])
+            ->set_default_value('3'),
 
-    // Fallback if no categories exist at all
-    if (empty($categories)) {
-        $categories = [
-            'insights' => 'Insights',
-            'news-and-events' => 'News & Events',
+        Field::make('checkbox', 'show_load_more', 'Show Load More Button?')
+            ->set_default_value(false),
+
+        Field::make('text', 'load_more_text', 'Load More Button Text')
+            ->set_default_value('Load More')
+            ->set_conditional_logic([[
+                'field' => 'show_load_more',
+                'value' => true,
+            ]]),
+
+        Field::make('text', 'load_more_link', 'Load More Link URL')
+            ->set_default_value('/insights/')
+            ->set_conditional_logic([[
+                'field' => 'show_load_more',
+                'value' => true,
+            ]]),
+    ])
+    ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+
+        // Block-এর জন্য query args তৈরি
+        $query_args = [
+            'post_type'      => 'insights',
+            'posts_per_page' => (int) ($fields['insights_posts_per_page'] ?? 6),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
         ];
-    }
-    ?>
 
-    <?php if (!empty($categories)): ?>
-        <div class="container">
+        // ক্যাটাগরি ফিল্টার থাকলে
+        if (!empty($fields['insights_category_filter'])) {
+            $query_args['tax_query'] = [
+                [
+                    'taxonomy' => 'insights_category',
+                    'field'    => 'slug',
+                    'terms'    => $fields['insights_category_filter'],
+                ]
+            ];
+        }
 
-            <div class="insights-page-section">
-                <!-- Category Tabs -->
-                <div class="insights-tabs-container">
-                    <div class="insights-tabs">
-                        <?php
-                        $first = true;
-                        foreach ($categories as $slug => $name):
-                            $active = $first ? 'active' : '';
-                            ?>
-                            <button class="insights-tab <?php echo esc_attr($active); ?>"
-                                data-category="<?php echo esc_attr($slug); ?>">
-                                <?php echo esc_html($name); ?>
-                            </button>
-                            <?php
-                            $first = false;
-                        endforeach;
-                        ?>
-                    </div>
-                </div>
+        // reusable part-এর জন্য query vars সেট করা
+        set_query_var('insights_grid_title', $fields['insights_grid_title'] ?: 'Our Insights');
+        set_query_var('insights_posts_per_page', $query_args['posts_per_page']);
+        set_query_var('insights_category_filter', $fields['insights_category_filter'] ?? '');
+        set_query_var('insights_grid_layout', $fields['insights_grid_layout'] ?? '3');
+        set_query_var('show_load_more', $fields['show_load_more'] ?? false);
+        set_query_var('load_more_text', $fields['load_more_text'] ?? 'Load More');
+        set_query_var('load_more_link', $fields['load_more_link'] ?? '');
 
-                <!-- Tab Contents -->
-                <div class="insights-tab-contents">
-                    <?php
-                    $first = true;
-                    foreach ($categories as $slug => $name):
-                        $active = $first ? 'active' : '';
-
-                        $posts_query = new WP_Query([
-                            'post_type' => 'insights',
-                            'posts_per_page' => -1,
-                            'orderby' => 'date',
-                            'order' => 'DESC',
-                            'tax_query' => [
-                                [
-                                    'taxonomy' => 'insights_category',
-                                    'field' => 'slug',
-                                    'terms' => $slug,
-                                ],
-                            ],
-                        ]);
-                        ?>
-
-                        <div class="insights-tab-content <?php echo esc_attr($active); ?>"
-                            data-category="<?php echo esc_attr($slug); ?>">
-                            <?php if ($posts_query->have_posts()): ?>
-
-                                <div class="insights-posts-grid">
-                                    <?php
-                                    while ($posts_query->have_posts()):
-                                        $posts_query->the_post();
-                                        $author_id = get_the_author_meta('ID');
-                                        $author_name = get_the_author_meta('display_name', $author_id);
-                                        ?>
-
-                                        <div class="insights-card">
-                                            <!-- Card Image -->
-                                            <div class="insights-card-image">
-                                                <a href="<?php the_permalink(); ?>">
-                                                    <?php
-                                                    if (has_post_thumbnail()) {
-                                                        the_post_thumbnail('medium', [
-                                                            'class' => 'insights-card-img',
-                                                            'alt' => get_the_title()
-                                                        ]);
-                                                    } else {
-                                                        echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image" class="insights-card-img">';
-                                                    }
-                                                    ?>
-                                                </a>
-
-                                                <!-- Category Badge -->
-
-                                            </div>
-
-                                            <!-- Card Content -->
-                                            <div class="insights-card-content">
-
-                                                <div class="insights-card-meta">
-                                                    <?php
-                                                    // Category Badge
-                                                    $terms = get_the_terms(get_the_ID(), 'insights_category');
-                                                    if ($terms && !is_wp_error($terms) && !empty($terms)) {
-                                                        $first_term = $terms[0];
-                                                        echo '<span class="category-badge meta-category">' . esc_html($first_term->name) . '</span>';
-                                                        echo ' • ';
-                                                    }
-                                                    ?>
-
-                                                    <!-- Date -->
-                                                    <span class="insights-card-date">
-                                                        <?php echo esc_html(get_the_date('M j, Y')); ?>
-                                                    </span>
-                                                </div>
-                                                <h3 class="insights-card-title">
-                                                    <a href="<?php the_permalink(); ?>">
-                                                        <?php the_title(); ?>
-                                                    </a>
-                                                </h3>
-
-                                                <!-- Excerpt / Short Description -->
-                                                <?php if (has_excerpt()): ?>
-                                                    <div class="insights-card-excerpt">
-                                                        <?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?>
-                                                    </div>
-                                                <?php endif; ?>
-
-                                                <!-- Author Box in Card -->
-
-                                                <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More</a>
-                                            </div>
-                                        </div>
-
-                                    <?php endwhile; ?>
-                                </div>
-
-                            <?php else: ?>
-
-                                <div class="insights-no-posts">
-                                    <h3>No
-                                        <?php echo esc_html($name); ?> found
-                                    </h3>
-                                    <p>Sorry, there are no posts to display in this category.</p>
-                                </div>
-
-                            <?php endif; ?>
-
-                            <?php wp_reset_postdata(); ?>
-                        </div>
-
-                        <?php $first = false; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-
-    <?php else: ?>
-
-        <div class="insights-no-categories">
-            <h2>No insight categories found</h2>
-            <p>Please create some categories in Insights → Categories.</p>
-        </div>
-
-    <?php endif; ?>
-
-</div>
-
-
-
-<?php
-get_footer();
+        // reusable component লোড করা
+        get_template_part('components/insights/insights-content-block');
+    }); 
