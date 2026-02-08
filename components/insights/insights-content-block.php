@@ -1,5 +1,3 @@
-
-
 <?php
 /**
  * Reusable Insights Grid + Tabs Display with AJAX Load More
@@ -175,7 +173,24 @@ if ($use_tabs) {
                                                 </div>
                                             <?php endif; ?>
 
-                                            <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More</a>
+                                            <div class="insights-card-details-button">
+                                                <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More <svg
+                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <g clip-path="url(#clip0_1787_525)">
+                                                            <path
+                                                                d="M12.1727 11.9998L9.34375 9.17184L10.7577 7.75684L15.0007 11.9998L10.7577 16.2428L9.34375 14.8278L12.1727 11.9998Z"
+                                                                fill="#BC001A" />
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="clip0_1787_525">
+                                                                <rect width="24" height="24" fill="white" />
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>
+                                                </a>
+
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endwhile; ?>
