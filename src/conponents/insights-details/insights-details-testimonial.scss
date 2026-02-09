@@ -8,13 +8,36 @@ $border-color: #e8e8e8;
 
 
 .insights-details-testimonials {
-   .container{
-    .testimonial-card{
-        display: flex;
-        flex-direction: column;
-        .quote-mark{
-            
+    padding: 60px 0;
+
+    .details-testimonial-container {
+        max-width: 904px;
+        width: 100%;
+        margin: 0 auto;
+
+        .testimonial-card {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+
+            .quote-mark {
+                margin-bottom: 20px;
+            }
+
+            .testimonial-content {
+                display: flex;
+                flex-direction: column;
+
+                .heading-four {
+                    margin-bottom: 30px;
+                }
+
+                .body-text-three {
+                    line-height: 120%;
+                }
+            }
         }
     }
-   }
 }

@@ -215,14 +215,8 @@
                                     transition: all 0.3s ease;
                                     position: relative;
 
-                                    // &::after {
-                                    //     content: '→';
-                                    //     margin-left: 0.5rem;
-                                    //     transition: transform 0.3s ease;
-                                    // }
-
                                     &:hover {
-                                        color: #1d4ed8;
+                                        text-decoration: underline;
 
                                         &::after {
                                             transform: translateX(4px);
@@ -334,5 +328,3 @@
         }
     }
 }
-
-

@@ -3,7 +3,7 @@ $fields = get_query_var('insights_details_fields', []);
 ?>
 
 <section class="insights-details-testimonials">
-    <div class="container">
+    <div class="details-testimonial-container">
         <div class="testimonial-card">
             <div class="quote-mark">
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,17 +16,19 @@ $fields = get_query_var('insights_details_fields', []);
                 </svg>
             </div>
 
-            <?php if (!empty($fields['testimonial_text'])): ?>
-                <div class="testimonial-text">
-                    <?php echo esc_html($fields['testimonial_text']); ?>
-                </div>
-            <?php endif; ?>
+            <div class="testimonial-content">
+                <?php if (!empty($fields['testimonial_text'])): ?>
+                    <div class="heading-four">
+                        <?php echo esc_html($fields['testimonial_text']); ?>
+                    </div>
+                <?php endif; ?>
 
-            <?php if (!empty($fields['testimonial_attribution'])): ?>
-                <p class="testimonial-attribution">
-                    <?php echo esc_html($fields['testimonial_attribution']); ?>
-                </p>
-            <?php endif; ?>
+                <?php if (!empty($fields['testimonial_attribution'])): ?>
+                    <p class="body-text-three">
+                        <?php echo esc_html($fields['testimonial_attribution']); ?>
+                    </p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </section>
