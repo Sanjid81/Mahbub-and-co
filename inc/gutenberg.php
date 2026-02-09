@@ -410,11 +410,26 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields(array(
             Field::make('rich_text', 'insights_content', 'Content')
                 ->set_help_text('Add custom content for this insight'),
-         
+
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
             set_query_var('insights_details_fields', $fields);
             get_template_part('components/insights/insights-details-page');
+        });
+
+
+    // insights details page componenets
+    Block::make('Insights Details Testimonial Card')
+        ->add_fields([
+            Field::make('textarea', 'testimonial_text', 'Testimonial Text')
+                ->set_required(true),
+
+            Field::make('text', 'testimonial_attribution', 'Attribution / Source')
+                ->set_help_text('e.g. Client feedback, Chambers Asia-Pacific (2025)'),
+        ])
+        ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+            set_query_var('insights_details_fields', $fields);
+            get_template_part('components/insights/insights-details/details-testimonials');
         });
 
     // =========================================================
@@ -424,9 +439,9 @@ add_action('carbon_fields_register_fields', function () {
         ->where('post_type', '=', 'insights')
         ->add_fields(array(
             Field::make('complex', 'insights_authors', 'Add Authors')
-                ->set_layout('tabbed-horizontal')          
-                ->set_collapsed(true)                      
-                ->set_max(5)                                
+                ->set_layout('tabbed-horizontal')
+                ->set_collapsed(true)
+                ->set_max(5)
                 ->add_fields(array(
                     Field::make('text', 'author_name', 'Author Name')
                         ->set_required(true),
@@ -444,7 +459,7 @@ add_action('carbon_fields_register_fields', function () {
                         ->set_attribute('placeholder', 'https://linkedin.com/in/username'),
                 ))
         ));
-        
+
     // =========================================================
     // Insights page - Display insights posts
     // =========================================================
@@ -539,6 +554,9 @@ add_action('carbon_fields_register_fields', function () {
                 echo '<!-- Template not found: insights-top-slider.php -->';
             }
         });
+
+
+
 
 });
 
