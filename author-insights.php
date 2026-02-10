@@ -77,12 +77,16 @@ if ($author_posts_query->have_posts()) {
 
 <div class="author-details-page">
     <div class="container">
-        <button class="back-btn" onclick="history.back()">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- your svg path remains unchanged -->
-            </svg>
-            Back
-        </button>
+        <div class="button-wraper">
+            <button class="back-btn" onclick="history.back()">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12.4693 6.99962C12.4693 7.17366 12.4001 7.34058 12.2771 7.46365C12.154 7.58672 11.9871 7.65587 11.813 7.65587H3.77396L6.59145 10.4728C6.71474 10.5961 6.784 10.7633 6.784 10.9377C6.784 11.112 6.71474 11.2792 6.59145 11.4025C6.46817 11.5258 6.30096 11.5951 6.12661 11.5951C5.95226 11.5951 5.78505 11.5258 5.66177 11.4025L1.72427 7.46501C1.66309 7.40404 1.61454 7.33159 1.58142 7.25182C1.5483 7.17206 1.53125 7.08653 1.53125 7.00016C1.53125 6.91379 1.5483 6.82827 1.58142 6.7485C1.61454 6.66873 1.66309 6.59629 1.72427 6.53532L5.66177 2.59782C5.72281 2.53677 5.79528 2.48835 5.87504 2.45531C5.9548 2.42228 6.04028 2.40527 6.12661 2.40527C6.21294 2.40527 6.29843 2.42228 6.37818 2.45531C6.45794 2.48835 6.53041 2.53677 6.59145 2.59782C6.6525 2.65886 6.70092 2.73133 6.73396 2.81109C6.767 2.89085 6.784 2.97633 6.784 3.06266C6.784 3.14899 6.767 3.23448 6.73396 3.31423C6.70092 3.39399 6.6525 3.46646 6.59145 3.52751L3.77396 6.34337H11.813C11.9871 6.34337 12.154 6.41251 12.2771 6.53558C12.4001 6.65865 12.4693 6.82557 12.4693 6.99962Z"
+                        fill="black" />
+                </svg>
+
+                Back </button>
+        </div>
 
         <div class="author-details-page-wraper">
 
@@ -91,21 +95,21 @@ if ($author_posts_query->have_posts()) {
                 <!-- ================= AUTHOR HEADER ================= -->
                 <div class="author-header">
                     <div class="author-info-wrapper">
-                        <?php if ($author_image): ?>
+                            <?php if ($author_image): ?>
                             <div class="author-avatar-container">
                                 <img src="<?php echo esc_url($author_image); ?>" alt="<?php echo esc_attr($author_name); ?>"
                                     class="author-avatar">
                             </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
 
                         <div class="author-details">
                             <h1 class="author-page-title">
-                                <?php echo esc_html($author_name); ?>
+                                    <?php echo esc_html($author_name); ?>
                             </h1>
 
-                            <?php if ($author_bio): ?>
+                                <?php if ($author_bio): ?>
                                 <div class="author-bio">
-                                    <?php echo wp_kses_post($author_bio); ?>
+                                            <?php echo wp_kses_post($author_bio); ?>
                                 </div>
                             <?php else: ?>
                                 <p style="color:#999;">No bio available</p>

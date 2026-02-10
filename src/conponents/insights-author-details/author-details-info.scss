@@ -2,25 +2,35 @@
     padding-top: 80px;
 
     .container {
-        .back-btn {
-            color: var(--dark-normal);
-            @extend .navbar-text;
-            font-weight: 400;
-            width: fit-content;
-            border: 0;
-            margin-bottom: 30px;
-            background-color: rgba(0, 0, 0, 0.05);
-            border-radius: 320px;
-            padding: 6px 16px;
+        .button-wraper {
+            max-width: 1394px;
+            width: 100%;
+            margin: 0 auto;
 
-            svg {
+            .back-btn {
+                color: var(--dark-normal);
+                @extend .navbar-text;
+                font-weight: 400;
+                width: fit-content;
+                border: 0;
+                margin-bottom: 30px;
+                background-color: rgba(0, 0, 0, 0.05);
+                border-radius: 320px;
+                padding: 6px 16px;
 
-                margin-right: 6px;
+                svg {
+
+                    margin-right: 6px;
+                }
             }
         }
 
+
         .author-details-page-wraper {
             padding-top: 40px;
+            max-width: 1255px;
+            width: 100%;
+            margin: 0 auto;
 
             .author-header {
                 margin-bottom: 50px;
@@ -57,8 +67,9 @@
 
                             @media (max-width: 1030px) {
                                 font-size: 20px;
-                                line-height: 44px;
+                              line-height: 44px;
                             }
+                          
                         }
 
                         .author-bio {

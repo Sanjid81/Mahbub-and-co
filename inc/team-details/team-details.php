@@ -12,38 +12,75 @@ use Carbon_Fields\Block;
 // Register everything inside the proper hook
 add_action('carbon_fields_register_fields', function () {
 
-    // Post Meta for Team CPT
+
+
     Container::make('post_meta', 'Team Member Extra Info')
         ->where('post_type', '=', 'team')
         ->add_fields(array(
-            Field::make('text', 'team_designation', 'Designation / Position')
-                ->set_width(50),
 
+            // 1. Basic Contact Information
             Field::make('text', 'team_email', 'Email Address')
-                ->set_width(50),
+                ->set_width(50)
+                ->set_attribute('placeholder', 'example@mahbubandco.com')
+                ->set_attribute('type', 'email'),
 
+            Field::make('text', 'team_phone', 'Phone Number')
+                ->set_width(50)
+                ->set_attribute('placeholder', '+880 1X XXXX XXXX')
+                ->set_attribute('type', 'tel'),
+
+            // 2. Designation & Address
+            Field::make('text', 'team_designation', 'Designation / Position')
+                ->set_width(50)
+                ->set_attribute('placeholder', 'e.g. Head of Chambers, Senior Advocate')
+                ->set_help_text('Enter the team member’s designation or title'),
+
+            Field::make('text', 'team_address', 'Address')
+                ->set_width(50)
+                ->set_attribute('placeholder', 'Dhaka, Bangladesh'),
+
+            // 3. Social Media Links
             Field::make('complex', 'team_socials', 'Social Media Links')
                 ->add_fields(array(
                     Field::make('text', 'social_name', 'Platform Name')
-                        ->set_width(33),
+                        ->set_width(40)
+                        ->set_attribute('placeholder', 'Facebook / LinkedIn / Twitter'),
+
                     Field::make('text', 'social_url', 'Profile URL')
-                        ->set_width(67),
-                    Field::make('text', 'social_icon', 'Icon Class (optional)')
-                        ->set_width(33),
+                        ->set_width(60)
+                        ->set_attribute('placeholder', 'https://facebook.com/yourprofile')
+                        ->set_attribute('type', 'url'),
                 ))
                 ->set_layout('tabbed-horizontal')
-                ->set_max(8),
+                ->set_max(6),
 
-            Field::make('file', 'team_cv_file', 'CV / Resume (PDF)')
+            // 4. Documents Section
+            Field::make('separator', 'sep_documents', 'CV & Portfolio'),
+
+            // CV
+            Field::make('file', 'team_cv_file', 'CV / Resume (PDF only)')
                 ->set_value_type('url')
+                ->set_type('application/pdf')
                 ->set_width(50),
 
+            Field::make('text', 'team_cv_button_text', 'CV Button Text')
+                ->set_default_value('Download CV')
+                ->set_width(50)
+                ->set_attribute('placeholder', 'e.g. Download CV / View Resume'),
+
+            // Portfolio
             Field::make('file', 'team_portfolio_file', 'Portfolio / Other Document')
                 ->set_value_type('url')
                 ->set_width(50),
+
+            Field::make('text', 'team_portfolio_button_text', 'Portfolio Button Text')
+                ->set_default_value('View Portfolio')
+                ->set_width(50)
+                ->set_attribute('placeholder', 'e.g. View Portfolio / See Details'),
         ));
-        
-// ======================================================
+
+
+    // ======================================================
     // Gutenberg Block: Team Details Tabs
     Block::make(__('Team Details Tabs', 'mahbub-and-co'))
         ->set_description(__('Custom tabs for team member details', 'mahbub-and-co'))
@@ -69,7 +106,7 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_max(6),
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
-            set_query_var('team_tabs', $fields['team_tabs'] );
+            set_query_var('team_tabs', $fields['team_tabs']);
             get_template_part('components/team-details/team-details-tab-inf');
         });
 });

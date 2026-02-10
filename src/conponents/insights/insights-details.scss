@@ -175,6 +175,10 @@
                                     @extend .body-text-three;
                                     line-height: 18px;
                                     color: var(--dark-normal);
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
                                 }
                             }
                         }
