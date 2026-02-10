@@ -133,7 +133,7 @@
                                             $bio = $author['author_bio'] ?? '';
 
                                             $author_slug = sanitize_title($name);
-                                            $author_url = home_url('/author/' . $author_slug . '/');
+                                            $author_url = home_url('/insights-author/' . $author_slug . '/'); // 
                                             ?>
                                             <div class="author-card">
                                                 <?php if ($image): ?>
@@ -217,16 +217,6 @@
         'ignore_sticky_posts' => true,
     ];
 
-    // if (!empty($cat_slug)) {
-    //     $args['tax_query'] = [
-    //         [
-    //             'taxonomy' => 'insights_category',
-    //             'field' => 'slug',
-    //             'terms' => $cat_slug,
-    //         ]
-    //     ];
-    // }
-
     $query = new WP_Query($args);
     ?>
 
@@ -252,7 +242,6 @@
                             <?php while ($query->have_posts()):
                                 $query->the_post(); ?>
                                 <div class="swiper-slide">
-                                    <!-- <a href="< ?php the_permalink(); ?>" class="insight-card-link"> -->
                                     <div class="insights-card">
                                         <div class="insights-card-image">
                                             <a href="<?php the_permalink(); ?>">
@@ -308,8 +297,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- </a> -->
                                 </div>
                             <?php endwhile; ?>
                         </div>

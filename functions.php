@@ -413,6 +413,7 @@ function load_more_insights_handler()
 //***************** */ post author**********************
 // Custom Author for Insights
 // Custom Author Slug for Insights (using custom name from Carbon Fields)
+// Custom author slug support
 add_filter('query_vars', function ($vars) {
     $vars[] = 'insights_author_slug';
     return $vars;
@@ -420,10 +421,14 @@ add_filter('query_vars', function ($vars) {
 
 add_action('init', function () {
     add_rewrite_rule(
-        '^author/([^/]+)/?$',
+        '^insights-author/([^/]+)/?$',          
         'index.php?insights_author_slug=$matches[1]',
         'top'
     );
+});
+
+add_action('after_switch_theme', function () {
+    flush_rewrite_rules();
 });
 
 add_action('template_redirect', function () {
