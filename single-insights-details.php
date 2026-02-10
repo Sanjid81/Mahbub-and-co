@@ -210,22 +210,22 @@
     // WP_Query setup
     $args = [
         'post_type' => 'insights',
-        'posts_per_page' => $slides_count,
+        'posts_per_page' => -1,
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
         'ignore_sticky_posts' => true,
     ];
 
-    if (!empty($cat_slug)) {
-        $args['tax_query'] = [
-            [
-                'taxonomy' => 'insights_category',
-                'field' => 'slug',
-                'terms' => $cat_slug,
-            ]
-        ];
-    }
+    // if (!empty($cat_slug)) {
+    //     $args['tax_query'] = [
+    //         [
+    //             'taxonomy' => 'insights_category',
+    //             'field' => 'slug',
+    //             'terms' => $cat_slug,
+    //         ]
+    //     ];
+    // }
 
     $query = new WP_Query($args);
     ?>
