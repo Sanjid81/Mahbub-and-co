@@ -16,9 +16,8 @@ add_action('carbon_fields_register_fields', function () {
 
     Container::make('post_meta', 'Team Member Extra Info')
         ->where('post_type', '=', 'team')
-        ->add_fields(array(
+        ->add_fields([
 
-            // 1. Basic Contact Information
             Field::make('text', 'team_email', 'Email Address')
                 ->set_width(50)
                 ->set_attribute('placeholder', 'example@mahbubandco.com')
@@ -29,55 +28,42 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_attribute('placeholder', '+880 1X XXXX XXXX')
                 ->set_attribute('type', 'tel'),
 
-            // 2. Designation & Address
             Field::make('text', 'team_designation', 'Designation / Position')
-                ->set_width(50)
-                ->set_attribute('placeholder', 'e.g. Head of Chambers, Senior Advocate')
-                ->set_help_text('Enter the team member’s designation or title'),
+                ->set_width(50),
 
             Field::make('text', 'team_address', 'Address')
-                ->set_width(50)
-                ->set_attribute('placeholder', 'Dhaka, Bangladesh'),
+                ->set_width(50),
 
-            // 3. Social Media Links
             Field::make('complex', 'team_socials', 'Social Media Links')
-                ->add_fields(array(
+                ->add_fields([
                     Field::make('text', 'social_name', 'Platform Name')
-                        ->set_width(40)
-                        ->set_attribute('placeholder', 'Facebook / LinkedIn / Twitter'),
-
+                        ->set_width(40),
                     Field::make('text', 'social_url', 'Profile URL')
                         ->set_width(60)
-                        ->set_attribute('placeholder', 'https://facebook.com/yourprofile')
                         ->set_attribute('type', 'url'),
-                ))
+                ])
                 ->set_layout('tabbed-horizontal')
                 ->set_max(6),
 
-            // 4. Documents Section
-            Field::make('separator', 'sep_documents', 'CV & Portfolio'),
-
-            // CV
-            Field::make('file', 'team_cv_file', 'CV / Resume (PDF only)')
+            Field::make('file', 'team_cv_file', 'CV / Resume (PDF)')
                 ->set_value_type('url')
                 ->set_type('application/pdf')
                 ->set_width(50),
 
             Field::make('text', 'team_cv_button_text', 'CV Button Text')
                 ->set_default_value('Download CV')
-                ->set_width(50)
-                ->set_attribute('placeholder', 'e.g. Download CV / View Resume'),
+                ->set_width(50),
 
-            // Portfolio
             Field::make('file', 'team_portfolio_file', 'Portfolio / Other Document')
                 ->set_value_type('url')
                 ->set_width(50),
 
             Field::make('text', 'team_portfolio_button_text', 'Portfolio Button Text')
                 ->set_default_value('View Portfolio')
-                ->set_width(50)
-                ->set_attribute('placeholder', 'e.g. View Portfolio / See Details'),
-        ));
+                ->set_width(50),
+
+        ]);
+
 
 
     // ======================================================
