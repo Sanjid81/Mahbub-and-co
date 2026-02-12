@@ -19,11 +19,16 @@ if (empty($team_tabs))
     <div class="container">
         <?php foreach ($team_tabs as $index => $tab): ?>
             <section id="<?php echo esc_attr($tab['tab_id']); ?>" class="tab-content">
+                <h2><?php echo esc_html($tab['tab_title']); ?></h2>
                 <div class="subcategory-description-container">
                     <?php echo apply_filters('the_content', $tab['tab_content']); ?>
                 </div>
                 <?php if (!empty($tab['button_text'])): ?>
                     <a href="<?php echo esc_url($tab['button_link']); ?>" class="download-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.5 17.5H2.5M15 9.16667L10 14.1667M10 14.1667L5 9.16667M10 14.1667V2.5" stroke="#BC001A"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                         <?php echo esc_html($tab['button_text']); ?>
                     </a>
                 <?php endif; ?>
@@ -31,59 +36,3 @@ if (empty($team_tabs))
         <?php endforeach; ?>
     </div>
 </div>
-
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get all navigation items and sections
-        const navItems = document.querySelectorAll('.tab-item');
-        const sections = document.querySelectorAll('.tab-content');
-
-        // Function to remove active class from all nav items
-        function removeActiveClasses() {
-            navItems.forEach(item => item.classList.remove('active'));
-        }
-
-        // Function to add active class to current nav item
-        function addActiveClass(id) {
-            removeActiveClasses();
-            const activeLink = document.querySelector(`.tab-item[href="#${id}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        }
-
-        // Smooth scroll on click
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = item.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Highlight active section on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-
-                if (window.pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            if (current) {
-                addActiveClass(current);
-            }
-        });
-    });
-</script> -->
