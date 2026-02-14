@@ -1,145 +1,208 @@
 <?php
 /**
  * Render callback for Career Overview Block
- * 
- * @param array $fields      Saved field values
- * @param array $attributes  Block attributes
- * @param array $inner_blocks Inner blocks content (not used here)
+ * Carbon Fields may pass (inner_blocks, attributes, fields) - we detect $fields from args.
  */
-
-function career_overview_render_callback($fields, $attributes, $inner_blocks)
+function career_overview_render_callback()
 {
-    $team_tabs = isset($fields['team_tabs']) ? $fields['team_tabs'] : [];
-    // Backward compat: old block had career_heading/intro/dev_sections inside first tab
-    $career_heading = $fields['career_heading'] ?? ($team_tabs[0]['career_heading'] ?? '') ?: 'Our Career Programs';
-    $career_intro = $fields['career_intro'] ?? ($team_tabs[0]['career_intro'] ?? '');
-    $career_dev_sections = $fields['career_dev_sections'] ?? ($team_tabs[0]['career_dev_sections'] ?? []);
-    $bg_attachment = $fields['background_image'] ?? '';
-    $bg_image = '';
-    if (!empty($bg_attachment)) {
-        $bg_image = is_numeric($bg_attachment) ? wp_get_attachment_image_url($bg_attachment, 'full') : $bg_attachment;
+    try {
+        $args  = func_get_args();
+        $fields = [];
+        foreach ($args as $arg) {
+            if (is_array($arg) && array_key_exists('team_tabs', $arg)) {
+                $fields = $arg;
+                break;
+            }
+        }
+        $team_tabs = isset($fields['team_tabs']) && is_array($fields['team_tabs']) ? $fields['team_tabs'] : [];
+    } catch (Throwable $e) {
+        echo '<div class="career-page-section career-overview-block"><div class="container"><p class="career-block-error">Career block: ' . esc_html($e->getMessage()) . '</p></div></div>';
+        return;
     }
     ?>
     <div class="career-page-section">
         <div class="career-overview-block">
+
             <?php if (!empty($team_tabs)): ?>
                 <div class="team-details-tabs">
                     <div class="team-details-tab">
-                        <?php foreach ($team_tabs as $index => $tab): ?>
-                            <a href="#<?php echo esc_attr($tab['tab_id'] ?? ''); ?>"
-                                class="tab-item nav-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                                <?php echo esc_html($tab['tab_title'] ?? $tab['tab_id'] ?? ''); ?>
+                        <?php foreach ($team_tabs as $index => $tab): $tab_nav = is_array($tab) ? $tab : []; ?>
+                            <a href="#<?php echo esc_attr($tab_nav['tab_id'] ?? 'tab-' . $index); ?>"
+                               class="tab-item nav-item <?php echo $index === 0 ? 'active' : ''; ?>"
+                               data-tab-id="<?php echo esc_attr($tab_nav['tab_id'] ?? 'tab-' . $index); ?>">
+                                <?php echo esc_html($tab_nav['tab_title'] ?? $tab_nav['tab_id'] ?? ''); ?>
                             </a>
                         <?php endforeach; ?>
                     </div>
                 </div>
             <?php endif; ?>
 
-            <div class="container">
+            <!-- Tab contents – same page: Overview then What We Look For (scroll + tab click) -->
+            <div class="tab-contents career-tab-contents">
+                <?php foreach ($team_tabs as $index => $tab):
+                    $tab = is_array($tab) ? $tab : [];
+                    $tab_id = $tab['tab_id'] ?? 'tab-' . $index;
+                    // This tab's data only (no mixing with other tabs)
+                    $career_heading = !empty($tab['career_heading']) ? (string) $tab['career_heading'] : 'Our Career Programs';
+                    $career_intro   = isset($tab['career_intro']) ? (string) $tab['career_intro'] : '';
+                    $bg_attachment  = $tab['background_image'] ?? '';
+                    $bg_image       = $bg_attachment ? (is_numeric($bg_attachment) ? wp_get_attachment_image_url((int) $bg_attachment, 'full') : (string) $bg_attachment) : '';
+                ?>
+                    <div id="<?php echo esc_attr($tab_id); ?>" class="tab-content <?php echo $index === 0 ? 'active' : ''; ?>">
+                        <div class="container">
 
-                <div class="overview-first-section">
-                    <div class="overview-first-content">
-                        <h1>
-                            <?php echo esc_html($career_heading); ?>
-                        </h1>
+                            <!-- Per-tab heading -->
+                            <!-- < ?php if (!empty($tab['tab_heading'])): ?>
+                                <h1>< ?php echo esc_html(is_string($tab['tab_heading']) ? $tab['tab_heading'] : ''); ?></h1>
+                            < ?php endif; ?> -->
 
-                        <?php if (!empty($career_intro)): ?>
-                            <div class="intro">
-                                <?php echo wp_kses_post($career_intro); ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+                            <!-- Per-tab main content -->
+                            <!-- <c?php if (!empty($tab['tab_content'])): ?>
+                                <div class="tab-main-content">
+                                    < ?php echo wp_kses_post(is_string($tab['tab_content']) ? $tab['tab_content'] : ''); ?>
+                                </div>
+                            < ?php endif; ?> -->
 
-                    <div class="program-list-grid">
-                        <?php
-                        $programs = new WP_Query([
-                            'post_type' => 'program',
-                            'posts_per_page' => -1,
-                            'orderby' => 'menu_order title',
-                            'order' => 'ASC',
-                        ]);
+                            <!-- Tab-specific images -->
+                            <!-- < ?php $tab_images = isset($tab['tab_images']) && is_array($tab['tab_images']) ? $tab['tab_images'] : []; ?>
+                            <c?php if (!empty($tab_images)): ?>
+                                <div class="tab-images">
+                                    < ?php foreach ($tab_images as $img_item): ?>
+                                        < ?php $img_item = is_array($img_item) ? $img_item : []; if (!empty($img_item['image'])): ?>
+                                            < ?php echo wp_get_attachment_image((int) $img_item['image'], 'large', false, ['loading' => 'lazy']); ?>
+                                        < ?php endif; ?>
+                                    < ?php endforeach; ?>
+                                </div>
+                            < ? php endif; ?> -->
 
-                        if ($programs->have_posts()) {
-                            while ($programs->have_posts()) {
-                                $programs->the_post();
-                                $short = carbon_get_the_post_meta('program_short_title') ?: get_the_title();
-                                ?>
-                                <a href="<?php the_permalink(); ?>" class="program-card">
-                                    <?php echo esc_html($short); ?>
-                                    <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_1911_3226)">
-                                                <path
-                                                    d="M13.1727 11.9997L8.22266 7.04974L9.63666 5.63574L16.0007 11.9997L9.63666 18.3637L8.22266 16.9497L13.1727 11.9997Z"
-                                                    fill="#BC001A" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_1911_3226">
-                                                    <rect width="24" height="24" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </span>
-                                </a>
-                                <?php
-                            }
-                            wp_reset_postdata();
-                        } else {
-                            echo '<p>No career programs found.</p>';
-                        }
-                        ?>
-                    </div>
-                </div>
+                            <?php
+                            $is_overview_tab = (stripos($tab_id, 'overview') !== false || $index === 0);
+                            $is_look_for_tab = (stripos($tab_id, 'what-we-look-for') !== false || stripos($tab_id, 'what_we_look') !== false || $index === 1);
+                            $career_dev_sections = isset($tab['career_dev_sections']) && is_array($tab['career_dev_sections']) ? $tab['career_dev_sections'] : [];
+                            $dev_section_images  = isset($tab['dev_section_images']) && is_array($tab['dev_section_images']) ? $tab['dev_section_images'] : [];
+                            ?>
 
-            </div>
-            <div class="career-dev-sections" <?php echo $bg_image ? ' style="--career-section-bg: url(\'' . esc_url($bg_image) . '\');"' : ''; ?>>
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="dev-sections-content">
-                        <?php if (!empty($career_dev_sections)): ?>
-                            <div class="dev-sections-wrapper">
-                                <?php foreach ($career_dev_sections as $sec): ?>
-                                    <div class="dev-section">
-                                        <div class="dev-card">
-                                            <h2>
-                                                <?php echo esc_html($sec['dev_title'] ?? ''); ?>
-                                            </h2>
-                                            <?php echo wp_kses_post($sec['dev_content'] ?? ''); ?>
+                            <?php if ($is_overview_tab): ?>
+                                <!-- Tab 1: Why Mahbub & Co (left content + right program list) -->
+                                <div class="overview-first-section">
+                                    <div class="overview-first-content">
+                                        <h1><?php echo esc_html($career_heading); ?></h1>
+                                        <?php if ($career_intro !== ''): ?>
+                                            <div class="intro">
+                                                <?php echo wp_kses_post($career_intro); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="program-list-grid">
+                                        <?php
+                                        $programs = new WP_Query([
+                                            'post_type'      => 'program',
+                                            'posts_per_page' => -1,
+                                            'orderby'        => 'menu_order title',
+                                            'order'          => 'ASC',
+                                        ]);
+                                        if ($programs->have_posts()) {
+                                            foreach ($programs->posts as $program_post) {
+                                                $p_id   = $program_post->ID;
+                                                $short  = function_exists('carbon_get_post_meta') ? (carbon_get_post_meta($p_id, 'program_short_title') ?: $program_post->post_title) : $program_post->post_title;
+                                                $p_link = get_permalink($p_id);
+                                                ?>
+                                                <a href="<?php echo esc_url($p_link); ?>" class="program-card">
+                                                    <?php echo esc_html($short); ?>
+                                                    <span class="arrow">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_1911_3226)">
+                                                                <path d="M13.1727 11.9997L8.22266 7.04974L9.63666 5.63574L16.0007 11.9997L9.63666 18.3637L8.22266 16.9497L13.1727 11.9997Z" fill="#BC001A" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_1911_3226">
+                                                                    <rect width="24" height="24" fill="white" />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <?php
+                                            }
+                                            wp_reset_postdata();
+                                        } else {
+                                            echo '<p>No career programs found.</p>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <!-- Dark block: Professional & Personal Development (only on Overview tab) -->
+                                <?php if (!empty($career_dev_sections) || !empty($dev_section_images)): ?>
+                                <div class="career-dev-sections" <?php echo $bg_image ? ' style="--career-section-bg: url(\'' . esc_url($bg_image) . '\');"' : ''; ?>>
+                                    <div class="overlay"></div>
+                                    <div class="container">
+                                        <div class="dev-sections-content">
+                                            <?php if (!empty($career_dev_sections)): ?>
+                                                <div class="dev-sections-wrapper">
+                                                    <?php foreach ($career_dev_sections as $sec): ?>
+                                                        <?php $sec = is_array($sec) ? $sec : []; ?>
+                                                        <div class="dev-section">
+                                                            <div class="dev-card">
+                                                                <h2><?php echo esc_html(isset($sec['dev_title']) ? (string) $sec['dev_title'] : ''); ?></h2>
+                                                                <?php echo wp_kses_post(isset($sec['dev_content']) && is_string($sec['dev_content']) ? $sec['dev_content'] : ''); ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if (!empty($dev_section_images)): ?>
+                                                <div class="dev-sections-images">
+                                                    <?php foreach ($dev_section_images as $img_item): ?>
+                                                        <?php $img_item = is_array($img_item) ? $img_item : []; if (!empty($img_item['dev_image1'])): ?>
+                                                            <?php echo wp_get_attachment_image((int) $img_item['dev_image1'], 'medium', false, ['loading' => 'lazy']); ?>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+
+                            <?php if ($is_look_for_tab): ?>
+                                <!-- Tab 2: What We Look for – light blue section with two dotted boxes -->
+                                <div class="what-we-look-for">
+                                    <div class="what-we-look-for-inner">
+                                        <h1 class="what-we-look-for-heading"><?php echo esc_html($career_heading); ?></h1>
+                                        <?php if ($career_intro !== ''): ?>
+                                            <div class="what-we-look-for-intro">
+                                                <?php echo wp_kses_post($career_intro); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if (!empty($career_dev_sections)): ?>
+                                            <div class="look-for-boxes">
+                                                <?php foreach ($career_dev_sections as $sec): ?>
+                                                    <?php $sec = is_array($sec) ? $sec : []; ?>
+                                                    <div class="look-for-box">
+                                                        <?php if (!empty($sec['dev_title'])): ?>
+                                                            <h2 class="look-for-box-title"><?php echo esc_html((string) $sec['dev_title']); ?></h2>
+                                                        <?php endif; ?>
+                                                        <div class="look-for-box-content">
+                                                            <?php echo wp_kses_post(isset($sec['dev_content']) && is_string($sec['dev_content']) ? $sec['dev_content'] : ''); ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
 
 
-                        <?php if (!empty($career_dev_sections)): ?>
-                            <div class="dev-sections-images">
-                                <?php foreach ($career_dev_sections as $sec): ?>
-                                    <?php
-                                    $sec_images = isset($sec['dev_section_images']) && is_array($sec['dev_section_images']) ? $sec['dev_section_images'] : [];
-                                    $imgs = isset($sec_images[0]) && is_array($sec_images[0]) ? $sec_images[0] : $sec;
-                                    $has_any = !empty($imgs['dev_image1']) || !empty($imgs['dev_image2']) || !empty($imgs['dev_image3']);
-                                    if ($has_any):
-                                        ?>
-                                        <div class="dev-section-images-wrapper">
-                                            <?php
-                                            foreach (['dev_image1', 'dev_image2', 'dev_image3'] as $key) {
-                                                if (!empty($imgs[$key])) {
-                                                    echo wp_get_attachment_image($imgs[$key], 'medium', false, ['loading' => 'lazy']);
-                                                }
-                                            }
-                                            ?>
-                                        </div>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+
+
+                            
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
-
-            
         </div>
     </div>
     <?php
@@ -147,10 +210,6 @@ function career_overview_render_callback($fields, $attributes, $inner_blocks)
 
 /**
  * Render callback for Program Details Full Layout block (single program page).
- *
- * @param array $fields      Saved field values (empty for this block)
- * @param array $attributes  Block attributes
- * @param array $inner_blocks Inner blocks content (not used here)
  */
 function program_details_render_callback($fields, $attributes, $inner_blocks)
 {

@@ -8,6 +8,7 @@ import "../scripts/components/navbar";
 import "../scripts/components/about-counter";
 import  "./components/our-expertise/faq";
 import  "./components/team-details/team-details-tabs";
+import  "./components/career/career-tabs";
 import  "./components/insights/insights-tabs";
 import  "./components/insights/insights-slider";
 import  "./components/insights/insights-details-bottom-slider";

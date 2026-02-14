@@ -1,0 +1,30 @@
+/**
+ * Program details page: title + custom blocks (Gutenberg)
+ */
+.program-details-page {
+    background-color: var(--body-bg);
+    padding: 60px 0 80px;
+
+    .program-details-inner {
+        max-width: 1110px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .program-details-header {
+        margin-bottom: 40px;
+    }
+
+    .program-details-title {
+        @extend .heading-two;
+        color: var(--dark-normal);
+        margin: 0;
+    }
+
+    .program-details-blocks {
+        /* Custom blocks (Gutenberg) – each block can have its own layout */
+        > * + * {
+            margin-top: 1.5em;
+        }
+    }
+}
