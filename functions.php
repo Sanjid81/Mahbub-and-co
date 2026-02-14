@@ -55,6 +55,9 @@ function crb_load_carbonfields()
         '/inc/team-details/team-details.php',
         '/inc/insights-post-type.php',
         '/inc/distribute-insights-categories.php',
+        '/inc/register-career-post-type.php',
+        '/components/career/career-tab-section.php',
+        '/inc/career-programs/career-fields.php',
     ];
 
     foreach ($files as $file) {

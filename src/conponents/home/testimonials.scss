@@ -224,5 +224,13 @@
         }
     }
 
+    &.team-details-tab-testimonials {
+        padding-top: 60px;
+        background-color: rgba(150, 0, 20, 1);
 
+        .overlay {
+            display: none;
+        }
+
+    }
 }

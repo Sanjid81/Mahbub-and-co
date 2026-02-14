@@ -163,11 +163,7 @@
             <?php the_content(); ?>
         </div>
 
-        <?php if (has_excerpt()): ?>
-            <div class="team-profile-excerpt">
-                <?php the_excerpt(); ?>
-            </div>
-        <?php endif; ?>
+       
 
     <?php endwhile; else: ?>
     <div class="team-profile-not-found">

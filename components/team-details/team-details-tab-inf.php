@@ -9,7 +9,7 @@ if (empty($team_tabs))
         <div class="team-details-tab">
             <?php foreach ($team_tabs as $index => $tab): ?>
                 <a href="#<?php echo esc_attr($tab['tab_id']); ?>"
-                    class="tab-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                    class="tab-item nav-item <?php echo $index === 0 ? 'active' : ''; ?>">
                     <?php echo esc_html($tab['tab_title']); ?>
                 </a>
             <?php endforeach; ?>

@@ -1,13 +1,15 @@
 <?php
 $testimonials = get_query_var('testimonials', []);
 $testimonials_bg = get_query_var('testimonials_bg', ''); // NEW
+$extra_class = get_query_var('testimonials_extra_class', ''); 
+
 
 $bg_url = $testimonials_bg ? wp_get_attachment_image_url($testimonials_bg, 'full') : '';
 ?>
 
 <?php if (!empty($testimonials)): ?>
 
-    <section class="testimonials-section" <?php if($bg_url) echo 'style="background-image: url('.esc_url($bg_url).');"'; ?>>
+    <section class="testimonials-section <?php echo esc_attr($extra_class); ?>" <?php if($bg_url) echo 'style="background-image: url('.esc_url($bg_url).');"'; ?>>
         <div class="overlay"></div>
         <div class="container">
             <div class="header-row">
