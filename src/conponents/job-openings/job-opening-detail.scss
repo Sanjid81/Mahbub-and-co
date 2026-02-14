@@ -1,0 +1,65 @@
+/**
+ * Single Job Opening details page – unique classes: maco-opening-detail-*
+ */
+.maco-opening-detail {
+    background-color: var(--body-bg);
+    padding: 60px 0 80px;
+}
+
+.maco-opening-detail-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Full card on details page (same as listing card – reuses maco-openings-card styles) */
+.maco-opening-detail-card-wrap {
+    margin-bottom: 32px;
+}
+
+.maco-opening-detail-full-card {
+    padding: 28px 24px;
+}
+
+.maco-opening-detail-full-card .maco-opening-detail-card-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* বাকি সব কন্টেন্ট = কাস্টম ব্লক (Gutenberg) */
+.maco-opening-detail-blocks {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark-80);
+    margin-bottom: 32px;
+}
+
+.maco-opening-detail-blocks.entry-content p {
+    margin-bottom: 16px;
+}
+
+.maco-opening-detail-blocks .wp-block-image,
+.maco-opening-detail-blocks .wp-block-columns {
+    margin-bottom: 1.5em;
+}
+
+.maco-opening-detail-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-white);
+    background-color: var(--primary-red);
+    padding: 14px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.maco-opening-detail-apply-btn:hover {
+    background-color: var(--dark-red);
+    color: var(--color-white);
+}

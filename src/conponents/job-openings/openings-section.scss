@@ -1,0 +1,171 @@
+/**
+ * Current Openings section – unique classes: maco-openings-*
+ * Does not overwrite any existing theme classes.
+ */
+.maco-openings {
+    background-color: var(--color-white);
+    padding: 80px 0 100px;
+}
+
+.maco-openings-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.maco-openings-title {
+    font-family: var(--font-primary);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--dark-normal);
+    margin: 0 0 24px;
+}
+
+.maco-openings-tabs-wrap {
+    margin-bottom: 32px;
+}
+
+.maco-openings-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background-color: rgba(188, 0, 26, 0.08);
+    padding: 4px;
+    border-radius: 8px;
+    border: none;
+}
+
+.maco-openings-tab {
+    font-family: var(--font-primary);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--dark-normal);
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.maco-openings-tab:hover {
+    background-color: rgba(188, 0, 26, 0.12);
+    color: var(--dark-normal);
+}
+
+.maco-openings-tab--active {
+    background-color: var(--primary-red);
+    color: var(--color-white);
+}
+
+.maco-openings-tab--active:hover {
+    background-color: var(--dark-red);
+    color: var(--color-white);
+}
+
+.maco-openings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .maco-openings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.maco-openings-card {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    padding: 24px;
+    background-color: var(--color-white);
+    transition: box-shadow 0.2s;
+}
+
+.maco-openings-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.maco-openings-card.maco-openings-card--hidden {
+    display: none;
+}
+
+.maco-openings-card-title {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--dark-normal);
+    margin: 0 0 16px;
+}
+
+.maco-openings-card-title-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.maco-openings-card-title-link:hover {
+    color: var(--primary-red);
+}
+
+.maco-openings-card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    margin-bottom: 20px;
+}
+
+.maco-openings-card-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--dark-80);
+}
+
+.maco-openings-card-meta-icon {
+    flex-shrink: 0;
+    color: var(--primary-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.maco-openings-card-meta-icon svg {
+    display: block;
+}
+
+.maco-openings-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-white);
+    background-color: var(--primary-red);
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.maco-openings-apply-btn:hover {
+    background-color: var(--dark-red);
+    color: var(--color-white);
+}
+
+.maco-openings-apply-btn-arrow {
+    display: inline-flex;
+}
+
+.maco-openings-empty {
+    grid-column: 1 / -1;
+    font-family: var(--font-primary);
+    color: var(--dark-80);
+    margin: 0;
+}

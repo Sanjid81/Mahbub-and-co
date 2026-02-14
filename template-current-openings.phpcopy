@@ -1,0 +1,16 @@
+<?php
+/*
+Template Name: Current Openings
+Description: Shows the Current Openings section (job listings with category tabs).
+*/
+defined('ABSPATH') || exit;
+get_header();
+
+$fields = array('maco_openings_heading' => 'Current Openings');
+if (function_exists('maco_current_openings_render_callback')) {
+    maco_current_openings_render_callback($fields, array(), null);
+} else {
+    echo '<p>' . esc_html__('Current Openings block is not loaded.', 'mahbub-and-co') . '</p>';
+}
+
+get_footer();
