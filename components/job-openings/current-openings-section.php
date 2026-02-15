@@ -33,7 +33,7 @@ function maco_register_current_openings_block()
 
 function maco_current_openings_render_callback()
 {
-    $args   = func_get_args();
+    $args = func_get_args();
     $heading = 'Current Openings';
     foreach ($args as $arg) {
         if (is_array($arg) && array_key_exists('maco_openings_heading', $arg)) {
@@ -52,99 +52,156 @@ function maco_current_openings_render_callback()
     }
 
     $terms = get_terms(array(
-        'taxonomy'   => 'job_opening_category',
+        'taxonomy' => 'job_opening_category',
         'hide_empty' => true,
-        'orderby'    => 'name',
-        'order'      => 'ASC',
+        'orderby' => 'name',
+        'order' => 'ASC',
     ));
     if (is_wp_error($terms)) {
         $terms = array();
     }
 
     $jobs = new WP_Query(array(
-        'post_type'      => 'job_opening',
+        'post_type' => 'job_opening',
         'posts_per_page' => -1,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'post_status'    => array('publish', 'future'),
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => array('publish', 'future'),
     ));
 
     ?>
     <section class="maco-openings">
-        <div class="maco-openings-inner">
-            <h2 class="maco-openings-title"><?php echo esc_html($heading); ?></h2>
+        <div class="container">
+            <div class="maco-openings-inner">
+                <h2 class="maco-openings-title">
+                    <?php echo esc_html($heading); ?>
+                </h2>
 
-            <div class="maco-openings-tabs-wrap">
-                <nav class="maco-openings-tabs" role="tablist">
-                    <button type="button" class="maco-openings-tab maco-openings-tab--active" data-maco-openings-filter="all" aria-selected="true">All</button>
-                    <?php foreach ($terms as $term): ?>
-                        <button type="button" class="maco-openings-tab" data-maco-openings-filter="<?php echo esc_attr($term->slug); ?>" aria-selected="false"><?php echo esc_html($term->name); ?></button>
-                    <?php endforeach; ?>
-                </nav>
-            </div>
+                <div class="maco-openings-tabs-wrap">
+                    <nav class="maco-openings-tabs" role="tablist">
+                        <button type="button" class="maco-openings-tab maco-openings-tab--active"
+                            data-maco-openings-filter="all" aria-selected="true">All</button>
+                        <?php foreach ($terms as $term): ?>
+                            <button type="button" class="maco-openings-tab"
+                                data-maco-openings-filter="<?php echo esc_attr($term->slug); ?>" aria-selected="false">
+                                <?php echo esc_html($term->name); ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </nav>
+                </div>
 
-            <div class="maco-openings-grid">
-                <?php
-                if ($jobs->have_posts()) {
-                    while ($jobs->have_posts()) {
-                        $jobs->the_post();
-                        $id = get_the_ID();
-                        $job_terms = get_the_terms($id, 'job_opening_category');
-                        $term_slugs = array();
-                        if ($job_terms && !is_wp_error($job_terms)) {
-                            foreach ($job_terms as $t) {
-                                $term_slugs[] = $t->slug;
+                <div class="maco-openings-grid">
+                    <?php
+                    if ($jobs->have_posts()) {
+                        while ($jobs->have_posts()) {
+                            $jobs->the_post();
+                            $id = get_the_ID();
+                            $job_terms = get_the_terms($id, 'job_opening_category');
+                            $term_slugs = array();
+                            if ($job_terms && !is_wp_error($job_terms)) {
+                                foreach ($job_terms as $t) {
+                                    $term_slugs[] = $t->slug;
+                                }
                             }
-                        }
-                        $data_cat = implode(' ', $term_slugs);
+                            $data_cat = implode(' ', $term_slugs);
 
-                        $exp   = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_experience') : '';
-                        $loc   = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_location') : '';
-                        $typ   = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_type') : '';
-                        $dead  = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_deadline') : '';
-                        $details_url = get_permalink($id);
-                        $view_details_text = __('View Details', 'mahbub-and-co');
-                        ?>
-                        <article class="maco-openings-card" data-maco-openings-category="<?php echo esc_attr($data_cat); ?>">
-                            <h3 class="maco-openings-card-title"><a href="<?php echo esc_url($details_url); ?>" class="maco-openings-card-title-link"><?php the_title(); ?></a></h3>
-                            <div class="maco-openings-card-meta">
-                                <?php if ($exp !== ''): ?>
-                                    <span class="maco-openings-card-meta-item">
-                                        <span class="maco-openings-card-meta-icon" aria-hidden="true"><?php echo maco_openings_icon_briefcase(); ?></span>
-                                        <span class="maco-openings-card-meta-text"><?php echo esc_html__('Experience:', 'mahbub-and-co'); ?> <?php echo esc_html($exp); ?></span>
-                                    </span>
-                                <?php endif; ?>
-                                <?php if ($loc !== ''): ?>
-                                    <span class="maco-openings-card-meta-item">
-                                        <span class="maco-openings-card-meta-icon" aria-hidden="true"><?php echo maco_openings_icon_pin(); ?></span>
-                                        <span class="maco-openings-card-meta-text"><?php echo esc_html__('Location:', 'mahbub-and-co'); ?> <?php echo esc_html($loc); ?></span>
-                                    </span>
-                                <?php endif; ?>
-                                <?php if ($typ !== ''): ?>
-                                    <span class="maco-openings-card-meta-item">
-                                        <span class="maco-openings-card-meta-icon" aria-hidden="true"><?php echo maco_openings_icon_briefcase(); ?></span>
-                                        <span class="maco-openings-card-meta-text"><?php echo esc_html__('Type:', 'mahbub-and-co'); ?> <?php echo esc_html($typ); ?></span>
-                                    </span>
-                                <?php endif; ?>
-                                <?php if ($dead !== ''): ?>
-                                    <span class="maco-openings-card-meta-item">
-                                        <span class="maco-openings-card-meta-icon" aria-hidden="true"><?php echo maco_openings_icon_calendar(); ?></span>
-                                        <span class="maco-openings-card-meta-text"><?php echo esc_html__('Deadline:', 'mahbub-and-co'); ?> <?php echo esc_html($dead); ?></span>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                            <a href="<?php echo esc_url($details_url); ?>" class="maco-openings-apply-btn">
-                                <?php echo esc_html($view_details_text); ?>
-                                <span class="maco-openings-apply-btn-arrow" aria-hidden="true"><?php echo maco_openings_icon_arrow(); ?></span>
-                            </a>
-                        </article>
-                        <?php
+                            $exp = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_experience') : '';
+                            $loc = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_location') : '';
+                            $typ = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_type') : '';
+                            $dead = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_deadline') : '';
+                            $details_url = get_permalink($id);
+                            $view_details_text = __('View Details', 'mahbub-and-co');
+                            ?>
+                            <article class="maco-openings-card" data-maco-openings-category="<?php echo esc_attr($data_cat); ?>">
+                                <h3 class="maco-openings-card-title"><a href="<?php echo esc_url($details_url); ?>"
+                                        class="maco-openings-card-title-link">
+                                        <?php the_title(); ?>
+                                    </a></h3>
+                                <div class="maco-openings-card-meta">
+                                    <?php if ($exp !== ''): ?>
+                                        <span class="maco-openings-card-meta-item">
+                                            <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                                <?php echo maco_openings_icon_briefcase(); ?>
+                                            </span>
+                                            <span class="maco-openings-card-meta-text">Experience:
+                                                <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                                <p>
+                                                    <?php echo esc_html($exp); ?>
+
+                                                </p>
+                                            </span>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($loc !== ''): ?>
+                                        <span class="maco-openings-card-meta-item">
+                                            <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                                <?php echo maco_openings_icon_pin(); ?>
+                                            </span>
+                                            <span class="maco-openings-card-meta-text">Location:
+                                                <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                                <p>
+                                                    <?php echo esc_html($loc); ?>
+                                                </p>
+                                            </span>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($typ !== ''): ?>
+                                        <span class="maco-openings-card-meta-item">
+                                            <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                                <?php echo maco_openings_icon_briefcase(); ?>
+                                            </span>
+                                            <span class="maco-openings-card-meta-text">Type:
+                                                <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                                <p>
+                                                    <?php echo esc_html($typ); ?>
+                                                </p>
+                                            </span>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if ($dead !== ''): ?>
+                                        <span class="maco-openings-card-meta-item">
+                                            <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                                <?php echo maco_openings_icon_calendar(); ?>
+                                            </span>
+                                            <span class="maco-openings-card-meta-text">Deadline:
+                                                <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                                <p>
+                                                    <?php echo esc_html($dead); ?>
+                                                </p>
+                                            </span>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                               
+
+                                <a href="<?php echo esc_url($details_url); ?>" class="red-bg-button" data-aos="fade-up">
+                                    <div class="button-text">
+                                    <?php echo esc_html($view_details_text); ?>
+                                    </div>
+                                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="44" height="44" rx="22" fill="white" />
+                                        <g clip-path="url(#clip0_1948_2508)">
+                                            <path d="M16.166 17H26.9993V27.8333" stroke="#BC001A" stroke-width="2"
+                                                stroke-miterlimit="10" />
+                                            <path d="M16 28L27 17" stroke="#BC001A" stroke-width="2" stroke-miterlimit="10" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1948_2508">
+                                                <rect width="20" height="20" fill="white" transform="translate(12 12)" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+
+                                </a>
+                            </article>
+                            <?php
+                        }
+                        wp_reset_postdata();
+                    } else {
+                        echo '<p class="maco-openings-empty">' . esc_html__('No job openings at the moment.', 'mahbub-and-co') . '</p>';
                     }
-                    wp_reset_postdata();
-                } else {
-                    echo '<p class="maco-openings-empty">' . esc_html__('No job openings at the moment.', 'mahbub-and-co') . '</p>';
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </section>

@@ -187,7 +187,22 @@ function career_overview_render_callback()
                 $btn_url = preg_match('#^https?://#', $btn_url) ? $btn_url : home_url('/' . ltrim($btn_url, '/'));
             ?>
                 <div class="career-apply-button-wrap">
-                    <a href="<?php echo esc_url($btn_url); ?>" class="career-section-button"><?php echo esc_html($btn_title); ?></a>
+                <a href="<?php echo esc_url($btn_url); ?>" class="red-bg-button" data-aos="fade-up">
+                            <div class="button-text"><?php echo esc_html($btn_title); ?></div>
+                           <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="44" height="44" rx="22" fill="white"/>
+<g clip-path="url(#clip0_1948_2508)">
+<path d="M16.166 17H26.9993V27.8333" stroke="#BC001A" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M16 28L27 17" stroke="#BC001A" stroke-width="2" stroke-miterlimit="10"/>
+</g>
+<defs>
+<clipPath id="clip0_1948_2508">
+<rect width="20" height="20" fill="white" transform="translate(12 12)"/>
+</clipPath>
+</defs>
+</svg>
+
+                        </a>
                 </div>
             <?php endif; ?>
 

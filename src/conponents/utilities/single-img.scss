@@ -1,35 +1,47 @@
 .single-img-container {
     background-color: var(--dark-normal);
+    height: 100%;
 
-        .img-wraper {
-            position: relative;
-            z-index: 10;
-            padding-bottom: 140px;
+    .img-wraper {
+        position: relative;
+        z-index: 10;
+        padding-bottom: 140px;
+        height: 800px;
+        width: 100%;
 
-            @media (max-width: 1200px) {
-                padding-bottom: 60px;
-            }
-
-            img {
-                height: 800px;
-                // height: 100%;
-                width: 100%;
-                object-fit: cover;
-                object-position: center center;
-                z-index: 10;
-
-                @media (max-width: 1200px) {
-                    height: 500px;
-                    width: 100%;
-                }
-
-                @media (max-width: 600px) {
-                    height: 300px;
-                    width: 100%;
-                }
-            }
+        @media (max-width: 1200px) {
+            padding-bottom: 60px;
         }
 
-    
+        @media (max-width: 1200px) {
+            height: 500px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            height: 300px;
+            width: 100%;
+        }
+
+        img {
+
+            width: 100%;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 10;
+        }
+    }
+
+    &.career-page-single-img {
+        .img-wraper {
+            padding-bottom: 0px;
+        }
+    }
+
+    &.career-details-single-img {
+        .img-wraper {
+            padding-bottom: 0px;
+        }
+    }
 
 }

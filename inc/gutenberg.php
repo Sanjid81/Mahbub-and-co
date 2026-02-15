@@ -194,10 +194,14 @@ add_action('carbon_fields_register_fields', function () {
     // =========================================================
     Block::make('Single Image Block', 'single img section')
         ->add_fields(array(
-            Field::make('image', 'single_image', 'Image')
+            Field::make('image', 'single_image', 'Image'),
+            Field::make('text', 'extra_class', 'Extra CSS Class')
+                ->set_help_text('Optional extra class for custom styling')
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
-            include get_template_directory() . '/components/comon-page-components/single-img.php';
+            $image_id    = $fields['single_image'] ?? '';
+            $extra_class = trim($fields['extra_class'] ?? '');
+                    include get_template_directory() . '/components/comon-page-components/single-img.php';
         });
 
     // ========about text field=============

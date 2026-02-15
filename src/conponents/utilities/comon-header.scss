@@ -34,26 +34,12 @@
         }
     }
 
+    .comon-header-button-wraper {
+        margin-top: 40px;
 
-    .btn-apply {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        // background: #c41e3a; // red accent – change to your brand color
-        color: white;
-        padding: 1rem 2.2rem;
-        border-radius: 50px;
-        font-size: 1.25rem;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-
-        &:hover {
-            background: #a0182f;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        @media (max-width: 1024px) {
+            margin-top: 20px;
         }
-
-
     }
+
 }

@@ -2,29 +2,190 @@
  * Program details page: title + custom blocks (Gutenberg)
  */
 .program-details-page {
-    background-color: var(--body-bg);
-    padding: 60px 0 80px;
+    width: 100%;
+    background-color: var(--dark-normal);
+
+
 
     .program-details-inner {
-        max-width: 1110px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
 
-    .program-details-header {
-        margin-bottom: 40px;
-    }
 
-    .program-details-title {
-        @extend .heading-two;
-        color: var(--dark-normal);
-        margin: 0;
-    }
+        .program-details-header {
+            margin-left: 40px;
+            padding: 114px 0;
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            width: 100%;
 
-    .program-details-blocks {
-        /* Custom blocks (Gutenberg) – each block can have its own layout */
-        > * + * {
-            margin-top: 1.5em;
+            @media(max-width:1440px) {
+                margin-left: 10px;
+                padding: 90px 20px;
+            }
+
+            @media(max-width:900px) {
+                padding: 60px 0px;
+            }
+        }
+
+        .program-details-title {
+            @extend .heading-one;
+            color: var(--color-white);
+            margin: 0;
+        }
+
+        .program-details-blocks {
+
+            /* Custom blocks (Gutenberg) – each block can have its own layout */
+            >*+* {
+                // margin-top: 1.5em;
+            }
         }
     }
+}
+
+
+
+
+// career program details info content styles
+.alumni-testimonials-block {
+    background: rgba(255, 255, 255, 1);
+
+    .testimonials-grid {
+        padding: 140px 0;
+        max-width: 1110px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 100px;
+
+        @media(max-width: 1440px) {
+            padding: 100px 0;
+            gap: 80px;
+        }
+
+        @media(max-width: 1024px) {
+            gap: 60px;
+            padding: 80px 0;
+        }
+
+        @media(max-width: 768px) {
+            gap: 40px;
+            padding: 70px 0;
+        }
+
+        .testimonial-item {
+            .testimonial-content {
+                .testimonial-meta {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 40px;
+
+                    .testimonial-meta-position-info {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        .name {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+
+                        .former-position {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+
+                        .years {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+
+                        .current-role {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+
+                    }
+
+                    .testimonial-meta-desc {
+                        .info-desc {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+                    }
+
+                    .testimonial-meta-quote {
+                        padding: 20px;
+                        border-radius: 20px;
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+
+                        .quote-mark {
+                            font-size: 20px;
+                            font-family: var(--font-primary);
+                            font-weight: 500;
+                            line-height: 130%;
+                            letter-spacing: 0;
+                            color: var(--color-black);
+
+                            @media (max-width: 1030px) {
+                                font-size: 18px;
+                                line-height: 130%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -63,6 +63,7 @@ function crb_load_carbonfields()
         '/inc/job-openings/job-opening-blocks.php',
         '/components/job-openings/current-openings-section.php',
         '/inc/inc/apply-form.php',
+        '/inc/career-programs/career-programs-deatils-block.php',
     ];
 
     foreach ($files as $file) {
