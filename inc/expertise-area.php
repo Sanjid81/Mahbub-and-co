@@ -27,7 +27,15 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_default_value('Download PDF'),
 
             Field::make('file', 'pdf_file', 'PDF File')
-                ->set_type('application/pdf')
+                ->set_type('application/pdf'),
+
+            Field::make('rich_text', 'expertise_details_content', __('Content below (details page)', 'mahbub-and-co'))
+                ->help_text(__('Add content that will show below the team list. You can use formatting, links, lists, etc.', 'mahbub-and-co')),
+
+            Field::make('association', 'expertise_blocks_page', __('Custom blocks below', 'mahbub-and-co'))
+                ->set_types(array(array('type' => 'post', 'post_type' => 'page')))
+                ->set_max(1)
+                ->help_text(__('Select a page. All blocks (Hero, Apply Form, etc.) from that page will show below on this details page. Create a page, add your blocks there, then select it here.', 'mahbub-and-co'))
         ));
 
     /**

@@ -168,4 +168,32 @@ $team_query = new WP_Query(array(
 
 </section>
 
+<?php
+$details_content = function_exists('carbon_get_term_meta') ? carbon_get_term_meta($term->term_id, 'expertise_details_content') : '';
+$blocks_page_arr = function_exists('carbon_get_term_meta') ? carbon_get_term_meta($term->term_id, 'expertise_blocks_page') : array();
+$blocks_page_id = 0;
+if (is_array($blocks_page_arr) && !empty($blocks_page_arr)) {
+    $first = $blocks_page_arr[0];
+    $blocks_page_id = is_array($first) && isset($first['id']) ? (int) $first['id'] : (int) $first;
+}
+
+if ($details_content !== '' && trim($details_content) !== '') {
+    echo '<div class="expertise-details-custom-blocks">';
+    echo '<div class="container">';
+    echo wp_kses_post(apply_filters('the_content', $details_content));
+    echo '</div>';
+    echo '</div>';
+}
+
+if ($blocks_page_id > 0) {
+    $blocks_page = get_post($blocks_page_id);
+    if ($blocks_page && $blocks_page->post_status === 'publish') {
+        echo '<div class="expertise-details-custom-blocks expertise-details-blocks-from-page">';
+        $page_content = get_post_field('post_content', $blocks_page_id);
+        echo apply_filters('the_content', $page_content);
+        echo '</div>';
+    }
+}
+?>
+
 <?php get_footer(); ?>

@@ -49,32 +49,9 @@ function career_overview_render_callback()
                     $bg_image       = $bg_attachment ? (is_numeric($bg_attachment) ? wp_get_attachment_image_url((int) $bg_attachment, 'full') : (string) $bg_attachment) : '';
                 ?>
                     <div id="<?php echo esc_attr($tab_id); ?>" class="tab-content <?php echo $index === 0 ? 'active' : ''; ?>">
-                        <div class="container">
+                        <div class="career-container">
 
-                            <!-- Per-tab heading -->
-                            <!-- < ?php if (!empty($tab['tab_heading'])): ?>
-                                <h1>< ?php echo esc_html(is_string($tab['tab_heading']) ? $tab['tab_heading'] : ''); ?></h1>
-                            < ?php endif; ?> -->
-
-                            <!-- Per-tab main content -->
-                            <!-- <c?php if (!empty($tab['tab_content'])): ?>
-                                <div class="tab-main-content">
-                                    < ?php echo wp_kses_post(is_string($tab['tab_content']) ? $tab['tab_content'] : ''); ?>
-                                </div>
-                            < ?php endif; ?> -->
-
-                            <!-- Tab-specific images -->
-                            <!-- < ?php $tab_images = isset($tab['tab_images']) && is_array($tab['tab_images']) ? $tab['tab_images'] : []; ?>
-                            <c?php if (!empty($tab_images)): ?>
-                                <div class="tab-images">
-                                    < ?php foreach ($tab_images as $img_item): ?>
-                                        < ?php $img_item = is_array($img_item) ? $img_item : []; if (!empty($img_item['image'])): ?>
-                                            < ?php echo wp_get_attachment_image((int) $img_item['image'], 'large', false, ['loading' => 'lazy']); ?>
-                                        < ?php endif; ?>
-                                    < ?php endforeach; ?>
-                                </div>
-                            < ? php endif; ?> -->
-
+                           
                             <?php
                             $is_overview_tab = (stripos($tab_id, 'overview') !== false || $index === 0);
                             $is_look_for_tab = (stripos($tab_id, 'what-we-look-for') !== false || stripos($tab_id, 'what_we_look') !== false || $index === 1);
@@ -84,7 +61,8 @@ function career_overview_render_callback()
 
                             <?php if ($is_overview_tab): ?>
                                 <!-- Tab 1: Why Mahbub & Co (left content + right program list) -->
-                                <div class="overview-first-section">
+                               <div class="container">
+                                 <div class="overview-first-section">
                                     <div class="overview-first-content">
                                         <h1><?php echo esc_html($career_heading); ?></h1>
                                         <?php if ($career_intro !== ''): ?>
@@ -131,6 +109,7 @@ function career_overview_render_callback()
                                         ?>
                                     </div>
                                 </div>
+                               </div>
                                 <!-- Dark block: Professional & Personal Development (only on Overview tab) -->
                                 <?php if (!empty($career_dev_sections) || !empty($dev_section_images)): ?>
                                 <div class="career-dev-sections" <?php echo $bg_image ? ' style="--career-section-bg: url(\'' . esc_url($bg_image) . '\');"' : ''; ?>>
@@ -159,6 +138,7 @@ function career_overview_render_callback()
                                                     <?php endforeach; ?>
                                                 </div>
                                             <?php endif; ?>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -194,14 +174,22 @@ function career_overview_render_callback()
                                 </div>
                             <?php endif; ?>
 
-
-
-
-                            
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php
+            $first_tab = !empty($team_tabs[0]) && is_array($team_tabs[0]) ? $team_tabs[0] : [];
+            $btn_title = isset($first_tab['button_title']) ? trim((string) $first_tab['button_title']) : '';
+            $btn_url   = isset($first_tab['button_url']) ? trim((string) $first_tab['button_url']) : '';
+            if ($btn_title !== '' && $btn_url !== ''):
+                $btn_url = preg_match('#^https?://#', $btn_url) ? $btn_url : home_url('/' . ltrim($btn_url, '/'));
+            ?>
+                <div class="career-apply-button-wrap">
+                    <a href="<?php echo esc_url($btn_url); ?>" class="career-section-button"><?php echo esc_html($btn_title); ?></a>
+                </div>
+            <?php endif; ?>
 
         </div>
     </div>

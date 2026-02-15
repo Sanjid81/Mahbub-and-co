@@ -43,6 +43,10 @@ function register_custom_career_blocks()
 
                     Field::make('image', 'background_image', 'Background Image (dark section)')
                         ->set_value_type('url'),
+                    Field::make('text', 'button_title', 'Button Title')
+                        ->set_help_text('Button text below the background section'),
+                    Field::make('text', 'button_url', 'Button URL')
+                        ->set_help_text('Link for the button (e.g. /apply or full URL)'),
 
                 ))
                 ->set_layout('tabbed-horizontal')

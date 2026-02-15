@@ -4,7 +4,8 @@
     /* All tab contents visible on one page; .active only for nav highlight (scroll spy) */
     .tab-contents.career-tab-contents {
         .tab-content {
-            scroll-margin-top: 80px; /* so anchor scroll clears sticky nav */
+            scroll-margin-top: 80px;
+            /* so anchor scroll clears sticky nav */
         }
     }
 
@@ -150,6 +151,26 @@
         }
     }
 
+    .career-apply-button-wrap {
+        text-align: center;
+        padding: 50px 20px 60px;
+
+        .career-section-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: var(--primary-red, #BC001A);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: opacity 0.2s ease;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+
     .career-dev-sections {
         position: relative;
         height: 100%;
@@ -247,7 +268,7 @@
             .dev-sections-images {
                 display: flex;
                 justify-content: space-between;
-                gap: 135px;
+                gap: 9px;
 
                 .dev-section-images-wrapper {
 
@@ -276,13 +297,33 @@
                     }
                 }
             }
+
+            .career-section-button-wrap {
+                margin-top: 40px;
+                text-align: center;
+
+                .career-section-button {
+                    display: inline-block;
+                    padding: 14px 32px;
+                    background-color: var(--primary-red, #BC001A);
+                    color: #fff;
+                    text-decoration: none;
+                    font-weight: 600;
+                    border-radius: 4px;
+                    transition: opacity 0.2s ease;
+
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+            }
         }
     }
 }
 
 /* What We Look for – light blue section with two dotted boxes */
 .what-we-look-for {
-    background-color: #e8f0f5;
+    background-color: rgba(247, 247, 247, 1);
     padding: 80px 0 100px;
     margin-top: 0;
 
@@ -300,7 +341,7 @@
     .what-we-look-for-heading {
         @extend .heading-two;
         color: var(--dark-normal);
-        margin-bottom: 24px;
+        margin-bottom: 40px;
     }
 
     .what-we-look-for-intro {
@@ -315,35 +356,48 @@
     }
 
     .look-for-boxes {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        margin-top: 24px;
+        max-width: 1395px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+        margin-top: 80px;
 
-        @media (max-width: 900px) {
-            grid-template-columns: 1fr;
-        }
-    }
+        .look-for-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
 
-    .look-for-box {
-        border: 2px dashed rgba(13, 110, 253, 0.6);
-        border-radius: 8px;
-        padding: 28px 24px;
-        background-color: var(--color-white);
 
-        .look-for-box-title {
-            @extend .heading-five;
-            color: var(--dark-normal);
-            margin-bottom: 16px;
-        }
 
-        .look-for-box-content {
-            @extend .body-text;
-            line-height: 24px;
-            color: var(--dark-80);
+            .look-for-box-title {
+                @extend .heading-five;
+                color: var(--dark-normal);
+                width: 100%;
+                text-align: left;
 
-            p {
-                margin-bottom: 12px;
+                &::after {
+                    content: "";
+                    width: 100%;
+                    height: 1px;
+                    display: block;
+                    background: rgba(0, 0, 0, 0.1);
+                    margin: 20px 0;
+                }
+            }
+
+            .look-for-box-content {
+                max-width: 924px;
+                width: 100%;
+                @extend .body-text;
+                line-height: 24px;
+                color: var(--dark-80);
+                margin-left: auto;
+
+                // p {
+                //     margin-bottom: 12px;
+                // }
             }
         }
     }
