@@ -5,9 +5,10 @@
 .maco-openings {
     background-color: var(--color-white);
     padding: 120px 0;
-@media (max-width: 1024px) {
-    padding: 70px 0;
-}
+
+    @media (max-width: 1024px) {
+        padding: 70px 0;
+    }
 
     .maco-openings-inner {
         .maco-openings-title {
@@ -136,11 +137,3 @@
     }
 
 }
-
-
-
-
-
-
-
-

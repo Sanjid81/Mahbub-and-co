@@ -44,9 +44,9 @@ function maco_register_job_opening_meta()
                 ->set_attribute('type', 'url')
                 ->set_attribute('placeholder', 'https://...')
                 ->help_text(__('Leave empty to use auto share link.', 'mahbub-and-co')),
-            Field::make('text', 'maco_job_share_twitter', __('Twitter / X Share URL', 'mahbub-and-co'))
-                ->set_attribute('type', 'url')
-                ->set_attribute('placeholder', 'https://...')
-                ->help_text(__('Leave empty to use auto share link.', 'mahbub-and-co')),
+            Field::make('text', 'maco_job_share_email', __('Share via Email', 'mahbub-and-co'))
+                ->set_attribute('type', 'email')
+                ->set_attribute('placeholder', 'email@example.com')
+                ->help_text(__('Leave empty to use default mailto (subject + body with job title and link).', 'mahbub-and-co')),
         ));
 }

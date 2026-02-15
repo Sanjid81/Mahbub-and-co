@@ -93,18 +93,17 @@ while ($job_query->have_posts()) {
     $share_title = get_the_title($id);
     $share_fb = 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode($share_url);
     $share_li = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode($share_url);
-    $share_tw = 'https://twitter.com/intent/tweet?url=' . rawurlencode($share_url) . '&text=' . rawurlencode($share_title);
+    $share_email_subject = sprintf(__('Share: %s', 'mahbub-and-co'), $share_title);
+    $share_email_body = $share_title . "\n" . $share_url;
+    $share_email_custom = function_exists('carbon_get_post_meta') ? trim((string) carbon_get_post_meta($id, 'maco_job_share_email')) : '';
+    $share_email = 'mailto:' . ($share_email_custom !== '' ? $share_email_custom : '') . '?subject=' . rawurlencode($share_email_subject) . '&body=' . rawurlencode($share_email_body);
     $share_fb_custom = function_exists('carbon_get_post_meta') ? trim((string) carbon_get_post_meta($id, 'maco_job_share_facebook')) : '';
     $share_li_custom = function_exists('carbon_get_post_meta') ? trim((string) carbon_get_post_meta($id, 'maco_job_share_linkedin')) : '';
-    $share_tw_custom = function_exists('carbon_get_post_meta') ? trim((string) carbon_get_post_meta($id, 'maco_job_share_twitter')) : '';
     if ($share_fb_custom !== '') {
         $share_fb = $share_fb_custom;
     }
     if ($share_li_custom !== '') {
         $share_li = $share_li_custom;
-    }
-    if ($share_tw_custom !== '') {
-        $share_tw = $share_tw_custom;
     }
 
     $maco_show_debug = isset($_GET['maco_debug']) && $_GET['maco_debug'] === '1';
@@ -130,149 +129,207 @@ while ($job_query->have_posts()) {
     $archive_url = get_post_type_archive_link('job_opening');
     $back_text = __('Back to Job Openings', 'mahbub-and-co');
     ?>
-    <article class="maco-opening-detail" id="maco-opening-detail-<?php echo esc_attr($id); ?>"
+    <section class="maco-opening-detail" id="maco-opening-detail-<?php echo esc_attr($id); ?>"
         data-maco-opening-id="<?php echo esc_attr($id); ?>">
-        <div class="maco-opening-detail-inner">
-            <?php if ($archive_url): ?>
-                <p class="maco-opening-detail-back">
-                    <a href="<?php echo esc_url($archive_url); ?>"
-                        class="maco-opening-detail-back-link"><?php echo esc_html($back_text); ?></a>
-                </p>
-            <?php endif; ?>
+        <div class="container">
+            <div class="maco-opening-detail-inner">
+                <button class="back-btn" onclick="history.back()">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12.4693 6.99962C12.4693 7.17366 12.4001 7.34058 12.2771 7.46365C12.154 7.58672 11.9871 7.65587 11.813 7.65587H3.77396L6.59145 10.4728C6.71474 10.5961 6.784 10.7633 6.784 10.9377C6.784 11.112 6.71474 11.2792 6.59145 11.4025C6.46817 11.5258 6.30096 11.5951 6.12661 11.5951C5.95226 11.5951 5.78505 11.5258 5.66177 11.4025L1.72427 7.46501C1.66309 7.40404 1.61454 7.33159 1.58142 7.25182C1.5483 7.17206 1.53125 7.08653 1.53125 7.00016C1.53125 6.91379 1.5483 6.82827 1.58142 6.7485C1.61454 6.66873 1.66309 6.59629 1.72427 6.53532L5.66177 2.59782C5.72281 2.53677 5.79528 2.48835 5.87504 2.45531C5.9548 2.42228 6.04028 2.40527 6.12661 2.40527C6.21294 2.40527 6.29843 2.42228 6.37818 2.45531C6.45794 2.48835 6.53041 2.53677 6.59145 2.59782C6.6525 2.65886 6.70092 2.73133 6.73396 2.81109C6.767 2.89085 6.784 2.97633 6.784 3.06266C6.784 3.14899 6.767 3.23448 6.73396 3.31423C6.70092 3.39399 6.6525 3.46646 6.59145 3.52751L3.77396 6.34337H11.813C11.9871 6.34337 12.154 6.41251 12.2771 6.53558C12.4001 6.65865 12.4693 6.82557 12.4693 6.99962Z"
+                            fill="black" />
+                    </svg>
 
-            <div class="maco-opening-detail-layout">
-                <div class="maco-opening-detail-main">
-                    <div class="maco-opening-detail-desc-card">
-                        <?php if ($has_raw): ?>
-                            <?php
-                            // Debug header
-                           
+                    Back </button>
 
-                            // Try standard processing
-                            $processed = do_blocks($raw_content);
-                            $final = apply_filters('the_content', $processed);
 
-                            if (trim(strip_tags($final)) !== '' && strpos($final, '<div class="maco-job-block') !== false) {
-                                echo $final; // Success – blocks rendered!
-                            } else {
+                <div class="maco-opening-detail-layout">
+                    <div class="maco-opening-detail-main">
+                        <div class="maco-opening-detail-desc-card">
+                            <?php if ($has_raw): ?>
+                                <?php
+                                // Debug header
+                        
 
-                                if (preg_match('/<!-- wp:carbon-fields\/job-description\s+({.*?}) \/-->/s', $raw_content, $matches)) {
-                                    $json = $matches[1];
-                                    $data = json_decode($json, true);
-                                    if (isset($data['data'])) {
-                                        $fields = $data['data'];
-                                        $heading = $fields['heading'] ?? 'Job Description';
-                                        $content = $fields['content'] ?? '';
+                                // Try standard processing
+                                $processed = do_blocks($raw_content);
+                                $final = apply_filters('the_content', $processed);
 
-                                        echo '<div class="maco-job-block maco-job-block-description">';
-                                        if ($heading)
-                                            echo '<h2>' . esc_html($heading) . '</h2>';
-                                        if ($content)
-                                            echo '<div class="entry-content">' . wp_kses_post(apply_filters('the_content', $content)) . '</div>';
-                                        echo '</div>';
+                                if (trim(strip_tags($final)) !== '' && strpos($final, '<div class="maco-job-block') !== false) {
+                                    echo $final; // Success – blocks rendered!
+                                } else {
+
+                                    if (preg_match('/<!-- wp:carbon-fields\/job-description\s+({.*?}) \/-->/s', $raw_content, $matches)) {
+                                        $json = $matches[1];
+                                        $data = json_decode($json, true);
+                                        if (isset($data['data'])) {
+                                            $fields = $data['data'];
+                                            $heading = $fields['heading'] ?? 'Job Description';
+                                            $content = $fields['content'] ?? '';
+
+                                            echo '<div class="maco-job-block maco-job-block-description">';
+                                            if ($heading)
+                                                echo '<h2>' . esc_html($heading) . '</h2>';
+                                            if ($content)
+                                                echo '<div class="entry-content">' . wp_kses_post(apply_filters('the_content', $content)) . '</div>';
+                                            echo '</div>';
+                                        }
                                     }
-                                }
 
-                                // Add similar preg_match blocks for key-requirements and key-skills if needed
-                                // Example for requirements:
-                                if (preg_match('/<!-- wp:carbon-fields\/key-requirements\s+({.*?}) \/-->/s', $raw_content, $matches_req)) {
-                                   
-                                }
+                                    // Add similar preg_match blocks for key-requirements and key-skills if needed
+                                    // Example for requirements:
+                                    if (preg_match('/<!-- wp:carbon-fields\/key-requirements\s+({.*?}) \/-->/s', $raw_content, $matches_req)) {
 
-                                // If nothing matched, show basic cleaned text
-                                $clean = preg_replace('/<!--.*?-->/s', '', $raw_content);
-                                echo wp_kses_post(wpautop($clean));
-                            }
-                            ?>
-                        <?php else: ?>
-                            <p>Add content using blocks...</p>
-                        <?php endif; ?>
+                                    }
+
+                                    // If nothing matched, show basic cleaned text
+                                    $clean = preg_replace('/<!--.*?-->/s', '', $raw_content);
+                                    echo wp_kses_post(wpautop($clean));
+                                }
+                                ?>
+                            <?php else: ?>
+                                <p>Add content using blocks...</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
+
+                    <aside class="maco-opening-detail-sidebar">
+                        <div class="maco-openings-card maco-opening-detail-sidebar-card">
+                            <h2 class="maco-openings-card-title maco-opening-detail-sidebar-title">
+                                <?php the_title(); ?>
+                            </h2>
+                            <div class="maco-openings-card-meta">
+                                <?php if ($exp !== ''): ?>
+                                    <span class="maco-openings-card-meta-item">
+                                        <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                            <?php echo $icon_briefcase; ?>
+                                        </span>
+                                        <span class="maco-openings-card-meta-text">Experience:
+                                            <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                            <p>
+                                                <?php echo esc_html($exp); ?>
+
+                                            </p>
+                                        </span>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if ($loc !== ''): ?>
+                                    <span class="maco-openings-card-meta-item">
+                                        <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                            <?php echo $icon_pin; ?>
+                                        </span>
+                                        <span class="maco-openings-card-meta-text">Location:
+                                            <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                            <p>
+                                                <?php echo esc_html($loc); ?>
+                                            </p>
+                                        </span>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if ($typ !== ''): ?>
+                                    <span class="maco-openings-card-meta-item">
+                                        <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                            <?php echo $icon_briefcase; ?>
+                                        </span>
+                                        <span class="maco-openings-card-meta-text">Type:
+                                            <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                            <p>
+                                                <?php echo esc_html($typ); ?>
+                                            </p>
+                                        </span>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if ($dead !== ''): ?>
+                                    <span class="maco-openings-card-meta-item">
+                                        <span class="maco-openings-card-meta-icon" aria-hidden="true">
+                                            <?php echo $icon_calendar; ?>
+                                        </span>
+                                        <span class="maco-openings-card-meta-text">Deadline:
+                                            <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
+                                            <p>
+                                                <?php echo esc_html($dead); ?>
+                                            </p>
+                                        </span>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+
+                            <a href="<?php echo esc_url($apply_link); ?>" class="red-bg-button" data-aos="fade-up">
+                                <div class="button-text">
+                                    <?php echo esc_html($apply_text); ?>
+                                </div>
+                                <svg width="44" height="44" viewBox="0 0 44 44" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="44" height="44" rx="22" fill="white" />
+                                    <g clip-path="url(#clip0_1948_2508)">
+                                        <path d="M16.166 17H26.9993V27.8333" stroke="#BC001A" stroke-width="2"
+                                            stroke-miterlimit="10" />
+                                        <path d="M16 28L27 17" stroke="#BC001A" stroke-width="2" stroke-miterlimit="10" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_1948_2508">
+                                            <rect width="20" height="20" fill="white" transform="translate(12 12)" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+
+                            </a>
+                        </div>
+                        <div class="maco-opening-detail-share-card">
+                            <h3 class="maco-opening-detail-share-title">
+                                <?php echo esc_html__('Share this Job', 'mahbub-and-co'); ?>
+                            </h3>
+                            <div class="maco-opening-detail-share-icons">
+                                <a href="<?php echo esc_url($share_email); ?>" class="maco-opening-detail-share-icon"
+                                    aria-label="<?php esc_attr_e('Share via Email', 'mahbub-and-co'); ?>">
+                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="#960014" />
+                                        <path
+                                            d="M25 12.25H13C11.35 12.25 10 13.6 10 15.25V22.75C10 24.4 11.35 25.75 13 25.75H25C26.65 25.75 28 24.4 28 22.75V15.25C28 13.6 26.65 12.25 25 12.25ZM26.2 16.6L20.275 20.575C19.9 20.8 19.45 20.95 19 20.95C18.55 20.95 18.1 20.8 17.725 20.575L11.8 16.6C11.5 16.375 11.425 15.925 11.65 15.55C11.875 15.25 12.325 15.175 12.7 15.4L18.625 19.375C18.85 19.525 19.225 19.525 19.45 19.375L25.375 15.4C25.75 15.175 26.2 15.25 26.425 15.625C26.575 15.925 26.5 16.375 26.2 16.6Z"
+                                            fill="#960014" />
+                                    </svg>
+
+                                </a>
+                                <a href="<?php echo esc_url($share_fb); ?>" class="maco-opening-detail-share-icon"
+                                    target="_blank" rel="noopener"
+                                    aria-label="<?php esc_attr_e('Share on Facebook', 'mahbub-and-co'); ?>">
+                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="#960014" />
+                                        <path
+                                            d="M23.1598 20.0485L23.6556 16.8155H20.5537V14.7175C20.5537 13.833 20.987 12.9709 22.3764 12.9709H23.7867V10.2185C23.7867 10.2185 22.5068 10 21.2831 10C18.7283 10 17.0586 11.5484 17.0586 14.3515V16.8155H14.2188V20.0485H17.0586V27.8641C17.628 27.9535 18.2116 28 18.8061 28C19.4007 28 19.9843 27.9535 20.5537 27.8641V20.0485H23.1598Z"
+                                            fill="#960014" />
+                                    </svg>
+
+                                </a>
+                                <a href="<?php echo esc_url($share_li); ?>" class="maco-opening-detail-share-icon"
+                                    target="_blank" rel="noopener"
+                                    aria-label="<?php esc_attr_e('Share on LinkedIn', 'mahbub-and-co'); ?>">
+                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="#960014" />
+                                        <g clip-path="url(#clip0_1420_20214)">
+                                            <path
+                                                d="M28 20.9445V27.5988H24.1414V21.3923C24.1414 19.8313 23.5847 18.7683 22.1869 18.7683C21.1197 18.7683 20.4878 19.484 20.2074 20.1787C20.107 20.4256 20.0777 20.773 20.0777 21.1203V27.603H16.219C16.219 27.603 16.2692 17.0859 16.219 15.9978H20.0777V17.6425C20.0693 17.6551 20.0609 17.6676 20.0525 17.6802H20.0777V17.6425C20.5924 16.8515 21.5048 15.7258 23.5555 15.7258C26.0958 15.7216 28 17.383 28 20.9445ZM12.1846 10.4023C10.8621 10.4023 10 11.2687 10 12.407C10 13.5202 10.837 14.4116 12.1344 14.4116H12.1595C13.5071 14.4116 14.3441 13.5202 14.3441 12.407C14.3148 11.2687 13.5029 10.4023 12.1846 10.4023ZM10.2302 27.603H14.0888V15.9936H10.2302V27.603Z"
+                                                fill="#960014" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1420_20214">
+                                                <rect width="18" height="18" fill="white" transform="translate(10 10)" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </aside>
                 </div>
-
-                <aside class="maco-opening-detail-sidebar">
-                    <div class="maco-openings-card maco-opening-detail-sidebar-card">
-                        <h2 class="maco-openings-card-title maco-opening-detail-sidebar-title"><?php the_title(); ?></h2>
-                        <div class="maco-openings-card-meta">
-                            <?php if ($exp !== ''): ?>
-                                <span class="maco-openings-card-meta-item">
-                                    <span class="maco-openings-card-meta-icon"
-                                        aria-hidden="true"><?php echo $icon_briefcase; ?></span>
-                                    <span
-                                        class="maco-openings-card-meta-text"><?php echo esc_html__('Experience:', 'mahbub-and-co'); ?>
-                                        <?php echo esc_html($exp); ?></span>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($loc !== ''): ?>
-                                <span class="maco-openings-card-meta-item">
-                                    <span class="maco-openings-card-meta-icon"
-                                        aria-hidden="true"><?php echo $icon_pin; ?></span>
-                                    <span
-                                        class="maco-openings-card-meta-text"><?php echo esc_html__('Location:', 'mahbub-and-co'); ?>
-                                        <?php echo esc_html($loc); ?></span>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($typ !== ''): ?>
-                                <span class="maco-openings-card-meta-item">
-                                    <span class="maco-openings-card-meta-icon"
-                                        aria-hidden="true"><?php echo $icon_briefcase; ?></span>
-                                    <span
-                                        class="maco-openings-card-meta-text"><?php echo esc_html__('Type:', 'mahbub-and-co'); ?>
-                                        <?php echo esc_html($typ); ?></span>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($dead !== ''): ?>
-                                <span class="maco-openings-card-meta-item">
-                                    <span class="maco-openings-card-meta-icon"
-                                        aria-hidden="true"><?php echo $icon_calendar; ?></span>
-                                    <span
-                                        class="maco-openings-card-meta-text"><?php echo esc_html__('Deadline:', 'mahbub-and-co'); ?>
-                                        <?php echo esc_html($dead); ?></span>
-                                </span>
-                            <?php endif; ?>
-                        </div>
-                        <a href="<?php echo esc_url($apply_link); ?>" class="maco-opening-detail-apply-btn"
-                            target="<?php echo $apply_url !== '' ? '_blank' : '_self'; ?>"
-                            rel="<?php echo $apply_url !== '' ? 'noopener' : ''; ?>">
-                            <?php echo esc_html($apply_text); ?>
-                            <span class="maco-openings-apply-btn-arrow" aria-hidden="true"><?php echo $icon_arrow; ?></span>
-                        </a>
-                    </div>
-                    <div class="maco-opening-detail-share-card">
-                        <h3 class="maco-opening-detail-share-title">
-                            <?php echo esc_html__('Share this Job', 'mahbub-and-co'); ?>
-                        </h3>
-                        <div class="maco-opening-detail-share-icons">
-                            <a href="<?php echo esc_url($share_fb); ?>" class="maco-opening-detail-share-icon"
-                                target="_blank" rel="noopener"
-                                aria-label="<?php esc_attr_e('Share on Facebook', 'mahbub-and-co'); ?>">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path
-                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                </svg>
-                            </a>
-                            <a href="<?php echo esc_url($share_li); ?>" class="maco-opening-detail-share-icon"
-                                target="_blank" rel="noopener"
-                                aria-label="<?php esc_attr_e('Share on LinkedIn', 'mahbub-and-co'); ?>">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path
-                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                </svg>
-                            </a>
-                            <a href="<?php echo esc_url($share_tw); ?>" class="maco-opening-detail-share-icon"
-                                target="_blank" rel="noopener"
-                                aria-label="<?php esc_attr_e('Share on Twitter', 'mahbub-and-co'); ?>">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path
-                                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </aside>
             </div>
         </div>
-    </article>
+    </section>
     <?php
 }
 

@@ -10,9 +10,8 @@ use Carbon_Fields\Field;
 add_action('carbon_fields_register_fields', 'maco_register_job_opening_blocks', 20);
 
 /**
- * Enhanced fallback: রেন্ডার সব raw Carbon job blocks (description + requirements + skills)
  */
-add_filter('the_content', 'maco_render_all_job_blocks_fallback', 999); // high priority যাতে পরে চলে
+add_filter('the_content', 'maco_render_all_job_blocks_fallback', 999); 
 
 function maco_render_all_job_blocks_fallback($content) {
     if (get_post_type() !== 'job_opening') {
@@ -50,7 +49,6 @@ function maco_render_all_job_blocks_fallback($content) {
         $needle = '<!-- wp:carbon-fields/' . $block_slug . ' ';
         $pos = 0;
         while (($pos = strpos($content, $needle, $pos)) !== false) {
-            // JSON parse logic (আগের মতো, সংক্ষিপ্ত করে)
             $json_start = $pos + strlen($needle);
             $brace_pos = strpos($content, '{', $json_start);
             if ($brace_pos === false) { $pos = $json_start; continue; }
@@ -106,7 +104,6 @@ function maco_render_all_job_blocks_fallback($content) {
     return $content;
 }
 
-// Register blocks (আগের মতো, ছোট করে)
 function maco_register_job_opening_blocks() {
     Block::make('Job Description')
         ->set_icon('media-text')->set_category('layout')
@@ -137,10 +134,8 @@ function maco_register_job_opening_blocks() {
         ])->set_render_callback('maco_job_block_key_skills_render');
 }
 
-// Render callbacks (আগের মতো রাখুন, অথবা debug যোগ করুন)
 function maco_job_block_description_render($fields, $attributes, $inner) {
-    error_log('Job Description render called - Post: ' . get_the_ID()); // debug.log চেক করুন
-    // ... আগের কোড ...
+    error_log('Job Description render called - Post: ' . get_the_ID()); 
 }
 
 function maco_job_block_key_requirements_render($fields, $attributes, $inner) {
