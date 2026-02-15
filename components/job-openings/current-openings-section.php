@@ -102,8 +102,8 @@ function maco_current_openings_render_callback()
                         $loc   = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_location') : '';
                         $typ   = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_type') : '';
                         $dead  = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_deadline') : '';
-                        $apply_text = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_apply_text') : 'Apply Now';
                         $details_url = get_permalink($id);
+                        $view_details_text = __('View Details', 'mahbub-and-co');
                         ?>
                         <article class="maco-openings-card" data-maco-openings-category="<?php echo esc_attr($data_cat); ?>">
                             <h3 class="maco-openings-card-title"><a href="<?php echo esc_url($details_url); ?>" class="maco-openings-card-title-link"><?php the_title(); ?></a></h3>
@@ -134,7 +134,7 @@ function maco_current_openings_render_callback()
                                 <?php endif; ?>
                             </div>
                             <a href="<?php echo esc_url($details_url); ?>" class="maco-openings-apply-btn">
-                                <?php echo esc_html($apply_text); ?>
+                                <?php echo esc_html($view_details_text); ?>
                                 <span class="maco-openings-apply-btn-arrow" aria-hidden="true"><?php echo maco_openings_icon_arrow(); ?></span>
                             </a>
                         </article>

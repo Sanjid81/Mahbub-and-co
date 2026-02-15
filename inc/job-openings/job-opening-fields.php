@@ -27,9 +27,26 @@ function maco_register_job_opening_meta()
                 ->set_help_text('e.g. March 15, 2025')
                 ->set_attribute('placeholder', 'March 15, 2025'),
             Field::make('text', 'maco_job_apply_url', __('Apply URL', 'mahbub-and-co'))
-                ->set_help_text('Link for Apply Now. Leave blank to use job details page.')
-                ->set_attribute('type', 'url'),
+                ->set_attribute('type', 'url')
+                ->set_attribute('placeholder', 'https://... keep this button empty'),
             Field::make('text', 'maco_job_apply_text', __('Apply Button Text', 'mahbub-and-co'))
                 ->set_default_value('Apply Now'),
+        ));
+
+    Container::make('post_meta', __('Share this Job', 'mahbub-and-co'))
+        ->where('post_type', '=', 'job_opening')
+        ->add_fields(array(
+            Field::make('text', 'maco_job_share_facebook', __('Facebook Share URL', 'mahbub-and-co'))
+                ->set_attribute('type', 'url')
+                ->set_attribute('placeholder', 'https://...')
+                ->help_text(__('Leave empty to use auto share link (share current page on Facebook).', 'mahbub-and-co')),
+            Field::make('text', 'maco_job_share_linkedin', __('LinkedIn Share URL', 'mahbub-and-co'))
+                ->set_attribute('type', 'url')
+                ->set_attribute('placeholder', 'https://...')
+                ->help_text(__('Leave empty to use auto share link.', 'mahbub-and-co')),
+            Field::make('text', 'maco_job_share_twitter', __('Twitter / X Share URL', 'mahbub-and-co'))
+                ->set_attribute('type', 'url')
+                ->set_attribute('placeholder', 'https://...')
+                ->help_text(__('Leave empty to use auto share link.', 'mahbub-and-co')),
         ));
 }

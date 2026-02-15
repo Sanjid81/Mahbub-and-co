@@ -1,12 +1,11 @@
 <?php
 // inc/career-blocks.php
-// কোনো স্পেস/লাইন <?php এর আগে রাখবে না!
 
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
 // ===============================================
-// 1. রেন্ডার ফাংশন (প্রথমে ডিফাইন করতে হবে)
+// 1. Render functions (must be defined first)
 // ===============================================
 
 function career_overview_render_callback($fields, $attributes, $inner_blocks)
@@ -115,7 +114,7 @@ function career_overview_render_callback($fields, $attributes, $inner_blocks)
                 <?php endforeach; ?>
             </div>
 
-            <!-- তোমার আগের career-dev-sections -->
+            <!-- career-dev-sections -->
             <div class="career-dev-sections" <?php echo $bg_image ? ' style="--career-section-bg: url(\'' . esc_url($bg_image) . '\');"' : ''; ?>>
                 <div class="overlay"></div>
                 <div class="container">
@@ -153,7 +152,7 @@ function program_details_render_callback($fields, $attributes, $inner_blocks)
 }
 
 // ===============================================
-// 2. Block Register (ফাংশনের পরে)
+// 2. Block Register (after functions)
 // ===============================================
 
 add_action('carbon_fields_register_fields', function() {

@@ -31,6 +31,19 @@ function maco_register_job_opening_cpt()
 }
 add_action('init', 'maco_register_job_opening_cpt');
 
+/**
+ * Flush rewrite rules once so single job_opening URLs work (e.g. /job-opening/post-slug/).
+ */
+function maco_job_opening_maybe_flush_rewrite_rules()
+{
+    if (get_option('maco_job_opening_rewrite_flushed')) {
+        return;
+    }
+    flush_rewrite_rules(false);
+    update_option('maco_job_opening_rewrite_flushed', true);
+}
+add_action('init', 'maco_job_opening_maybe_flush_rewrite_rules', 999);
+
 function maco_register_job_opening_category_taxonomy()
 {
     $labels = array(
@@ -53,3 +66,59 @@ function maco_register_job_opening_category_taxonomy()
     ));
 }
 add_action('init', 'maco_register_job_opening_category_taxonomy');
+
+/**
+ * Single job_opening: allow future and (when logged in) draft in main query.
+ */
+function maco_job_opening_single_include_future($query)
+{
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    if ($query->is_singular('job_opening')) {
+        $statuses = array('publish', 'future');
+        if (is_user_logged_in()) {
+            $statuses[] = 'draft';
+        }
+        $query->set('post_status', $statuses);
+    }
+}
+add_action('pre_get_posts', 'maco_job_opening_single_include_future');
+
+/**
+ * Force single-job_opening.php template for singular job_opening.
+ * When URL is /job-opening/slug/ but WordPress returns 404 (e.g. rewrite not flushed),
+ * still load single template so single-job-opening-details.php can find post by slug.
+ */
+function maco_single_job_opening_template($template)
+{
+    if (is_singular('job_opening')) {
+        $single = get_query_template('single', array('single-job_opening.php'));
+        if ($single !== '') {
+            return $single;
+        }
+    }
+    if (is_404() && !empty($_SERVER['REQUEST_URI'])) {
+        $path = trim(parse_url(wp_unslash($_SERVER['REQUEST_URI']), PHP_URL_PATH), '/');
+        $segments = array_filter(explode('/', $path));
+        $slug = count($segments) >= 1 ? end($segments) : '';
+        $prev = count($segments) >= 2 ? $segments[count($segments) - 2] : '';
+        if ($slug !== '' && $slug !== 'job-opening' && $prev === 'job-opening') {
+                $check = new WP_Query(array(
+                    'name'           => $slug,
+                    'post_type'      => 'job_opening',
+                    'post_status'    => array('publish', 'future'),
+                    'posts_per_page' => 1,
+                    'no_found_rows'  => true,
+                ));
+                if ($check->have_posts()) {
+                    $single = get_query_template('single', array('single-job_opening.php'));
+                    if ($single !== '') {
+                        return $single;
+                    }
+                }
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'maco_single_job_opening_template', 99);
