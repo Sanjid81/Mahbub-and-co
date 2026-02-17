@@ -97,7 +97,6 @@ $job_permalink = get_permalink($job_id);
                 </div>
 
                 <div class="section-divider"></div>
-
                 <!-- Additional Qualifications Section -->
                 <div class="section-title">Additional Qualifications</div>
                 <div class="form-row">
