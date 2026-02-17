@@ -31,7 +31,8 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
 
                 <p class="footer-text"><?php echo esc_html($footer_tagline); ?></p>
             </div>
-
+<div class="footer-columns">
+    
             <!-- Areas of Expertise Section -->
             <div class="footer-column double-menu-column" data-aos="fade-up">
                 <h3 class="footer-title">Areas of Expertise</h3>
@@ -137,6 +138,7 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
                 </div>
             </div>
         </div>
+</div>
 
         <!-- Footer Bottom -->
 
