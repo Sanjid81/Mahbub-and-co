@@ -104,11 +104,38 @@
                                 display: flex;
                                 align-items: center;
                                 gap: 5px;
-                                cursor: pointer;
 
-                                svg {
-                                    transition: transform 0.3s ease;
-                                    stroke: white;
+                                /* Link: no arrow (arrow is on .nav-submenu-toggle) */
+                                > a::after {
+                                    content: none;
+                                    display: none;
+                                }
+
+                                .nav-submenu-toggle {
+                                    display: inline-flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 24px;
+                                    height: 24px;
+                                    padding: 0;
+                                    margin-left: 2px;
+                                    border: none;
+                                    background: none;
+                                    cursor: pointer;
+                                    color: white;
+                                    flex-shrink: 0;
+
+                                    svg {
+                                        transition: transform 0.3s ease;
+                                        stroke: white;
+                                    }
+
+                                    &:hover {
+                                        color: var(--text-red);
+                                        svg {
+                                            stroke: var(--text-red);
+                                        }
+                                    }
                                 }
 
                                 .sub-menu {
@@ -127,12 +154,21 @@
                                     transition: all 0.3s ease;
                                 }
 
-                                &:hover .sub-menu {
+                                /* Desktop: show submenu on hover OR when opened by icon click (.active) */
+                                &:hover .sub-menu,
+                                &.active .sub-menu {
                                     opacity: 1;
                                     visibility: visible;
                                 }
 
-                                &:hover a svg {
+                                /* After closing by icon click, stay closed until mouse leaves (avoid hover reopening) */
+                                &.submenu-just-closed .sub-menu {
+                                    opacity: 0 !important;
+                                    visibility: hidden !important;
+                                }
+
+                                &:hover .nav-submenu-toggle svg,
+                                &.active .nav-submenu-toggle svg {
                                     transform: rotate(180deg);
                                     stroke: #FF6600;
                                 }
@@ -145,10 +181,6 @@
                                         font-weight: 500;
                                         font-size: 16px;
                                         line-height: 24px;
-
-                                        &:hover {
-                                            // color: var(--text-red);
-                                        }
                                     }
                                 }
                             }
@@ -209,7 +241,7 @@
         }
 
         /* Responsive Styles */
-        @media (max-width: 1100px) {
+        @media (max-width: 1150px) {
             .nav-wraper {
                 .nav-first-half {
                     .nav-menu {
@@ -325,11 +357,49 @@
                                         }
 
                                         &.menu-item-has-children {
-                                            cursor: pointer;
                                             position: relative;
                                             overflow: hidden;
-                                            // margin-bottom: 5px;
+                                            /* Mobile: main menu row (link + icon), then submenu full width below */
+                                            display: grid;
+                                            grid-template-columns: 1fr auto;
+                                            grid-template-rows: auto auto;
+                                            align-items: center;
+                                            gap: 0;
 
+                                            > a {
+                                                grid-column: 1;
+                                                grid-row: 1;
+                                                min-width: 0;
+                                            }
+
+                                            .nav-submenu-toggle {
+                                                grid-column: 2;
+                                                grid-row: 1;
+                                                display: inline-flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                width: 32px;
+                                                height: 32px;
+                                                padding: 0;
+                                                margin: -8px 0;
+                                                border: none;
+                                                background: none;
+                                                cursor: pointer;
+                                                color: white;
+                                                flex-shrink: 0;
+
+                                                svg {
+                                                    stroke: white;
+                                                    transition: transform 0.3s ease, stroke 0.3s ease;
+                                                }
+                                            }
+
+                                            .sub-menu {
+                                                grid-column: 1 / -1;
+                                                grid-row: 2;
+                                                width: 100%;
+                                                box-sizing: border-box;
+                                            }
 
                                             a {
                                                 display: inline-flex;
@@ -524,36 +594,15 @@
         }
 
 
-        ul li.menu-item-has-children>a {
+        /* Submenu arrow is now .nav-submenu-toggle button; link has no ::after */
+        ul li.menu-item-has-children > a {
             position: relative;
-
-            &::after {
-                content: '';
-                display: inline-block;
-                width: 16px;
-                height: 16px;
-                margin-left: 6px;
-                vertical-align: middle;
-                background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_924_233)'%3E%3Cpath d='M13 6L8 11L3 6' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_924_233'%3E%3Crect width='16' height='16' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E") no-repeat center;
-                background-size: 16px 16px;
-                transition: transform 0.3s ease, filter 0.3s ease;
-            }
-
-            /* Desktop hover */
-            &:hover::after {
-                transform: rotate(180deg);
-
-                @media (max-width: 1100px) {
-                    transform: rotate(0deg);
-                    /* mobile e hover remove */
-                }
-            }
         }
 
-        /* When submenu is open → rotate arrow + color change */
-        ul li.menu-item-has-children.active>a::after {
+        /* When submenu is open (e.g. mobile) → toggle button shows rotated */
+        ul li.menu-item-has-children.active .nav-submenu-toggle svg {
             transform: rotate(180deg);
-            // filter: brightness(0) saturate(100%) invert(59%) sepia(81%) saturate(3806%) hue-rotate(3deg) brightness(110%) contrast(102%);
+            stroke: #FF6600;
         }
 
         .resizable-element {

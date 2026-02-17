@@ -65,7 +65,7 @@ defined('ABSPATH') || exit;
                         <!-- Social Media Icons -->
                         <div class="social-media">
                             <?php if ($fb = carbon_get_theme_option('facebook_link')): ?>
-                                <a href="<?php echo esc_url($fb); ?>" target="_blank">
+                                <a href="<?php echo esc_url($fb); ?>" target="_blank" rel="noopener noreferrer">
 
                                     <svg width=" 38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@ defined('ABSPATH') || exit;
                                 </a>
                             <?php endif; ?>
                             <?php if ($insta = carbon_get_theme_option('linkedin_link')): ?>
-                                <a href="<?php echo esc_url($insta); ?>" target="_blank">
+                                <a href="<?php echo esc_url($insta); ?>" target="_blank" rel="noopener noreferrer">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
@@ -97,8 +97,8 @@ defined('ABSPATH') || exit;
                                     </svg>
                                 </a>
                             <?php endif; ?>
-                            <?php if ($li = carbon_get_theme_option('email_link')): ?>
-                                <a href="<?php echo esc_url($li); ?>" target="_blank">
+                            <?php if ($email = carbon_get_theme_option('email_link')): ?>
+                                <a href="mailto:<?php echo esc_attr($email); ?>" target="_blank" rel="noopener noreferrer">
                                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
@@ -112,8 +112,14 @@ defined('ABSPATH') || exit;
                         </div>
 
                         <!-- Primary Button -->
-                        <?php if ($btn_text = carbon_get_theme_option('button_text')):
-                            $btn_link = carbon_get_theme_option('button_link'); ?>
+                        <?php 
+                        // Use the Header-specific options for the button, as set in inc/theme-option.php under "Header Options"
+                        // To change this button's text & link, go to WP Admin > Theme Options > Header Options.
+
+                        $btn_text = carbon_get_theme_option('header_button_text');
+                        $btn_link = carbon_get_theme_option('header_button_link');
+
+                        if ($btn_text && $btn_link): ?>
                             <a href="<?php echo esc_url($btn_link); ?>" class="primary-button">
                                 <div class="button-text">
                                     <?php echo esc_html($btn_text); ?>
@@ -132,7 +138,6 @@ defined('ABSPATH') || exit;
                                         </clipPath>
                                     </defs>
                                 </svg>
-
                             </a>
                         <?php endif; ?>
                     </div>
@@ -179,7 +184,7 @@ defined('ABSPATH') || exit;
                             <!-- Social Media Icons -->
                             <div class="social-media">
                                 <?php if ($fb = carbon_get_theme_option('facebook_link')): ?>
-                                    <a href="<?php echo esc_url($fb); ?>" target="_blank">
+                                    <a href="<?php echo esc_url($fb); ?>" target="_blank" rel="noopener noreferrer">
 
                                         <svg width=" 38" height="38" viewBox="0 0 38 38" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +198,7 @@ defined('ABSPATH') || exit;
                                     </a>
                                 <?php endif; ?>
                                 <?php if ($li = carbon_get_theme_option('linkedin_link')): ?>
-                                    <a href="<?php echo esc_url($li); ?>" target="_blank">
+                                    <a href="<?php echo esc_url($li); ?>" target="_blank" rel="noopener noreferrer">
                                         <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
@@ -213,7 +218,7 @@ defined('ABSPATH') || exit;
                                     </a>
                                 <?php endif; ?>
                                 <?php if ($email = carbon_get_theme_option('email_link')): ?>
-                                    <a href="mailto:<?php echo esc_attr($email); ?>">
+                                    <a href="mailto:<?php echo esc_attr($email); ?>" target="_blank" rel="noopener noreferrer">
                                         <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"

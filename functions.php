@@ -126,6 +126,19 @@ function mytheme_setup()
 }
 add_action('after_setup_theme', 'mytheme_setup');
 
+/**
+ * Add submenu toggle button after menu link (for items with children).
+ * Link click = go to page; icon click = toggle submenu; hover = show submenu (desktop).
+ */
+add_filter('walker_nav_menu_start_el', function ($item_output, $menu_item, $depth, $args) {
+    if ($depth === 0 && in_array('menu-item-has-children', $menu_item->classes, true)) {
+        $item_output .= '<button type="button" class="nav-submenu-toggle" aria-expanded="false" aria-label="' . esc_attr__('Toggle submenu', 'mytheme') . '">';
+        $item_output .= '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 6L8 11L3 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        $item_output .= '</button>';
+    }
+    return $item_output;
+}, 10, 4);
+
 // ....................................
 // Footer menu register
 function yourthemename_register_menus()

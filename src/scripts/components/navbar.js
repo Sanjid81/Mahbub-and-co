@@ -16,49 +16,69 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // Submenu toggle
+  // Submenu toggle: only icon/button toggles; link goes to page; hover shows submenu (desktop)
   const menuItems = document.querySelectorAll(".menu-item-has-children");
 
   menuItems.forEach((item) => {
     const link = item.querySelector("a");
     const submenu = item.querySelector(".sub-menu");
-    const icon = item.querySelector("svg");
+    const toggleBtn = item.querySelector(".nav-submenu-toggle");
+    const toggleIcon = toggleBtn ? toggleBtn.querySelector("svg") : null;
 
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
+    // Link click → navigate to page (no preventDefault)
+    // Icon/toggle button click → open/close submenu
+    if (toggleBtn && submenu) {
+      toggleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
-      const isActive = item.classList.contains("active");
+        const isActive = item.classList.contains("active");
 
-      // Close all other menus
-      menuItems.forEach((other) => {
-        if (other !== item) {
-          other.classList.remove("active");
-          other.querySelector(".sub-menu").style.maxHeight = null;
-          const otherIcon = other.querySelector("svg");
-          if (otherIcon) otherIcon.style.transform = "rotate(0deg)";
+        // Close all other menus
+        menuItems.forEach((other) => {
+          if (other !== item) {
+            other.classList.remove("active");
+            const otherSub = other.querySelector(".sub-menu");
+            const otherBtn = other.querySelector(".nav-submenu-toggle");
+            if (otherSub) otherSub.style.maxHeight = null;
+            if (otherBtn) {
+              otherBtn.setAttribute("aria-expanded", "false");
+              const oIcon = otherBtn.querySelector("svg");
+              if (oIcon) {
+                oIcon.style.transform = "rotate(0deg)";
+                oIcon.style.stroke = "";
+              }
+            }
+          }
+        });
+
+        if (!isActive) {
+          item.classList.remove("submenu-just-closed"); // so submenu can show again
+          item.classList.add("active");
+          submenu.style.maxHeight = submenu.scrollHeight + "px";
+          toggleBtn.setAttribute("aria-expanded", "true");
+          if (toggleIcon) {
+            toggleIcon.style.transform = "rotate(180deg)";
+            toggleIcon.style.stroke = "#FF6600";
+          }
+        } else {
+          item.classList.remove("active");
+          submenu.style.maxHeight = null;
+          toggleBtn.setAttribute("aria-expanded", "false");
+          if (toggleIcon) {
+            toggleIcon.style.transform = "rotate(0deg)";
+            toggleIcon.style.stroke = "";
+          }
+          // Desktop: prevent hover from reopening submenu until mouse leaves
+          item.classList.add("submenu-just-closed");
         }
       });
 
-      // Toggle current menu
-      if (!isActive) {
-        item.classList.add("active");
-        submenu.style.maxHeight = submenu.scrollHeight + "px";
-
-        // icon rotate + color change
-        if (icon) {
-          icon.style.transform = "rotate(180deg)";
-          icon.style.stroke = "#FF6600";
-        }
-      } else {
-        item.classList.remove("active");
-        submenu.style.maxHeight = null;
-
-        if (icon) {
-          icon.style.transform = "rotate(0deg)";
-          icon.style.stroke = "#ffffff";
-        }
-      }
-    });
+      // Remove "just closed" state when mouse leaves so hover can open again
+      item.addEventListener("mouseleave", () => {
+        item.classList.remove("submenu-just-closed");
+      });
+    }
   });
 });
 

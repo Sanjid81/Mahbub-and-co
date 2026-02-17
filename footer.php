@@ -78,7 +78,7 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
                         <!-- <span>< ?php echo esc_html($footer_email); ?></span> -->
 
                         <?php if ($footer_email = carbon_get_theme_option('footer_email')): ?>
-                            <a href="mailto:<?php echo esc_attr($footer_email); ?>" class="footer-email-link">
+                            <a href="mailto:<?php echo esc_attr($footer_email); ?>" class="footer-email-link" target="_blank" rel="noopener noreferrer">
                                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
@@ -95,7 +95,7 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
                         <!-- <span>< ?php echo esc_html($footer_email); ?></span> -->
 
                         <?php if ($footer_facebook_link = carbon_get_theme_option('footer_facebook_link')): ?>
-                            <a href="<?php echo esc_attr($footer_facebook_link); ?>" class="footer-email-link">
+                            <a href="<?php echo esc_url($footer_facebook_link); ?>" class="footer-email-link" target="_blank" rel="noopener noreferrer">
                                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
@@ -114,7 +114,7 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
                         <!-- <span>< ?php echo esc_html($footer_email); ?></span> -->
 
                         <?php if ($footer_linkedin_link = carbon_get_theme_option('footer_linkedin_link')): ?>
-                            <a href="<?php echo esc_attr($footer_linkedin_link); ?>" class="footer-email-link">
+                            <a href="<?php echo esc_url($footer_linkedin_link); ?>" class="footer-email-link" target="_blank" rel="noopener noreferrer">
                                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="white"
