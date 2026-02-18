@@ -99,6 +99,7 @@
 
                             .read-more {
                                 @extend .body-text-three;
+                                line-height: 100%;
                                 font-weight: 600;
                                 color: var(--text-red);
                                 text-decoration: none;
@@ -108,7 +109,7 @@
                                 transition: color 0.2s ease;
 
                                 span {
-                                    margin-top: 6px;
+                                    margin-top: 3px;
                                     transition: transform 0.2s ease;
 
                                     @media (max-width: 1070px) {

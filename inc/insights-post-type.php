@@ -41,11 +41,12 @@ function register_insights_post_type_and_taxonomy()
             'edit_item' => 'Edit Category',
             'menu_name' => 'Categories',
         ),
-        'hierarchical' => true,
-        'public' => true,
-        'show_admin_column' => true,
-        'show_in_rest' => true,
-        'rewrite' => array('slug' => 'insights-category'),
+        'hierarchical'       => true,
+        'public'             => true,
+        'show_admin_column'  => true,
+        'show_in_rest'       => true,
+        'show_in_nav_menus'   => true,
+        'rewrite'            => array('slug' => 'insights-category'),
     ));
 }
 add_action('init', 'register_insights_post_type_and_taxonomy');

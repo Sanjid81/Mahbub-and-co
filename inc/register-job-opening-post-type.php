@@ -57,12 +57,13 @@ function maco_register_job_opening_category_taxonomy()
     );
 
     register_taxonomy('job_opening_category', 'job_opening', array(
-        'labels'            => $labels,
-        'hierarchical'      => true,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'rewrite'           => array('slug' => 'opening-category'),
-        'show_in_rest'      => true,
+        'labels'             => $labels,
+        'hierarchical'       => true,
+        'show_ui'            => true,
+        'show_admin_column'  => true,
+        'show_in_nav_menus'   => true,
+        'rewrite'            => array('slug' => 'opening-category'),
+        'show_in_rest'       => true,
     ));
 }
 add_action('init', 'maco_register_job_opening_category_taxonomy');

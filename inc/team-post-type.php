@@ -42,11 +42,12 @@ function register_team_post_type_and_taxonomy()
             'edit_item' => 'Edit Team Area',
             'menu_name' => 'Area of practice',
         ),
-        'hierarchical' => true,
-        'public' => true,
-        'show_admin_column' => true,
-        'show_in_rest' => true,
-        'rewrite' => array('slug' => 'team-area'),
+        'hierarchical'       => true,
+        'public'             => true,
+        'show_admin_column'  => true,
+        'show_in_rest'       => true,
+        'show_in_nav_menus'   => true,
+        'rewrite'            => array('slug' => 'team-area'),
     ));
 }
 add_action('init', 'register_team_post_type_and_taxonomy');
@@ -126,6 +127,29 @@ function flush_rewrite_rules_for_team()
 add_action('after_switch_theme', 'flush_rewrite_rules_for_team');
 // If this is in a plugin
 // register_activation_hook(__FILE__, 'flush_rewrite_rules_for_team');
+
+/**
+ * Ensure taxonomy menu links (from Appearance > Menus) have correct href for details/archive
+ */
+function mahbub_nav_menu_taxonomy_link_attributes($atts, $item, $args)
+{
+    if (!isset($item->type) || $item->type !== 'taxonomy' || empty($item->object) || empty($item->object_id)) {
+        return $atts;
+    }
+    $url = isset($item->url) ? $item->url : '';
+    if (empty($url)) {
+        $term = get_term((int) $item->object_id, $item->object);
+        if ($term && !is_wp_error($term)) {
+            $url = get_term_link($term);
+            $url = is_wp_error($url) ? '' : esc_url($url);
+        }
+    }
+    if ($url) {
+        $atts['href'] = $url;
+    }
+    return $atts;
+}
+add_filter('nav_menu_link_attributes', 'mahbub_nav_menu_taxonomy_link_attributes', 10, 3);
 
 // NO WHITESPACE BELOW THIS LINE
 

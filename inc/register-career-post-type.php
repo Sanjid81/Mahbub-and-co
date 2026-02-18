@@ -50,12 +50,13 @@ function register_career_job_type_taxonomy()
     );
 
     register_taxonomy('career_job_type', 'program', array(
-        'labels' => $labels,
-        'hierarchical' => true, // category-like
-        'show_ui' => true,
-        'show_admin_column' => true,
-        'rewrite' => array('slug' => 'career-job-type'),
-        'show_in_rest' => true,
+        'labels'             => $labels,
+        'hierarchical'       => true,
+        'show_ui'            => true,
+        'show_admin_column'  => true,
+        'show_in_nav_menus'   => true,
+        'rewrite'            => array('slug' => 'career-job-type'),
+        'show_in_rest'       => true,
     ));
 }
 add_action('init', 'register_career_job_type_taxonomy');
