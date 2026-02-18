@@ -37,7 +37,8 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('text', 'footer_email', 'Email'),
             Field::make('text', 'footer_facebook_link', 'Facebook URL'),
             Field::make('text', 'footer_linkedin_link', 'LinkedIn URL'),
-            Field::make('text', 'footer_copyright', 'Copyright Text'),
+            Field::make('text', 'footer_copyright', 'Copyright Text')
+                ->set_help_text('Use {year} for current year, e.g. © {year} Mahbub & Co. All rights reserved'),
             Field::make('text', 'footer_site_name', 'Site Name'),
             Field::make('text', 'footer_site_url', 'Site URL'),
             Field::make('text', 'footer_privacy_policy', 'Privacy Policy Page URL'),

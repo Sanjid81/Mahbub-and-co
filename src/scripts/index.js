@@ -2,6 +2,7 @@ import "../styles/index.scss";
 
 
 import "../scripts/components/hero-slider";
+import "../scripts/components/about/about-slider";
 import "../scripts/components/testimonials";
 import "../scripts/components/accolades";
 import "../scripts/components/navbar";
@@ -13,6 +14,7 @@ import  "./components/job-openings/openings-tabs";
 import  "./components/insights/insights-tabs";
 import  "./components/insights/insights-slider";
 import  "./components/insights/insights-details-bottom-slider";
+import  "./components/recognition/recognition-cards";
 
 
 

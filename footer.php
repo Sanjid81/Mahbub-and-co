@@ -146,7 +146,7 @@ $terms_conditions = carbon_get_theme_option('footer_terms_conditions');
 
         <div class="footer-bottom">
             <div class="copy-right-text">
-                <span><?php echo esc_html($footer_copyright); ?></span> | <span> Site by:</span>
+                <span><?php echo esc_html( str_replace( '{year}', date( 'Y' ), $footer_copyright ) ); ?></span> | <span> Site by:</span>
                 <?php if ($footer_site_name && $footer_site_url): ?>
                     <a href="<?php echo esc_url($footer_site_url); ?>" target="_blank" rel="noopener noreferrer">
                         <?php echo esc_html($footer_site_name); ?>

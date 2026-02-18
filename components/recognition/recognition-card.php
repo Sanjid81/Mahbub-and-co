@@ -9,16 +9,18 @@ $load_more_link = get_query_var('load_more_link', '#');
         <div class="container">
 
             <div class="recognition-cards">
-
-                <?php foreach ($cards as $card):
+                <div class="recognition-cards-list">
+                <?php foreach ($cards as $index => $card):
                     $image_id = $card['icon'] ?? '';
                     $image_url = wp_get_attachment_image_url($image_id, 'full');
                     $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true);
 
                     $title = $card['title'] ?? '';
                     $description = $card['description'] ?? '';
+                    $is_hidden = $index >= 3;
+                    $card_class = 'recognition-wraper recognition-card-item' . ($is_hidden ? ' recognition-card-item--hidden' : '');
                     ?>
-                    <div class="recognition-wraper" data-aos="fade-up">
+                    <div class="<?php echo esc_attr($card_class); ?>" data-aos="fade-up">
 
                         <?php if ($image_url): ?>
                             <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($alt_text ?: $title); ?>">
@@ -39,8 +41,9 @@ $load_more_link = get_query_var('load_more_link', '#');
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <?php if ($load_more_text): ?>
-                    <a href="<?php echo esc_url($load_more_link); ?>" class="primary-button" data-aos="fade-up">
+                </div>
+                <?php if ($load_more_text && count($cards) > 3): ?>
+                    <button type="button" class="primary-button recognition-load-more-btn" data-aos="fade-up">
                         <div class="button-text">
                             <?php echo esc_html($load_more_text); ?>
                         </div>
@@ -57,7 +60,7 @@ $load_more_link = get_query_var('load_more_link', '#');
                                 </clipPath>
                             </defs>
                         </svg>
-                    </a>
+                    </button>
                 <?php endif; ?>
             </div>
 

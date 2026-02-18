@@ -17,35 +17,35 @@
 
         @include breakpoint-max(3xl) {
             max-width: 1680px;
-            padding-left: 200px;
-            padding-right: 200px;
+            padding-left: 300px;
+            padding-right: 300px;
         }
 
         @include breakpoint-max(xxl) {
             max-width: 1440px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+
+        @include breakpoint-max(xl) {
             padding-left: 100px;
             padding-right: 100px;
         }
 
-        @include breakpoint-max(xl) {
+        @include breakpoint-max(lg) {
             padding-left: 80px;
             padding-right: 80px;
         }
 
-        @include breakpoint-max(lg) {
-            padding-left: 60px;
-            padding-right: 60px;
-        }
-
         @include breakpoint-max(md) {
-            padding-left: 25px;
-            padding-right: 25px;
+            padding-left: 50px;
+            padding-right: 50px;
         }
 
         @include breakpoint-max(sm) {
             max-width: 680px;
-            padding-left: 25px;
-            padding-right: 25px;
+            padding-left: 40px;
+            padding-right: 40px;
         }
 
         .about-details-content {
@@ -59,6 +59,18 @@
             }
 
             p {
+                font-size: 20px;
+                font-weight: 400;
+                font-family: var(--font-primary);
+                line-height: 28px;
+                letter-spacing: 0;
+
+                @media (max-width: 1030px) {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+
                 margin-bottom: 60px;
                 color: var(--white-80);
 

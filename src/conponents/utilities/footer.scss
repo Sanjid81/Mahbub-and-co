@@ -347,7 +347,7 @@
 
                 .privacy-policy {
                     a {
-                        @extend .body-text;
+                        @extend .body-text-three;
                         color: var(--light-bg);
                         text-decoration: none;
                         transition: color 0.3s;

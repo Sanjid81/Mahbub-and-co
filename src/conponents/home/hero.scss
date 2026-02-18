@@ -108,7 +108,8 @@
                     }
 
                     .slide-description {
-                        @extend .body-text;
+                        @extend .heading-three;
+                        // line-height: 18px;
                         color: var(--light-bg);
                         margin-bottom: 40px;
 

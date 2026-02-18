@@ -8,6 +8,14 @@
         padding: 120px 0;
         align-items: center;
 
+        .recognition-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            align-items: center;
+        }
+
         @media (max-width:1600px) {
             padding: 80px 0;
         }
@@ -38,6 +46,10 @@
             @media (max-width:500px) {
                 flex-direction: column;
                 gap: 20px;
+            }
+
+            &.recognition-card-item--hidden {
+                display: none !important;
             }
 
             img {
