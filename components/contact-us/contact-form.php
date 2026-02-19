@@ -22,17 +22,25 @@
 
                         <?php if (!empty($fields['office_addresses'])): ?>
                             <?php foreach ($fields['office_addresses'] as $office): ?>
-                                <div class="office-section">
+                                <?php
+                                $raw_link = $office['office_location_link'] ?? '';
+                                $location_link = (is_array($raw_link) && !empty($raw_link['url']))
+                                    ? esc_url($raw_link['url'])
+                                    : (is_string($raw_link) && $raw_link !== '' ? esc_url($raw_link) : '');
+                                $tag = $location_link ? 'a' : 'div';
+                                $attrs = $location_link ? ' href="' . $location_link . '" target="_blank" rel="noopener noreferrer" class="office-section office-section--link"' : ' class="office-section"';
+                                ?>
+                                <<?php echo $tag . $attrs; ?>>
                                     <h3 class="heading-three">
                                         <?php echo esc_html($office['office_title']); ?>
                                     </h3>
                                     <?php
                                     $lines = explode("\n", $office['office_address']);
                                     foreach ($lines as $line) {
-                                        echo '<p>' . esc_html($line) . '</p>';
+                                        echo '<p>' . esc_html(trim($line)) . '</p>';
                                     }
                                     ?>
-                                </div>
+                                </<?php echo $tag; ?>>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>

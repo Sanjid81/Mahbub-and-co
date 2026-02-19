@@ -199,7 +199,7 @@
 
                 @media (max-width: 1800px) {
                     padding-right: 20px;
-                    gap: 30px;
+                    gap: 8px;
                 }
 
                 @media (max-width: 700px) {
@@ -250,22 +250,18 @@
                                 background-color: transparent;
                             }
 
+                            color: inherit;
+                            transition: transform 0.25s ease;
+
                             &:hover {
-                                cursor: pointer;
-                                box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
-                                border-radius: 50px;
+                                transform: scale(1.12);
 
-
-                                svg {
-                                    border-radius: 50px;
-
-                                    rect {
-                                        stroke: var(--text-red);
-                                    }
-
-                                    path {
-                                        fill: var(--light-bg);
-                                    }
+                                svg path {
+                                    fill: rgba(188, 0, 26, 1);
+                                    fill-opacity: 1;
+                                }
+                                svg rect {
+                                    stroke: rgba(188, 0, 26, 1);
                                 }
                             }
                         }

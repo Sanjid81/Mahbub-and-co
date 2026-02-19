@@ -91,9 +91,21 @@
                             line-height: 24px;
                             letter-spacing: 0;
                             color: var(--dark-normal);
+                            cursor: pointer;
 
                             @media (max-width: 1030px) {
                                 line-height: 100%;
+                            }
+                        }
+
+                        &--link {
+                            text-decoration: none;
+                            display: block;
+                            cursor: pointer;
+                            transition: opacity 0.2s ease;
+
+                            &:hover {
+                                opacity: 0.85;
                             }
                         }
                     }
@@ -166,7 +178,7 @@
                     border-radius: 12px;
 
                     @media (max-width: 616px) {
-                        padding: 30px;
+                        padding: 20px;
                     }
 
                 }
@@ -218,6 +230,7 @@
                 .form-group select:focus {
                     outline: none;
                     border-color: none;
+                    background-color: #fcfcfc;
                 }
 
                 .form-group select {

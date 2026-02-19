@@ -206,9 +206,9 @@
                 }
 
                 .insights-slider-card-meta {
-                    font-size: 0.875rem;
                     margin-bottom: 10px;
-                    color: #faf8f8;
+                    color: rgba(255, 255, 255, 1);
+                    @extend .small-text;
 
                     .category-badge {
                         background-color: transparent;

@@ -360,6 +360,9 @@ add_action('carbon_fields_register_fields', function () {
                     Field::make('text', 'office_title', 'Office Title'),
                     Field::make('textarea', 'office_address', 'Office Address')
                         ->set_help_text('Use line breaks for new lines'),
+                    Field::make('text', 'office_location_link', 'Location URL')
+                        ->set_help_text('Google Maps or any location URL. The whole office block becomes a clickable link.')
+                        ->set_attribute('placeholder', 'https://maps.google.com/...'),
                 ]),
 
             // Email

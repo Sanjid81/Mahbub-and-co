@@ -65,53 +65,57 @@
                                     </span>
                                 </div>
 
-                                <!-- Social Media Links -->
+                                <!-- Social Media Links (SVG always shown; link from backend URL if set) -->
                                 <?php
                                 $fb_link = carbon_get_the_post_meta('insights_facebook_link');
                                 $li_link = carbon_get_the_post_meta('insights_linkedin_link');
+                                $fb_url = is_string($fb_link) && $fb_link !== '' ? esc_url($fb_link) : '';
+                                $li_url = is_string($li_link) && $li_link !== '' ? esc_url($li_link) : '';
+                                ?>
+                                <div class="social-media-links-container">
+                                    <span>SHARE</span>
+                                    <div class="social-media-links">
+                                        <?php if ($fb_url): ?>
+                                            <a href="<?php echo $fb_url; ?>" target="_blank" rel="noopener noreferrer"
+                                                class="social-icon social-facebook" title="Facebook">
+                                            <?php else: ?>
+                                                <span class="social-icon social-facebook" title="Facebook" aria-hidden="true">
+                                                <?php endif; ?>
+                                                <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
+                                                        stroke-opacity="0.1" />
+                                                    <path
+                                                        d="M23.1598 20.0485L23.6556 16.8155H20.5537V14.7175C20.5537 13.833 20.987 12.9709 22.3764 12.9709H23.7867V10.2185C23.7867 10.2185 22.5068 10 21.2831 10C18.7283 10 17.0586 11.5484 17.0586 14.3515V16.8155H14.2188V20.0485H17.0586V27.8641C17.628 27.9535 18.2116 28 18.8061 28C19.4007 28 19.9843 27.9535 20.5537 27.8641V20.0485H23.1598Z"
+                                                        fill="black" fill-opacity="0.6" />
+                                                </svg>
+                                                <?php if ($fb_url): ?></a><?php else: ?></span><?php endif; ?>
 
-                                if ($fb_link || $li_link): ?>
-                                    <div class="social-media-links-container">
-                                        <span>SHARE</span>
-                                        <div class="social-media-links">
-                                            <?php if ($fb_link): ?>
-                                                <a href="<?php echo esc_url($fb_link); ?>" target="_blank" rel="noopener noreferrer"
-                                                    class="social-icon social-facebook" title="Facebook">
-                                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
-                                                            stroke-opacity="0.1" />
+                                        <?php if ($li_url): ?>
+                                            <a href="<?php echo $li_url; ?>" target="_blank" rel="noopener noreferrer"
+                                                class="social-icon social-linkedin" title="LinkedIn">
+                                            <?php else: ?>
+                                                <span class="social-icon social-linkedin" title="LinkedIn" aria-hidden="true">
+                                                <?php endif; ?>
+                                                <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
+                                                        stroke-opacity="0.1" />
+                                                    <g clip-path="url(#clip0_927_13025)">
                                                         <path
-                                                            d="M23.1598 20.0485L23.6556 16.8155H20.5537V14.7175C20.5537 13.833 20.987 12.9709 22.3764 12.9709H23.7867V10.2185C23.7867 10.2185 22.5068 10 21.2831 10C18.7283 10 17.0586 11.5484 17.0586 14.3515V16.8155H14.2188V20.0485H17.0586V27.8641C17.628 27.9535 18.2116 28 18.8061 28C19.4007 28 19.9843 27.9535 20.5537 27.8641V20.0485H23.1598Z"
+                                                            d="M28 20.9445V27.5988H24.1414V21.3923C24.1414 19.8313 23.5847 18.7683 22.1869 18.7683C21.1197 18.7683 20.4878 19.484 20.2074 20.1787C20.107 20.4256 20.0777 20.773 20.0777 21.1203V27.603H16.219C16.219 27.603 16.2692 17.0859 16.219 15.9978H20.0777V17.6425C20.0693 17.6551 20.0609 17.6676 20.0525 17.6802H20.0777V17.6425C20.5924 16.8515 21.5048 15.7258 23.5555 15.7258C26.0958 15.7216 28 17.383 28 20.9445ZM12.1846 10.4023C10.8621 10.4023 10 11.2687 10 12.407C10 13.5202 10.837 14.4116 12.1344 14.4116H12.1595C13.5071 14.4116 14.3441 13.5202 14.3441 12.407C14.3148 11.2687 13.5029 10.4023 12.1846 10.4023ZM10.2302 27.603H14.0888V15.9936H10.2302V27.603Z"
                                                             fill="black" fill-opacity="0.6" />
-                                                    </svg>
-                                                </a>
-                                            <?php endif; ?>
-
-                                            <?php if ($li_link): ?>
-                                                <a href="<?php echo esc_url($li_link); ?>" target="_blank" rel="noopener noreferrer"
-                                                    class="social-icon social-linkedin" title="LinkedIn">
-                                                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect x="0.5" y="0.5" width="37" height="37" rx="18.5" stroke="black"
-                                                            stroke-opacity="0.1" />
-                                                        <g clip-path="url(#clip0_927_13025)">
-                                                            <path
-                                                                d="M28 20.9445V27.5988H24.1414V21.3923C24.1414 19.8313 23.5847 18.7683 22.1869 18.7683C21.1197 18.7683 20.4878 19.484 20.2074 20.1787C20.107 20.4256 20.0777 20.773 20.0777 21.1203V27.603H16.219C16.219 27.603 16.2692 17.0859 16.219 15.9978H20.0777V17.6425C20.0693 17.6551 20.0609 17.6676 20.0525 17.6802H20.0777V17.6425C20.5924 16.8515 21.5048 15.7258 23.5555 15.7258C26.0958 15.7216 28 17.383 28 20.9445ZM12.1846 10.4023C10.8621 10.4023 10 11.2687 10 12.407C10 13.5202 10.837 14.4116 12.1344 14.4116H12.1595C13.5071 14.4116 14.3441 13.5202 14.3441 12.407C14.3148 11.2687 13.5029 10.4023 12.1846 10.4023ZM10.2302 27.603H14.0888V15.9936H10.2302V27.603Z"
-                                                                fill="black" fill-opacity="0.6" />
-                                                        </g>
-                                                        <defs>
-                                                            <clipPath id="clip0_927_13025">
-                                                                <rect width="18" height="18" fill="white"
-                                                                    transform="translate(10 10)" />
-                                                            </clipPath>
-                                                        </defs>
-                                                    </svg>
-                                                </a>
-                                            <?php endif; ?>
-                                        </div>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_927_13025">
+                                                            <rect width="18" height="18" fill="white"
+                                                                transform="translate(10 10)" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <?php if ($li_url): ?></a><?php else: ?></span><?php endif; ?>
                                     </div>
-                                <?php endif; ?>
+                                </div>
                             </div>
                             <h1 class="insights-single-title">
                                 <?php the_title(); ?>
@@ -225,7 +229,7 @@
         <!-- <div class="overlay"></div> -->
         <div class="container">
             <div class="header-row">
-                <h2 class="heading-one">Related Topics
+                <h2 class="heading-two">Related Topics
                     <!-- < ?php echo esc_html($heading); ?> -->
                 </h2>
 
@@ -292,7 +296,14 @@
 
                                             <div class="insights-card-details-button">
                                                 <a href="<?php the_permalink(); ?>" class="insights-card-link">
-                                                    Read More →
+                                                    Read More
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M12.1727 11.9998L9.34375 9.17184L10.7577 7.75684L15.0007 11.9998L10.7577 16.2428L9.34375 14.8278L12.1727 11.9998Z"
+                                                            fill="#BC001A" />
+                                                    </svg>
+
                                                 </a>
                                             </div>
                                         </div>

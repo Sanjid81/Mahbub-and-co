@@ -246,19 +246,18 @@
                         display: flex;
                         border-radius: 50%;
 
+                        color: inherit;
+                        transition: transform 0.25s ease;
+
                         &:hover {
-                            cursor: pointer;
-                            box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
+                            transform: scale(1.12);
 
-
-                            svg {
-                                rect {
-                                    stroke: var(--text-red);
-                                }
-
-                                // path {
-                                //     fill: var(--text-red);
-                                // }
+                            svg path {
+                                fill: rgba(188, 0, 26, 1);
+                                fill-opacity: 1;
+                            }
+                            svg rect {
+                                stroke: rgba(188, 0, 26, 1);
                             }
                         }
                     }
