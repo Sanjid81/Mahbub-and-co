@@ -1,6 +1,10 @@
 .author-details-page {
     padding-top: 80px;
 
+@media (max-width: 1200px) {
+    padding-top: 60px;
+}
+
     .container {
         .button-wraper {
             max-width: 1394px;
@@ -28,6 +32,9 @@
 
         .author-details-page-wraper {
             padding-top: 40px;
+            @media (max-width: 1200px) {
+                padding-top: 20px;
+            }
             max-width: 1255px;
             width: 100%;
             margin: 0 auto;
@@ -66,7 +73,7 @@
                             color: var(--dark-normal);
 
                             @media (max-width: 1030px) {
-                                font-size: 20px;
+                                font-size: 28px;
                               line-height: 44px;
                             }
                           
@@ -124,7 +131,7 @@
                 }
 
                 // Mobile
-                @media (max-width: 767px) {
+                @media (max-width: 570px) {
                     grid-template-columns: 1fr;
                 }
 
@@ -149,6 +156,10 @@
                         height: 218px;
                         overflow: hidden;
                         background: #f5f5f5;
+                        @media (max-width: 800px) {
+                            height: 180px;
+                        }
+                      
 
                         a {
                             display: block;
