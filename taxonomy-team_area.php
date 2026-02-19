@@ -169,13 +169,12 @@ $team_query = new WP_Query(array(
                         <?php endwhile;
                         wp_reset_postdata(); ?>
                     </div>
-                <?php else: ?>F
-                </div>
-                <p class="text-gray-500">No team members found in this category.</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <p class="text-gray-500">No team members found in this category.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-
 </section>
 
 <?php

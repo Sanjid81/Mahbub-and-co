@@ -13,6 +13,10 @@ html {
     .fslightbox-open body {
         overflow-y: hidden;
     }
+
+    @media (min-width: 601px) {
+        min-height: 0 !important;
+    }
 }
 
 a {
@@ -49,6 +53,11 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background: var(--dark-bg);
+
+    // Prevent white space below footer on tablet/desktop (override any min-height from WP/plugins)
+    @media (min-width: 601px) {
+        min-height: 0 !important;
+    }
 }
 
 .container {

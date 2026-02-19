@@ -243,7 +243,7 @@ function mahbub_team_search_ajax()
     if ($query->have_posts()):
         while ($query->have_posts()):
             $query->the_post(); ?>
-            <div class="mahbub__team-member">
+            <a href="<?php the_permalink(); ?>" class="mahbub__team-member">
                 <?php if (has_post_thumbnail()): ?>
                     <div class="mahbub__team-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
                 <?php endif; ?>
@@ -255,7 +255,7 @@ function mahbub_team_search_ajax()
                         <?php echo esc_html(get_post_meta(get_the_ID(), '_team_member_designation', true)); ?>
                     </p>
                 </div>
-            </div>
+            </a>
         <?php endwhile;
         wp_reset_postdata();
     else:

@@ -120,7 +120,7 @@ $terms = get_terms(array(
                         if ($query->have_posts()):
                             while ($query->have_posts()):
                                 $query->the_post(); ?>
-                                <div class="mahbub__team-member">
+                                <a href="<?php the_permalink(); ?>" class="mahbub__team-member">
                                     <?php if (has_post_thumbnail()): ?>
                                         <div class="mahbub__team-thumb">
                                             <?php the_post_thumbnail('medium'); ?>
@@ -136,7 +136,7 @@ $terms = get_terms(array(
                                         </p>
                                     </div>
 
-                                   <a href="<?php the_permalink(); ?>" class="mahbub__team-member-btn">
+                                    <span class="mahbub__team-member-btn" aria-hidden="true">
                                         <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <rect width="38" height="38" rx="19" fill="#FFE6E9" />
@@ -152,8 +152,8 @@ $terms = get_terms(array(
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                    </a>
-                                </div>
+                                    </span>
+                                </a>
                             <?php endwhile;
                             wp_reset_postdata();
                         else:
