@@ -99,17 +99,30 @@
                 align-items: center;
                 gap: 12px;
                 background-color: transparent;
-                border: none;
-                color: rgba(0, 0, 0, 1);
                 border: 1px solid rgba(0, 0, 0, 0.1);
+                color: rgba(0, 0, 0, 1);
                 border-radius: 100px;
                 cursor: pointer;
                 padding: 12px 24px;
                 margin-top: 24px;
                 @extend .button-text;
+                transition: all 0.3s ease;
+                transform: translateY(0);
 
                 &:hover {
-                    opacity: 0.7;
+                    background-color: var(--text-red);
+                    color: var(--color-white);
+                    border-color: var(--text-red);
+                    box-shadow: 0 4px 16px rgba(188, 0, 26, 0.3);
+
+                    svg path,
+                    svg line {
+                        stroke: var(--color-white);
+                    }
+                }
+
+                svg {
+                    transition: stroke 0.3s ease;
                 }
             }
 
@@ -120,6 +133,8 @@
 
                 p {
                     @extend .navbar-text;
+                    font-weight: 400;
+
                     line-height: 24px;
                     margin-bottom: 60px;
                     color: var(--dark-80);

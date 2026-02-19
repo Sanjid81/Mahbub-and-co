@@ -267,8 +267,17 @@ function mahbub_team_search_ajax()
 add_action('wp_ajax_mahbub_team_search', 'mahbub_team_search_ajax');
 add_action('wp_ajax_nopriv_mahbub_team_search', 'mahbub_team_search_ajax');
 
-
-
+/**
+ * Remove Gutenberg/admin UI text that sometimes appears in team post content
+ * (e.g. "Move upMove downToggle panel: Team Member DetailsEmail")
+ */
+add_filter('the_content', function ($content) {
+    if (!is_singular('team')) {
+        return $content;
+    }
+    $content = preg_replace('/<p[^>]*>\s*Move up\s*Move down\s*Toggle panel:[^<]*<\/p>/is', '', $content);
+    return $content;
+}, 20);
 
 function enable_jquery_properly()
 {

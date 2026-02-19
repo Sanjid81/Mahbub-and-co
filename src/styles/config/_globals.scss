@@ -52,7 +52,7 @@ body {
     sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
-    background: var(--dark-bg);
+    // background: var(--body-bg);
 
     // Prevent white space below footer on tablet/desktop (override any min-height from WP/plugins)
     @media (min-width: 601px) {
