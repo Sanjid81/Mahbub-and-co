@@ -12,7 +12,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.09;
+        // opacity: 0.09;
         z-index: 0;
     }
 
@@ -30,7 +30,7 @@
             flex: 1;
             display: flex;
             justify-content: center;
-            background-color: rgba(88, 0, 12, 1);
+            background-color: rgba(82, 0, 11, 0.9);
             z-index: 1 !important;
 
             @media (max-width:1500px) {
@@ -87,7 +87,7 @@
                         }
 
                         .body-text {
-                            color: var(--light-bg);
+                            color: rgba(255, 255, 255, 0.8);
                         }
                     }
 
@@ -114,10 +114,10 @@
 
                                 .mahbub__team-search-input {
                                     background-color: transparent;
-                                    border: 1px solid var(--light-bg);
-                                    color: var(--light-bg);
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    color: rgba(255, 255, 255, 0.8);
                                     width: 100%;
-                                    padding: 12px 40px 12px 12px;
+                                    padding: 20px 40px 20px 24px;
                                     margin-bottom: 24px;
                                     border-radius: 16px;
                                     font-size: 16px;
@@ -130,8 +130,8 @@
 
                                 .mahbub__input-icon {
                                     position: absolute;
-                                    right: 10px;
-                                    bottom: 34px;
+                                    right: 24px;
+                                    bottom: 43px;
                                     pointer-events: none;
                                 }
                             }
@@ -139,11 +139,11 @@
                             .mahbub__team-select {
                                 width: 100%;
                                 margin-bottom: 16px;
-                                padding: 12px 16px 12px 12px;
+                                padding: 20px 40px 20px 24px;
                                 border-radius: 16px;
-                                border: 1px solid var(--light-bg);
+                                border: 1px solid rgba(255, 255, 255, 0.2);
                                 background-color: transparent;
-                                color: var(--light-bg);
+                                color: rgba(255, 255, 255, 0.8);
                                 font-size: 16px;
 
                                 appearance: none;
@@ -152,12 +152,14 @@
 
                                 background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
                                 background-repeat: no-repeat;
-                                background-position: right 16px center;
+                                background-position: right 24px center;
                                 background-size: 12px;
 
                                 option {
                                     color: #000;
                                 }
+
+
                             }
 
                             .primary-button {
@@ -167,6 +169,7 @@
 
                                 .button-text {
                                     color: var(--color-white);
+                                    font-family: var(--font-primary);
                                 }
                             }
                         }
@@ -178,7 +181,7 @@
 
         .team-section-right {
             z-index: 1 !important;
-            background-color: rgb(251, 248, 249);
+            background-color: rgb(251, 248, 249, 0.9);
             flex: 1.5;
             display: flex;
             justify-content: center;
@@ -312,25 +315,27 @@
                                     font-weight: 600;
                                     line-height: 24px;
                                     letter-spacing: 0;
-                                    column-rule: rgba(0, 0, 0, 1);
+                                    color: var(--dark-normal);
 
                                     @media (max-width: 1030px) {
                                         font-size: 16px;
                                         line-height: 20px;
                                     }
 
-                                    .mahbub__team-designation {
-                                        font-size: 14px;
-                                        font-family: var(--font-primary);
-                                        font-weight: 500;
-                                        line-height: 18px;
-                                        letter-spacing: 0;
-                                        color: rgba(0, 0, 0, 0.6);
 
-                                        @media (max-width: 1030px) {
-                                            font-size: 12px;
-                                            line-height: 18px;
-                                        }
+                                }
+
+                                .mahbub__team-designation {
+                                    font-size: 14px;
+                                    font-family: var(--font-primary);
+                                    font-weight: 500;
+                                    line-height: 18px;
+                                    letter-spacing: 0;
+                                    color: var(--dark-60);
+
+                                    @media (max-width: 1030px) {
+                                        font-size: 12px;
+                                        line-height: 18px;
                                     }
                                 }
                             }

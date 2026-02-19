@@ -17,6 +17,9 @@ add_action('carbon_fields_register_fields', function () {
 
             Field::make('image', 'crb_banner', __('Banner Image')),
 
+            Field::make('image', 'crb_description_background', __('Description Section Background Image'))
+                ->help_text(__('Background image for the description section (same style as Our People). Leave empty for default.', 'mahbub-and-co')),
+
             Field::make('rich_text', 'crb_description', __('Description')),
 
             Field::make('text', 'button_text', 'Back Button Text')
