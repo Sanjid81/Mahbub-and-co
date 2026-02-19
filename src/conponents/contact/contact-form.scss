@@ -246,29 +246,49 @@
                     }
                 }
 
-                .submit-btn {
-                    background-color: #c41e3a;
-                    color: white;
+
+                .submit-button {
+                    padding: 6px 10px;
+                    border: 1px solid #d0d0d0;
+                    transition: border-color 0.3s;
+                    width: fit-content;
+                    cursor: pointer;
+                    color: var(--dark-normal);
+                    border-radius: 100px;
+                    background-color: var(--primary-red);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 24px;
+                }
+    
+                .submit-button::after {
+                    content: "";
+                    width: 44px;
+                    height: 44px;
+                    background-image: url("data:image/svg+xml,%3Csvg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='44' height='44' rx='22' fill='white'/%3E%3Cg clip-path='url(%23clip0)'%3E%3Cpath d='M16.166 17H26.9993V27.8333' stroke='%23BC001A' stroke-width='2' stroke-miterlimit='10'/%3E%3Cpath d='M16 28L27 17' stroke='%23BC001A' stroke-width='2' stroke-miterlimit='10'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0'%3E%3Crect width='20' height='20' fill='white' transform='translate(12 12)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    flex-shrink: 0;
+                    @media (max-width: 900px) {
+                        width: 36px;
+                        height: 36px;
+                    }
+                }
+    
+                .submit-button button {
                     border: none;
-                    padding: 12px 35px;
-                    border-radius: 25px;
-                    font-size: 14px;
+                    background: transparent;
+                    color: var(--color-white);
+                    font-size: 16px;
                     font-weight: 600;
                     cursor: pointer;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 10px;
-                    transition: background-color 0.3s ease;
-                    margin-top: 10px;
-                }
+                    font-family: var(--font-primary);
+                    line-height: 24px;
+                    cursor: pointer;
+                    margin-left: 13px;
 
-                .submit-btn:hover {
-                    background-color: #a01729;
-                }
-
-                .submit-btn::after {
-                    content: '→';
-                    font-size: 18px;
+                    
                 }
             }
 

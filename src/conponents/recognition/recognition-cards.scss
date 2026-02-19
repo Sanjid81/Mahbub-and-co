@@ -1,12 +1,38 @@
 .recognition-section {
     background-color: rgb(247, 247, 247);
-
+    .container {
+        margin: 0 auto;
+        width: 100%;
+        padding-left: 120px;
+        padding-right: 120px;
+        max-width: 1920px;
+    
+        @include breakpoint-max(3xl) {
+            max-width: 1680px;
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+    
+        @include breakpoint-max(md) {
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+    
+        @include breakpoint-max(sm) {
+            max-width: 680px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+    
+    
+    }
     .recognition-cards {
         display: flex;
         flex-direction: column;
         gap: 20px;
         padding: 120px 0;
         align-items: center;
+        transition: all 0.3s ease;
 
         .recognition-cards-list {
             display: flex;
@@ -45,7 +71,8 @@
 
             @media (max-width:500px) {
                 flex-direction: column;
-                gap: 20px;
+                gap: 30px;
+                padding: 30px;
             }
 
             &.recognition-card-item--hidden {
