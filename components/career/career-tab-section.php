@@ -110,7 +110,6 @@ function career_overview_render_callback()
                                     </div>
                                 </div>
                                </div>
-                                <!-- Dark block: Professional & Personal Development (only on Overview tab) -->
                                 <?php if (!empty($career_dev_sections) || !empty($dev_section_images)): ?>
                                 <div class="career-dev-sections" <?php echo $bg_image ? ' style="--career-section-bg: url(\'' . esc_url($bg_image) . '\');"' : ''; ?>>
                                     <div class="overlay"></div>
