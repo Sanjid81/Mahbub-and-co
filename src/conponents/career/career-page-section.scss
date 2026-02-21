@@ -14,7 +14,7 @@
         background-color: var(--primary-red);
         position: sticky;
         top: 0;
-        z-index: 1000;
+        z-index: 99;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
 
@@ -107,7 +107,7 @@
             .intro {
                 p {
                     @extend .body-text;
-                    line-height: 120%;
+                    line-height: 24px;
                     color: var(--dark-80);
                     margin-bottom: 16px;
                 }

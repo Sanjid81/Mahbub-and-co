@@ -166,6 +166,9 @@ add_action('carbon_fields_register_fields', function () {
     // ========================about us header===========================
     Block::make('comon header Section')
         ->add_fields(array(
+            Field::make('image', 'careers_hero_bg', __('Background Image', 'your-textdomain'))
+                ->set_help_text(__('Hero section background image. Leave empty for default.', 'your-textdomain')),
+
             Field::make('text', 'careers_title', __('Main Title', 'your-textdomain'))
                 ->set_default_value('Careers')
                 ->set_width(50),
@@ -178,7 +181,10 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('text', 'careers_button_link', __('Button Link (URL)', 'your-textdomain'))
         ))
         ->set_render_callback(function ($fields) {
+            $bg_id = isset($fields['careers_hero_bg']) ? (int) $fields['careers_hero_bg'] : 0;
+            $bg_url = $bg_id ? wp_get_attachment_url($bg_id) : '';
 
+            set_query_var('careers_hero_bg', $bg_url);
             set_query_var('careers_title', $fields['careers_title'] ?? 'Careers');
             set_query_var('careers_description', $fields['careers_description'] ?? '');
             set_query_var('careers_button_text', $fields['careers_button_text'] ?? 'Apply');

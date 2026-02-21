@@ -3,9 +3,21 @@ $title = get_query_var('careers_title', 'Careers');
 $desc = get_query_var('careers_description', '');
 $btn_text = get_query_var('careers_button_text', 'Apply');
 $btn_link = get_query_var('careers_button_link', '#');
-?>
 
+$bg_img = get_query_var('careers_hero_bg', '');
+if (empty($bg_img) && function_exists('carbon_get_theme_option')) {
+    $bg_id = carbon_get_theme_option('careers_hero_bg');
+    $bg_img = $bg_id ? wp_get_attachment_url($bg_id) : '';
+}
+if (empty($bg_img)) {
+    $bg_img = 'https://i.postimg.cc/hGk6QtbV/hero-background-img.webp';
+}
+?>
 <section class="careers-hero">
+    <div class="careers-hero-bg">
+        <img src="<?php echo esc_url($bg_img); ?>" alt="" class="careers-hero-bg-img">
+        <span class="careers-hero-bg-overlay"></span>
+    </div>
     <div class="container">
         <div class="careers-content">
             <h1 class="heading-one">
