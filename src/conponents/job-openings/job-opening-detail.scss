@@ -47,12 +47,14 @@
                     max-width: 1110px;
                     width: 100%;
                     background-color: var(--color-white);
-                    border-radius: 10px;
+                    border-radius: 12px;
                     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
                     padding: 40px;
                     border: 1px solid rgba(0, 0, 0, 0.1);
 
-
+@media (max-width: 768px) {
+    padding: 20px;
+}
                     .maco-job-block-description {
                         h2 {
                             font-size: 32px;
@@ -95,7 +97,7 @@
                                     color: var(--dark-normal);
 
                                     @media (max-width: 1030px) {
-                                        line-height: 100%;
+                                        line-height: 24px;
                                     }
                                 }
                             }
@@ -221,15 +223,38 @@
 
                     .maco-opening-detail-share-icons {
                         display: flex;
-                        // flex-wrap: wrap;
                         gap: 12px;
+
+                        .maco-opening-detail-share-icon {
+                            display: inline-flex;
+                            transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+                            &:hover {
+                                transform: scale(1.1);
+
+                                svg {
+                                    rect {
+                                        stroke: var(--text-red);
+                                    }
+                                    path {
+                                        fill: var(--text-red);
+                                    }
+                                }
+                            }
+                        }
+
+                        svg {
+                            transition: box-shadow 0.25s ease;
+                        }
+
+                        .maco-opening-detail-share-icon:hover svg {
+                            filter: drop-shadow(0 4px 12px rgba(188, 0, 26, 0.25));
+                        }
                     }
 
-                  
-
-                    svg:hover {
-                        box-shadow: 0 4px 16px rgba(102, 3, 3, 0.06);
-                    }
+                    // svg:hover {
+                    //     box-shadow: 0 4px 16px rgba(102, 3, 3, 0.06);
+                    // }
 
                 }
             }

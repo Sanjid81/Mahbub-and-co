@@ -30,12 +30,17 @@
                 border-radius: 8px;
                 border: none;
 
+                @media (max-width: 480px) {
+                    justify-content: center;
+                    align-items: center;
+                }
+
                 .maco-openings-tab {
                     font-family: var(--font-primary);
-                    font-size: 15px;
-                    font-weight: 500;
-                    line-height: 1.4;
-                    color: var(--dark-normal);
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 20px;
+                    color: var(--dark-80);
                     background: transparent;
                     border: none;
                     padding: 18px 24px;
@@ -90,13 +95,11 @@
                     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
                 }
 
-                .maco-openings-card.maco-openings-card--hidden {
-                    display: none;
-                }
 
                 .maco-openings-card-title {
                     @extend .heading-five;
                     margin-bottom: 32px;
+                    font-family: var(--font-primary);
                 }
 
                 .maco-openings-card-meta {
@@ -110,6 +113,14 @@
                     @media (max-width: 1024px) {
                         grid-template-columns: 1fr;
                         gap: 16px;
+                    }
+
+                    @media (max-width: 768px) {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+
+                    @media (max-width: 480px) {
+                        grid-template-columns: 1fr;
                     }
 
                     .maco-openings-card-meta-item {
@@ -132,6 +143,10 @@
                         }
                     }
                 }
+            }
+
+            .maco-openings-card--hidden {
+                display: none !important;
             }
         }
     }
