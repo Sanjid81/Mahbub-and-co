@@ -110,56 +110,18 @@ $terms = get_terms(array(
                     </div>
 
                     <div class="mahbub__team-results">
-
                         <?php
-                        // Initial 6 team members
-                        $query = new WP_Query(array(
-                            'post_type' => 'team',
-                            'posts_per_page' => 6,
-                        ));
-                        if ($query->have_posts()):
-                            while ($query->have_posts()):
-                                $query->the_post(); ?>
-                                <a href="<?php the_permalink(); ?>" class="mahbub__team-member">
-                                    <?php if (has_post_thumbnail()): ?>
-                                        <div class="mahbub__team-thumb">
-                                            <?php the_post_thumbnail('medium'); ?>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <div class="team-member-info">
-                                        <h3 class="mahbub__team-name">
-                                            <?php the_title(); ?>
-                                        </h3>
-                                        <p class="mahbub__team-designation">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_team_member_designation', true)); ?>
-                                        </p>
-                                    </div>
-
-                                    <span class="mahbub__team-member-btn" aria-hidden="true">
-                                        <svg width="38" height="38" viewBox="0 0 38 38" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="38" height="38" rx="19" fill="#FFE6E9" />
-                                            <g clip-path="url(#clip0_927_12827)">
-                                                <path d="M14.5 23.5L23.5 14.5" stroke="#BC001A" stroke-width="1.5"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M16.1875 14.5H23.5V21.8125" stroke="#BC001A" stroke-width="1.5"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_927_12827">
-                                                    <rect width="18" height="18" fill="white" transform="translate(10 10)" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </span>
-                                </a>
-                            <?php endwhile;
-                            wp_reset_postdata();
-                        else:
-                            echo '<p>No Team Members found.</p>';
-                        endif;
+                        // Placeholder cards: same .mahbub__team-member design, no content. Replaced by real results on search.
+                        for ($i = 0; $i < 6; $i++) :
                         ?>
+                        <div class="mahbub__team-member mahbub__team-member--placeholder" aria-hidden="true">
+                            <div class="mahbub__team-thumb"></div>
+                            <div class="team-member-info">
+                                <h3 class="mahbub__team-name">&nbsp;</h3>
+                                <p class="mahbub__team-designation">&nbsp;</p>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
                     </div>
 
                 </div>

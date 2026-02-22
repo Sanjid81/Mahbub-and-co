@@ -228,7 +228,6 @@
                 .team-right-content {
                     .mahbub__selected-category {
                         margin-bottom: 25px;
-                        display: none;
                         display: flex;
                         width: fit-content;
                         align-items: center;
@@ -277,13 +276,27 @@
                             height: 340px;
                             max-height: 340px;
                             overflow: hidden;
-                            border-radius: 10px;
+                            border-radius: 12px;
                             background: linear-gradient(180deg, rgba(237, 240, 247, 1) 0%, rgba(204, 205, 223, 1) 100%);
                             transition: transform 0.2s ease, box-shadow 0.2s ease;
 
                             &:hover {
                                 transform: translateY(-2px);
                                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+                            }
+
+                            &--placeholder {
+                                cursor: default;
+                                pointer-events: none;
+
+                                &:hover {
+                                    transform: none;
+                                    box-shadow: none;
+                                }
+
+                                .mahbub__team-member-btn {
+                                    display: none;
+                                }
                             }
 
                             .mahbub__team-thumb {
