@@ -357,8 +357,9 @@
 
 
             .look-for-box-title {
-                @extend .heading-five;
-                color: var(--dark-normal);
+                @extend .heading-three;
+                line-height: 130%;
+                color: rgba(150, 0, 20, 1);
                 width: 100%;
                 text-align: left;
 
