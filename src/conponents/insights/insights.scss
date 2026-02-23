@@ -187,6 +187,7 @@
 
                             .insights-card-title {
                                 @extend .heading-three;
+                                font-family: var(--font-primary)!important;
                                 line-height: 130%;
                                 color: var(--dark-normal);
                                 flex-grow: 1;

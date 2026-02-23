@@ -16,6 +16,7 @@ import  "./components/insights/insights-slider";
 import  "./components/insights/insights-details-bottom-slider";
 import  "./components/recognition/recognition-cards";
 import  "./components/apply/apply-form-file-name";
+import  "./components/apply/apply-form-validation";
 
 
 

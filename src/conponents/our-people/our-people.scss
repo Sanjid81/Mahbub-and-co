@@ -174,9 +174,11 @@
                             .primary-button {
                                 border: 1px solid rgba(255, 255, 255, 0.2);
                                 background-color: transparent;
+                                transition: all 0.35s ease-in-out;
                                 color: #ffff;
 
                                 .button-text {
+                                    transition: all 0.35s ease-in-out;
                                     color: var(--color-white);
                                     font-family: var(--font-primary);
                                 }
