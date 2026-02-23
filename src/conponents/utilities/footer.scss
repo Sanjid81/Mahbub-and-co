@@ -35,6 +35,7 @@
                     padding-bottom: 30px;
 
                 }
+
                 @media (max-width: 700px) {
                     grid-template-columns: 1fr;
                     text-align: start;
@@ -126,6 +127,7 @@
                     max-width: 321px;
                     width: 100%;
                     @extend .heading-three;
+                    font-weight: 400;
                     line-height: 28px;
                     color: var(--light-bg);
                     opacity: 80%;
@@ -260,6 +262,7 @@
                                     fill: rgba(188, 0, 26, 1);
                                     fill-opacity: 1;
                                 }
+
                                 svg rect {
                                     stroke: rgba(188, 0, 26, 1);
                                 }
@@ -297,14 +300,16 @@
 
             .copy-right-text {
                 span {
-                    @extend .body-text;
+                    @extend .body-text-three;
+                    line-height: 18px;
                     color: var(--light-bg);
                     opacity: 80%;
 
                 }
 
                 a {
-                    @extend .body-text;
+                    @extend .body-text-three;
+                    line-height: 18px;
                     color: var(--light-bg);
                     opacity: 80%;
                     transition: color 0.3s;
@@ -376,7 +381,8 @@
 
                 .terms-conditions {
                     a {
-                        @extend .body-text;
+                        @extend .body-text-three;
+                        line-height: 18px;
                         color: var(--light-bg);
                         text-decoration: none;
                         transition: color 0.3s;
