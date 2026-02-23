@@ -27,6 +27,9 @@ function maco_register_current_openings_block()
         ->add_fields(array(
             Field::make('text', 'maco_openings_heading', __('Section Heading', 'mahbub-and-co'))
                 ->set_default_value('Current Openings'),
+            Field::make('text', 'maco_openings_button_text', __('Button Text', 'mahbub-and-co'))
+                ->set_default_value('Apply Now')
+             
         ))
         ->set_render_callback('maco_current_openings_render_callback');
 }
@@ -35,17 +38,26 @@ function maco_current_openings_render_callback()
 {
     $args = func_get_args();
     $heading = 'Current Openings';
+    $button_text = 'Apply Now';
     foreach ($args as $arg) {
         if (is_array($arg) && array_key_exists('maco_openings_heading', $arg)) {
             if ($arg['maco_openings_heading'] !== '') {
                 $heading = $arg['maco_openings_heading'];
             }
+            if (!empty($arg['maco_openings_button_text'])) {
+                $button_text = $arg['maco_openings_button_text'];
+            }
             break;
         }
         if (is_object($arg) && method_exists($arg, 'get_id') && function_exists('carbon_get_block_meta')) {
-            $h = carbon_get_block_meta($arg->get_id(), 'maco_openings_heading');
+            $block_id = $arg->get_id();
+            $h = carbon_get_block_meta($block_id, 'maco_openings_heading');
             if ($h !== '') {
                 $heading = $h;
+            }
+            $bt = carbon_get_block_meta($block_id, 'maco_openings_button_text');
+            if ($bt !== '') {
+                $button_text = $bt;
             }
             break;
         }
@@ -110,7 +122,6 @@ function maco_current_openings_render_callback()
                             $typ = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_type') : '';
                             $dead = function_exists('carbon_get_post_meta') ? carbon_get_post_meta($id, 'maco_job_deadline') : '';
                             $details_url = get_permalink($id);
-                            $view_details_text = __('View Details', 'mahbub-and-co');
                             ?>
                             <article class="maco-openings-card" data-maco-openings-category="<?php echo esc_attr($data_cat); ?>">
                                 <h3 class="maco-openings-card-title"><a href="<?php echo esc_url($details_url); ?>"
@@ -228,7 +239,7 @@ function maco_current_openings_render_callback()
 
                                 <a href="<?php echo esc_url($details_url); ?>" class="red-bg-button" data-aos="fade-up">
                                     <div class="button-text">
-                                        <?php echo esc_html($view_details_text); ?>
+                                        <?php echo esc_html($button_text); ?>
                                     </div>
                                     <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="44" height="44" rx="22" fill="white" />
