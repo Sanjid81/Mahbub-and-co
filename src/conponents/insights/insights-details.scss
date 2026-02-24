@@ -122,12 +122,21 @@
                                 display: flex;
                                 gap: 6px;
 
-                                .social-icon {
+                                a.social-icon {
                                     display: inline-flex;
                                     line-height: 0;
                                     text-decoration: none;
                                     color: inherit;
-                                    transition: transform 0.25s ease;
+                                    cursor: pointer;
+                                    transition: transform 0.25s ease,
+                                        color 0.25s ease;
+
+                                    svg path,
+                                    svg rect {
+                                        transition: fill 0.25s ease,
+                                            fill-opacity 0.25s ease,
+                                            stroke 0.25s ease;
+                                    }
 
                                     &:hover {
                                         transform: scale(1.12);
@@ -140,10 +149,11 @@
                                             stroke: rgba(188, 0, 26, 0.5);
                                         }
                                     }
-                                }
-                                span.social-icon {
-                                    cursor: default;
-                                    pointer-events: none;
+
+                                    &:focus-visible {
+                                        outline: 2px solid rgba(188, 0, 26, 0.6);
+                                        outline-offset: 2px;
+                                    }
                                 }
                             }
                         }
