@@ -299,8 +299,9 @@
                 padding: 2px 20px 40px;
                 z-index: 999;
                 overflow: hidden;
-                height: calc(100vh - 103px);
+                height: 100vh;
                 max-height: 0;
+                // max-height: 0;
                 opacity: 0;
                 visibility: hidden;
                 // transition: all 0.4s ease, max-height 0.4s ease;
@@ -310,7 +311,8 @@
                 // }
 
                 &.active {
-                    max-height: calc(100vh - 103px);
+                    // max-height: calc(100vh - 103px);
+                    max-height: 100vh;
                     opacity: 1;
                     visibility: visible;
 
@@ -318,7 +320,8 @@
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
-                        height: 100vh;
+                        max-height: calc(100vh - 103px);
+                        height: 100%;
                         overflow-y: auto;
 
                         .small-nav-first-half {

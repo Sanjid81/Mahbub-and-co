@@ -89,12 +89,19 @@ $team_query = new WP_Query(array(
                         <?php while ($team_query->have_posts()):
                             $team_query->the_post();
 
-                            // Dynamic fields
-                            $email = carbon_get_post_meta(get_the_ID(), 'team_email');
-                            $phone = carbon_get_post_meta(get_the_ID(), 'team_number');
+                            // Dynamic fields: single source = inc/team-details/team-details.php (Team Member Extra Info)
+                            $pid = get_the_ID();
+                            $email = carbon_get_post_meta($pid, 'team_email');
+                            if ($email === '' || $email === null) {
+                                $email = get_post_meta($pid, '_team_email', true) ?: get_post_meta($pid, 'team_email', true);
+                            }
+                            $email = trim((string) $email);
+                            $phone = carbon_get_post_meta($pid, 'team_phone') ?: get_post_meta($pid, '_team_phone', true) ?: get_post_meta($pid, 'team_phone', true);
+                            $phone = trim((string) $phone);
 
-                            // designation from team post meta
-                            $designation = get_post_meta(get_the_ID(), '_team_member_designation', true);
+                            // Designation: Carbon field first, then legacy meta box
+                            $designation = carbon_get_post_meta(get_the_ID(), 'team_designation')
+                                ?: get_post_meta(get_the_ID(), '_team_member_designation', true);
                             ?>
                             <div class="team-member ">
                                 <?php if (has_post_thumbnail()): ?>

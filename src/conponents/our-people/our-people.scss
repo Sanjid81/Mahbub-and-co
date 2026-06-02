@@ -1,381 +1,391 @@
 .our-people-section {
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+
+  // Prevent extra white space below footer on tablet/desktop (height: 100% was stretching the section)
+  @media (min-width: 601px) {
+    height: auto;
+    min-height: 0;
+  }
+
+  .bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    max-width: 1920px;
+    object-fit: cover;
+    // opacity: 0.09;
+    z-index: 0;
+  }
+
+  .our-people-container {
+    display: flex;
     width: 100%;
-    margin: 0 auto;
+    justify-content: center;
 
-    // Prevent extra white space below footer on tablet/desktop (height: 100% was stretching the section)
-    @media (min-width: 601px) {
-        height: auto;
-        min-height: 0;
+    @media (max-width: 1500px) {
+      flex-wrap: wrap;
     }
 
+    .team-section-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      background-color: rgba(82, 0, 11, 0.9);
+      z-index: 1 !important;
 
-    .bg-img {
-        position: absolute;
-        top: 0;
-        left: 0;
+      @media (max-width: 1500px) {
+        flex: 0 0 100%;
+        max-width: 100%;
+        justify-content: flex-start;
+      }
+
+      .team-left-inner {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        // opacity: 0.09;
-        z-index: 0;
+        max-width: 803px;
+        padding: 170px 120px;
+
+        @media (max-width: 1800px) {
+          max-width: 720px;
+          padding: 80px 50px;
+        }
+
+        @media (max-width: 1800px) {
+          max-width: 100%;
+          padding: 80px 80px;
+        }
+
+        @media (max-width: 800px) {
+          max-width: 100%;
+          padding: 60px 40px;
+        }
+
+        @media (max-width: 600px) {
+          max-width: 100%;
+          padding: 60px 30px;
+        }
+
+        .team-left-content {
+          max-width: 803px;
+          z-index: 1 !important;
+          display: flex;
+          flex-direction: column;
+          gap: 122px;
+
+          @media (max-width: 1500px) {
+            max-width: 900px;
+            gap: 80px;
+          }
+
+          @media (max-width: 600px) {
+            gap: 50px;
+          }
+
+          .text-content {
+            .heading-one {
+              color: var(--color-white);
+              margin-bottom: 40px;
+            }
+
+            .body-text {
+              color: rgba(255, 255, 255, 0.8);
+            }
+          }
+
+          .form-wrapper {
+            @media (max-width: 1500px) {
+              max-width: 500px;
+            }
+
+            .mahbub__team-search-form {
+              margin-top: 15px;
+
+              input:focus,
+              select:focus {
+                outline: none;
+                box-shadow: none;
+                border-color: var(--light-bg);
+              }
+
+              .mahbub__input-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .mahbub__team-search-input {
+                  background-color: transparent;
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  color: rgba(255, 255, 255, 0.8);
+                  width: 100%;
+                  padding: 20px 40px 20px 24px;
+                  margin-bottom: 24px;
+                  border-radius: 16px;
+                  font-size: 16px;
+
+                  &::placeholder {
+                    color: var(--light-bg);
+                    opacity: 0.7;
+                  }
+                }
+
+                .mahbub__input-icon {
+                  position: absolute;
+                  right: 24px;
+                  bottom: 43px;
+                  pointer-events: none;
+                }
+              }
+
+              .mahbub__team-select {
+                width: 100%;
+                margin-bottom: 16px;
+                padding: 20px 40px 20px 24px;
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background-color: transparent;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 16px;
+
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 24px center;
+                background-size: 12px;
+
+                option {
+                  color: #000;
+                }
+              }
+
+              .primary-button {
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background-color: transparent;
+                transition: all 0.35s ease-in-out;
+                color: #ffff;
+
+                .button-text {
+                  transition: all 0.35s ease-in-out;
+                  color: var(--color-white);
+                  font-family: var(--font-primary);
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
-    .our-people-container {
-        display: flex;
+    .team-section-right {
+      z-index: 1 !important;
+      background-color: rgb(251, 248, 249, 0.9);
+      flex: 1.5;
+      display: flex;
+      justify-content: center;
+
+      @media (max-width: 1800px) {
+        max-width: 100%;
+        justify-content: flex-start;
+      }
+
+      .team-right-inner {
         width: 100%;
-        justify-content: center;
+        max-width: 1200px;
+        padding: 70px 150px 110px 70px;
 
-        @media (max-width:1500px) {
-            flex-wrap: wrap;
+        @media (max-width: 1800px) {
+          max-width: 1000px;
+          padding: 120px 60px;
         }
 
+        @media (max-width: 1500px) {
+          max-width: 100%;
+          padding: 80px 60px;
+        }
 
-        .team-section-left {
-            flex: 1;
+        @media (max-width: 800px) {
+          max-width: 100%;
+          padding: 60px 40px;
+        }
+
+        @media (max-width: 600px) {
+          max-width: 100%;
+          padding: 60px 30px;
+        }
+
+        .team-right-content {
+          .mahbub__selected-category {
+            margin-bottom: 25px;
             display: flex;
-            justify-content: center;
-            background-color: rgba(82, 0, 11, 0.9);
-            z-index: 1 !important;
+            width: fit-content;
+            align-items: center;
+            padding: 0px 10px 0px 16px;
+            background-color: rgba(255, 230, 233, 1);
+            border-radius: 320px;
 
-            @media (max-width:1500px) {
-                flex: 0 0 100%;
-                max-width: 100%;
-                justify-content: flex-start;
+            .mahbub__selected-category-name {
+              font-size: 14px;
+              font-family: var(--font-primary);
+              font-weight: 400;
+              line-height: 24px;
+              letter-spacing: 0;
+              color: rgba(188, 0, 26, 1);
             }
 
-            .team-left-inner {
+            button {
+              border: 0;
+              margin-top: 3px;
+            }
+          }
+
+          .mahbub__team-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+
+            @media (max-width: 992px) {
+              grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Mobile */
+            @media (max-width: 600px) {
+              grid-template-columns: repeat(1, 1fr);
+            }
+
+            .mahbub__team-member {
+              display: block;
+              text-decoration: none;
+              color: inherit;
+              cursor: pointer;
+              position: relative;
+              height: 340px;
+              max-height: 340px;
+              overflow: hidden;
+              border-radius: 12px;
+              background: linear-gradient(
+                180deg,
+                rgba(237, 240, 247, 1) 0%,
+                rgba(204, 205, 223, 1) 100%
+              );
+              transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+              }
+
+              &--placeholder {
+                cursor: default;
+                pointer-events: none;
+
+                &:hover {
+                  transform: none;
+                  box-shadow: none;
+                }
+
+                .mahbub__team-member-btn {
+                  display: none;
+                }
+              }
+
+              .mahbub__team-thumb {
                 width: 100%;
-                max-width: 803px;
-                padding: 170px 120px;
+                height: 100%;
 
-                @media (max-width:1800px) {
-                    max-width: 720px;
-                    padding: 80px 50px;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  object-position: top;
+                }
+              }
+
+              .mahbub__team-member-btn {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                z-index: 2;
+                border: 0;
+                font-size: 14px;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+              }
+
+              &:hover .mahbub__team-member-btn {
+                opacity: 1;
+              }
+
+              .team-member-info {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                position: absolute;
+                bottom: 14px;
+                right: 14px;
+                left: 12px;
+                padding: 8px;
+                background-color: rgba(255, 255, 255, 0.4);
+                border-radius: 8px;
+                z-index: 2;
+
+                //
+                animation: slideUp 0.7s ease forwards;
+                opacity: 0;
+
+                .mahbub__team-name {
+                  font-size: 18px;
+                  font-family: var(--font-primary);
+                  font-weight: 600;
+                  line-height: 24px;
+                  letter-spacing: 0;
+                  color: var(--dark-normal);
+
+                  @media (max-width: 1030px) {
+                    font-size: 16px;
+                    line-height: 20px;
+                  }
                 }
 
-                @media (max-width:1800px) {
-                    max-width: 100%;
-                    padding: 80px 80px;
+                .mahbub__team-designation {
+                  font-size: 14px;
+                  font-family: var(--font-primary);
+                  font-weight: 500;
+                  line-height: 18px;
+                  letter-spacing: 0;
+                  color: var(--dark-60);
+
+                  @media (max-width: 1030px) {
+                    font-size: 12px;
+                    line-height: 18px;
+                  }
                 }
 
-                @media (max-width:800px) {
-                    max-width: 100%;
-                    padding: 60px 40px;
+                @keyframes slideUp {
+                  from {
+                    transform: translateY(30px);
+                    opacity: 0;
+                  }
+                  to {
+                    transform: translateY(0);
+                    opacity: 1;
+                  }
                 }
-
-                @media (max-width:600px) {
-                    max-width: 100%;
-                    padding: 60px 30px;
-                }
-
-                .team-left-content {
-                    max-width: 803px;
-                    z-index: 1 !important;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 122px;
-
-                    @media (max-width:1500px) {
-                        max-width: 900px;
-                        gap: 80px;
-                    }
-
-                    @media (max-width:600px) {
-                        gap: 50px;
-                    }
-
-                    .text-content {
-                        .heading-one {
-                            color: var(--color-white);
-                            margin-bottom: 40px;
-                        }
-
-                        .body-text {
-                            color: rgba(255, 255, 255, 0.8);
-                        }
-                    }
-
-                    .form-wrapper {
-                        @media (max-width:1500px) {
-                            max-width: 500px;
-                        }
-
-                        .mahbub__team-search-form {
-                            margin-top: 15px;
-
-                            input:focus,
-                            select:focus {
-                                outline: none;
-                                box-shadow: none;
-                                border-color: var(--light-bg);
-                            }
-
-                            .mahbub__input-wrapper {
-                                position: relative;
-                                display: flex;
-                                align-items: center;
-
-
-                                .mahbub__team-search-input {
-                                    background-color: transparent;
-                                    border: 1px solid rgba(255, 255, 255, 0.20);
-                                    color: rgba(255, 255, 255, 0.8);
-                                    width: 100%;
-                                    padding: 20px 40px 20px 24px;
-                                    margin-bottom: 24px;
-                                    border-radius: 16px;
-                                    font-size: 16px;
-
-                                    &::placeholder {
-                                        color: var(--light-bg);
-                                        opacity: 0.7;
-                                    }
-                                }
-
-                                .mahbub__input-icon {
-                                    position: absolute;
-                                    right: 24px;
-                                    bottom: 43px;
-                                    pointer-events: none;
-                                }
-                            }
-
-                            .mahbub__team-select {
-                                width: 100%;
-                                margin-bottom: 16px;
-                                padding: 20px 40px 20px 24px;
-                                border-radius: 16px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                background-color: transparent;
-                                color: rgba(255, 255, 255, 0.8);
-                                font-size: 16px;
-
-                                appearance: none;
-                                -webkit-appearance: none;
-                                -moz-appearance: none;
-
-                                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-                                background-repeat: no-repeat;
-                                background-position: right 24px center;
-                                background-size: 12px;
-
-                                option {
-                                    color: #000;
-                                }
-
-
-                            }
-
-                            .primary-button {
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                background-color: transparent;
-                                transition: all 0.35s ease-in-out;
-                                color: #ffff;
-
-                                .button-text {
-                                    transition: all 0.35s ease-in-out;
-                                    color: var(--color-white);
-                                    font-family: var(--font-primary);
-                                }
-                            }
-                        }
-                    }
-                }
+              }
             }
+          }
         }
-
-
-        .team-section-right {
-            z-index: 1 !important;
-            background-color: rgb(251, 248, 249, 0.9);
-            flex: 1.5;
-            display: flex;
-            justify-content: center;
-
-            @media (max-width:1800px) {
-                max-width: 100%;
-                justify-content: flex-start;
-            }
-
-            .team-right-inner {
-                width: 100%;
-                max-width: 1200px;
-                padding: 70px 150px 110px 70px;
-
-                @media (max-width:1800px) {
-                    max-width: 1000px;
-                    padding: 120px 60px;
-                }
-
-                @media (max-width:1500px) {
-                    max-width: 100%;
-                    padding: 80px 60px;
-                }
-
-                @media (max-width:800px) {
-                    max-width: 100%;
-                    padding: 60px 40px;
-                }
-
-                @media (max-width:600px) {
-                    max-width: 100%;
-                    padding: 60px 30px;
-                }
-
-                .team-right-content {
-                    .mahbub__selected-category {
-                        margin-bottom: 25px;
-                        display: flex;
-                        width: fit-content;
-                        align-items: center;
-                        padding: 0px 10px 0px 16px;
-                        background-color: rgba(255, 230, 233, 1);
-                        border-radius: 320px;
-
-                        .mahbub__selected-category-name {
-                            font-size: 14px;
-                            font-family: var(--font-primary);
-                            font-weight: 400;
-                            line-height: 24px;
-                            letter-spacing: 0;
-                            color: rgba(188, 0, 26, 1);
-                        }
-
-                        button {
-                            border: 0;
-                            margin-top: 3px;
-                        }
-                    }
-
-                    .mahbub__team-results {
-                        display: grid;
-                        grid-template-columns: repeat(3, 1fr);
-                        gap: 20px;
-
-                        @media (max-width: 992px) {
-
-                            grid-template-columns: repeat(2, 1fr);
-
-                        }
-
-                        /* Mobile */
-                        @media (max-width: 600px) {
-                            grid-template-columns: repeat(1, 1fr);
-
-                        }
-
-                        .mahbub__team-member {
-                            display: block;
-                            text-decoration: none;
-                            color: inherit;
-                            cursor: pointer;
-                            position: relative;
-                            height: 340px;
-                            max-height: 340px;
-                            overflow: hidden;
-                            border-radius: 12px;
-                            background: linear-gradient(180deg, rgba(237, 240, 247, 1) 0%, rgba(204, 205, 223, 1) 100%);
-                            transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-                            &:hover {
-                                transform: translateY(-2px);
-                                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-                            }
-
-                            &--placeholder {
-                                cursor: default;
-                                pointer-events: none;
-
-                                &:hover {
-                                    transform: none;
-                                    box-shadow: none;
-                                }
-
-                                .mahbub__team-member-btn {
-                                    display: none;
-                                }
-                            }
-
-                            .mahbub__team-thumb {
-                                width: 100%;
-                                height: 100%;
-
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                    object-fit: cover;
-                                    object-position: top;
-                                }
-                            }
-
-                            .mahbub__team-member-btn {
-                                position: absolute;
-                                top: 12px;
-                                right: 12px;
-                                z-index: 2;
-                                border: 0;
-                                font-size: 14px;
-                                pointer-events: none;
-                                opacity: 0;
-                                transition: opacity 0.3s ease-in-out;
-                            }
-
-                            &:hover .mahbub__team-member-btn {
-                                opacity: 1;
-                            }
-
-                            .team-member-info {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 4px;
-                                position: absolute;
-                                bottom: 14px;
-                                right: 14px;
-                                left: 12px;
-                                padding: 8px;
-                                background-color: rgba(255, 255, 255, 1);
-                                border-radius: 8px;
-                                z-index: 2;
-
-                                .mahbub__team-name {
-                                    font-size: 18px;
-                                    font-family: var(--font-primary);
-                                    font-weight: 600;
-                                    line-height: 24px;
-                                    letter-spacing: 0;
-                                    color: var(--dark-normal);
-
-                                    @media (max-width: 1030px) {
-                                        font-size: 16px;
-                                        line-height: 20px;
-                                    }
-
-
-                                }
-
-                                .mahbub__team-designation {
-                                    font-size: 14px;
-                                    font-family: var(--font-primary);
-                                    font-weight: 500;
-                                    line-height: 18px;
-                                    letter-spacing: 0;
-                                    color: var(--dark-60);
-
-                                    @media (max-width: 1030px) {
-                                        font-size: 12px;
-                                        line-height: 18px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 }

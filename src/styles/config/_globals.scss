@@ -42,14 +42,8 @@ body {
         overflow-y: hidden !important;
     }
 
-    font-family: -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    sans-serif;
+    /* One place for default UI font (Manrope); syntax: comma-separated family names */
+    font-family: $font-body;
     line-height: 1.6;
     color: var(--text-dark);
     // background: var(--body-bg);

@@ -233,11 +233,13 @@ defined('ABSPATH') || exit;
                             </div>
 
                             <!-- Primary Button -->
-                            <?php if ($btn_text = carbon_get_theme_option('button_text')):
-                                $btn_link = carbon_get_theme_option('button_link'); ?>
-                                <a href="<?php echo esc_url($btn_link); ?>" class="primary-button">
+                            <?php 
+                            $mobile_btn_text = carbon_get_theme_option('header_button_text');
+                            $mobile_btn_link = carbon_get_theme_option('header_button_link');
+                            if ($mobile_btn_text && $mobile_btn_link): ?>
+                                <a href="<?php echo esc_url($mobile_btn_link); ?>" class="primary-button">
                                     <div class="button-text">
-                                        <?php echo esc_html($btn_text); ?>
+                                        <?php echo esc_html($mobile_btn_text); ?>
                                     </div>
                                     <svg width="44" height="44" viewBox="0 0 44 44" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">

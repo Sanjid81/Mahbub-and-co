@@ -195,8 +195,8 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
         </div>
 
         <div class="button-wrap">
-          <a href="<?php echo esc_url($news_button_link); ?>" class="primary-button" data-aos="fade-up">
-            <div class="button-text"><?php echo esc_html($news_button_text); ?>
+          <a href="<?php echo esc_url($insights_button_link); ?>" class="primary-button" data-aos="fade-up">
+            <div class="button-text"><?php echo esc_html($insights_button_text); ?>
             </div>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="44" height="44" rx="22" fill="#BC001A" />

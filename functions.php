@@ -252,7 +252,13 @@ function mahbub_team_search_ajax()
                         <?php the_title(); ?>
                     </h3>
                     <p class="mahbub__team-designation">
-                        <?php echo esc_html(get_post_meta(get_the_ID(), '_team_member_designation', true)); ?>
+                        <?php
+                        $des = function_exists('carbon_get_post_meta') ? carbon_get_post_meta(get_the_ID(), 'team_designation') : '';
+                        if ($des === '' || $des === null) {
+                            $des = get_post_meta(get_the_ID(), '_team_member_designation', true);
+                        }
+                        echo esc_html($des ?: '');
+                        ?>
                     </p>
                 </div>
             </a>

@@ -41,6 +41,18 @@ add_action('carbon_fields_register_fields', function () {
                 ->help_text(__('Select a page. All blocks (Hero, Apply Form, etc.) from that page will show below on this details page. Create a page, add your blocks there, then select it here.', 'mahbub-and-co'))
         ));
 
-    /* Team Member email/phone are in inc/team-details/team-details.php (Team Member Extra Info).
-       Do NOT add another post_meta container for team here – duplicate field names break Carbon save/load. */
+    /**
+     * ==============================
+     * TEAM MEMBER DETAILS
+     * ==============================
+     */
+    Container::make('post_meta', 'Team Member Details')
+        ->where('post_type', '=', 'team')
+        ->add_fields(array(
+
+            Field::make('text', 'team_email', 'Email'),
+
+            Field::make('text', 'team_number', 'Phone Number'),
+        ));
+
 });

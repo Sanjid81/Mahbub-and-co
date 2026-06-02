@@ -6,6 +6,10 @@
   background: linear-gradient(180deg, #111111 0%, #000000 100%);
   overflow: auto;
 
+  .swiper-wrapper {
+    justify-content: center;
+  }
+
   .banner-overlay {
     position: absolute;
     top: 0;
@@ -25,7 +29,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // gap: 60px;
     overflow: hidden !important;
 
     @include breakpoint-max(3xl) {
@@ -54,8 +57,31 @@
       @media (max-width: 800px) {
         margin-bottom: 40px;
       }
+    }
 
+    .initail-slider {
+      @media (max-width: 480px) {
+        overflow: visible;
 
+        .swiper {
+          overflow: visible !important;
+        }
+
+        .swiper-wrapper {
+          flex-direction: column !important;
+          transform: none !important;
+          width: 100% !important;
+          gap: 16px;
+          align-items: center;
+        }
+
+        .swiper-slide {
+          width: 100% !important;
+          margin: 0 !important;
+          display: flex;
+          justify-content: center;
+        }
+      }
     }
 
     .company-swiper {
@@ -67,7 +93,6 @@
         align-items: center;
         white-space: nowrap;
         transition-timing-function: linear !important;
-
       }
 
       .swiper-slide {
@@ -81,10 +106,6 @@
     .company-swiper-two {
       display: none;
 
-      @media (max-width: 800px) {
-        display: block;
-      }
-
       width: 100%;
       overflow: hidden;
 
@@ -93,7 +114,6 @@
         align-items: center;
         white-space: nowrap;
         transition-timing-function: linear !important;
-
       }
 
       .swiper-slide {
@@ -132,9 +152,7 @@
       align-items: center;
       padding: 55px 72px;
       background-color: var(--light-bg);
-      // border: 1px solid rgba(255, 255, 255, 0.7);
       max-width: 263px;
-      // height: 200px;
       position: relative;
       z-index: 2;
       border-radius: 12px;

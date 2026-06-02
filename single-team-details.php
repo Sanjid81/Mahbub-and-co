@@ -65,8 +65,12 @@
 
 
                                     <?php
-                                    $email = carbon_get_post_meta(get_the_ID(), 'team_email') ?: get_post_meta(get_the_ID(), 'team_email', true);
-                                    $email = trim($email);
+                                    $pid = get_the_ID();
+                                    $email = carbon_get_post_meta($pid, 'team_email');
+                                    if ($email === '' || $email === null) {
+                                        $email = get_post_meta($pid, '_team_email', true) ?: get_post_meta($pid, 'team_email', true);
+                                    }
+                                    $email = trim((string) $email);
                                     ?>
                                     <?php if ($email): ?>
                                         <div class="profile-contact-item email-item">

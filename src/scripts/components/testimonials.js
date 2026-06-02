@@ -1,9 +1,8 @@
-
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   const testimonialSlider = new Swiper(".testimonials-swiper", {
     slidesPerView: 3,
     slidesPerGroup: 1,
+    autoHeight: false,
     spaceBetween: 30,
     loop: true,
     loopFillGroupWithBlank: true,
@@ -16,18 +15,21 @@ document.addEventListener('DOMContentLoaded', function () {
         slidesPerView: 1,
         spaceBetween: 10,
       },
-      640: {   // tablet
+      640: {
+        // tablet
         slidesPerView: 2,
         spaceBetween: 20,
       },
-      1100: {  // desktop
+      1100: {
+        // desktop
         slidesPerView: 3,
         spaceBetween: 30,
       },
-      1400: {  // desktop
+      1400: {
+        // desktop
         slidesPerView: 3,
         spaceBetween: 30,
-      }
+      },
     },
     pagination: {
       el: ".testimonials-slider .swiper-pagination",
@@ -39,6 +41,3 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   });
 });
-
-
-

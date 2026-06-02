@@ -1,0 +1,192 @@
+.team-details-tab-section {
+    .team-details-tabs {
+        background-color: #8B1538;
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-details-tab {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        padding: 0 20px;
+    }
+
+    .tab-item {
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        &.active::after {
+            width: 100%;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    /* Main Content */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background-color: white;
+    }
+
+    section {
+        margin-bottom: 60px;
+        scroll-margin-top: 80px;
+    }
+
+    h2 {
+        color: #8B1538;
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: normal;
+    }
+
+    .content-text {
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+
+    /* Recognition Section */
+    .recognition-list {
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #333;
+
+            &::before {
+                content: '•';
+                position: absolute;
+                left: 0;
+                color: #8B1538;
+                font-size: 20px;
+            }
+        }
+    }
+
+    /* Work Highlight Section */
+    .work-list {
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #333;
+            line-height: 1.6;
+
+            &::before {
+                content: '•';
+                position: absolute;
+                left: 0;
+                color: #8B1538;
+                font-size: 20px;
+            }
+        }
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: transparent;
+        border: none;
+        color: #8B1538;
+        cursor: pointer;
+        padding: 10px 0;
+        margin-top: 15px;
+        font-size: 14px;
+        text-decoration: underline;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    /* Publications Section */
+    .publications-list {
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #333;
+
+            &::before {
+                content: '•';
+                position: absolute;
+                left: 0;
+                color: #8B1538;
+                font-size: 20px;
+            }
+        }
+    }
+
+    /* Testimonial Section */
+    .testimonial-content {
+        color: #333;
+        line-height: 1.8;
+    }
+
+    /* Subcategory Description Container */
+    .subcategory-description-container {
+        color: #333;
+        line-height: 1.8;
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+
+            li {
+                padding: 8px 0;
+                padding-left: 20px;
+                position: relative;
+
+                &::before {
+                    content: '•';
+                    position: absolute;
+                    left: 0;
+                    color: #8B1538;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

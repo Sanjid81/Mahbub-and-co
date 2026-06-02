@@ -31,7 +31,7 @@ function register_custom_career_blocks()
                             Field::make('text', 'dev_title', 'Section Title'),
                             Field::make('rich_text', 'dev_content', 'Content'),
                         ))
-                        ->set_max(5)
+                        ->set_max(2)
                         ->set_layout('tabbed-horizontal')
                         ->set_header_template('<%- dev_title || "Section" %>'),
 

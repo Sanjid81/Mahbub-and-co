@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const autoSwiper = new Swiper('.company-swiper', {
+document.addEventListener("DOMContentLoaded", function () {
+  const autoSwiper = new Swiper(".company-swiper", {
     loop: true,
     spaceBetween: 20,
-    slidesPerView: 'auto',
+    slidesPerView: "auto",
     allowTouchMove: true,
     grabCursor: true,
     simulateTouch: true,
@@ -16,47 +16,41 @@ document.addEventListener('DOMContentLoaded', function () {
     freeModeMomentum: false,
 
     breakpoints: {
-
       0: {
+        enabled: false, // ← disable on mobile
         spaceBetween: 10,
       },
-      768: {
+      801: {
+        enabled: false, // ← re-enable on tablet/desktop
         spaceBetween: 10,
       },
       1024: {
+        enabled: false,
         spaceBetween: 20,
       },
     },
   });
 
-  autoSwiper.slides.forEach(slide => {
-    slide.addEventListener('click', () => {
+  autoSwiper.slides.forEach((slide) => {
+    slide.addEventListener("click", () => {
       autoSwiper.slideNext();
     });
   });
 
-  autoSwiper.on('slidesLengthChange', () => {
-    autoSwiper.slides.forEach(slide => {
-      slide.addEventListener('click', () => {
+  autoSwiper.on("slidesLengthChange", () => {
+    autoSwiper.slides.forEach((slide) => {
+      slide.addEventListener("click", () => {
         autoSwiper.slideNext();
       });
     });
   });
-
-
 });
 
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  // -------- Desktop Swiper --------
-  const autoSwiper_two = new Swiper('.company-swiper-two', {
+document.addEventListener("DOMContentLoaded", function () {
+  const autoSwiper_two = new Swiper(".company-swiper-two", {
     loop: true,
     spaceBetween: 20,
-    slidesPerView: 'auto',
+    slidesPerView: "auto",
     allowTouchMove: true,
     grabCursor: true,
     simulateTouch: true,
@@ -65,48 +59,37 @@ document.addEventListener('DOMContentLoaded', function () {
       delay: 0,
       disableOnInteraction: false,
       reverseDirection: false,
-
     },
     freeMode: true,
     freeModeMomentum: false,
-    breakpoints: {
 
+    breakpoints: {
       0: {
+        enabled: false, // ← disable on mobile
         spaceBetween: 10,
       },
-      768: {
+      801: {
+        enabled: true, // ← re-enable on tablet/desktop
         spaceBetween: 10,
       },
       1024: {
+        enabled: true,
         spaceBetween: 20,
       },
     },
   });
 
-  // Slide click listener (desktop)
-  autoSwiper_two.slides.forEach(slide => {
-    slide.addEventListener('click', () => {
+  autoSwiper_two.slides.forEach((slide) => {
+    slide.addEventListener("click", () => {
       autoSwiper_two.slideNext();
     });
   });
 
-  autoSwiper_two.on('slidesLengthChange', () => {
-    autoSwiper_two.slides.forEach(slide => {
-      slide.addEventListener('click', () => {
+  autoSwiper_two.on("slidesLengthChange", () => {
+    autoSwiper_two.slides.forEach((slide) => {
+      slide.addEventListener("click", () => {
         autoSwiper_two.slideNext();
       });
     });
   });
-
-
 });
-
-
-
-
-
-
-
-
-
-

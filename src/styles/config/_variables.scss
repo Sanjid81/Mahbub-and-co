@@ -1,3 +1,4 @@
+/* Single source: body/default font. Use comma-separated list: <family-name># */
 $font-body: "Figtree", sans-serif;
 
 :root {
@@ -18,9 +19,10 @@ $font-body: "Figtree", sans-serif;
     --dark-bg: #0d0d0d;
     --gold: #D4AF37;
 
-    /* Fonts */
+    /* Fonts: prioritized list (family-name, fallback) */
     --font-primary: "Figtree", sans-serif;
     --font-secondary: "Inter", sans-serif;
+    --font-body: #{$font-body};
 }
 
 

@@ -148,6 +148,8 @@
 
                     .team-profile-info-area {
                         // flex: 1;
+                        max-width: 383px;
+                        width: 100%;
                         display: flex;
                         flex-direction: column;
                         align-items: start;
@@ -156,6 +158,7 @@
                         @media (max-width: 1300px) {
                             align-items: end;
                             text-align: center;
+                            max-width: 100%;
                         }
                         @media (max-width: 600px) {
                             align-items: center;

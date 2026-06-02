@@ -202,7 +202,21 @@ while ($job_query->have_posts()) {
                                 <?php if ($exp !== ''): ?>
                                     <span class="maco-openings-card-meta-item">
                                         <span class="maco-openings-card-meta-icon" aria-hidden="true">
-                                            <?php echo $icon_briefcase; ?>
+                                            <!-- < ?php echo $icon_briefcase; ?> -->
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.33398 1.33301V3.99967" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M10.666 1.33301V3.99967" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M12.6667 2.66699H3.33333C2.59695 2.66699 2 3.26395 2 4.00033V13.3337C2 14.07 2.59695 14.667 3.33333 14.667H12.6667C13.403 14.667 14 14.07 14 13.3337V4.00033C14 3.26395 13.403 2.66699 12.6667 2.66699Z"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M2 6.66699H14" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
                                         </span>
                                         <span class="maco-openings-card-meta-text">Experience:
                                             <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
@@ -216,7 +230,19 @@ while ($job_query->have_posts()) {
                                 <?php if ($loc !== ''): ?>
                                     <span class="maco-openings-card-meta-item">
                                         <span class="maco-openings-card-meta-icon" aria-hidden="true">
-                                            <?php echo $icon_pin; ?>
+                                            <!-- < ?php echo $icon_pin; ?> -->
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M13.3327 6.66634C13.3327 9.99501 9.64002 13.4617 8.40002 14.5323C8.2845 14.6192 8.14388 14.6662 7.99935 14.6662C7.85482 14.6662 7.7142 14.6192 7.59868 14.5323C6.35868 13.4617 2.66602 9.99501 2.66602 6.66634C2.66602 5.25185 3.22792 3.8953 4.22811 2.89511C5.22831 1.89491 6.58486 1.33301 7.99935 1.33301C9.41384 1.33301 10.7704 1.89491 11.7706 2.89511C12.7708 3.8953 13.3327 5.25185 13.3327 6.66634Z"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M8 8.66699C9.10457 8.66699 10 7.77156 10 6.66699C10 5.56242 9.10457 4.66699 8 4.66699C6.89543 4.66699 6 5.56242 6 6.66699C6 7.77156 6.89543 8.66699 8 8.66699Z"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
                                         </span>
                                         <span class="maco-openings-card-meta-text">Location:
                                             <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
@@ -229,7 +255,19 @@ while ($job_query->have_posts()) {
                                 <?php if ($typ !== ''): ?>
                                     <span class="maco-openings-card-meta-item">
                                         <span class="maco-openings-card-meta-icon" aria-hidden="true">
-                                            <?php echo $icon_briefcase; ?>
+                                            <!-- < ?php echo $icon_briefcase; ?> -->
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M10.6673 13.333V2.66634C10.6673 2.31272 10.5268 1.97358 10.2768 1.72353C10.0267 1.47348 9.68761 1.33301 9.33398 1.33301H6.66732C6.3137 1.33301 5.97456 1.47348 5.72451 1.72353C5.47446 1.97358 5.33398 2.31272 5.33398 2.66634V13.333"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M13.334 4H2.66732C1.93094 4 1.33398 4.59695 1.33398 5.33333V12C1.33398 12.7364 1.93094 13.3333 2.66732 13.3333H13.334C14.0704 13.3333 14.6673 12.7364 14.6673 12V5.33333C14.6673 4.59695 14.0704 4 13.334 4Z"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
                                         </span>
                                         <span class="maco-openings-card-meta-text">Type:
                                             <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
@@ -242,7 +280,21 @@ while ($job_query->have_posts()) {
                                 <?php if ($dead !== ''): ?>
                                     <span class="maco-openings-card-meta-item">
                                         <span class="maco-openings-card-meta-icon" aria-hidden="true">
-                                            <?php echo $icon_calendar; ?>
+                                            <!-- < ?php echo $icon_calendar; ?> -->
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.33398 1.33301V3.99967" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M10.666 1.33301V3.99967" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path
+                                                    d="M12.6667 2.66699H3.33333C2.59695 2.66699 2 3.26395 2 4.00033V13.3337C2 14.07 2.59695 14.667 3.33333 14.667H12.6667C13.403 14.667 14 14.07 14 13.3337V4.00033C14 3.26395 13.403 2.66699 12.6667 2.66699Z"
+                                                    stroke="#BC001A" stroke-width="1.33333" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M2 6.66699H14" stroke="#BC001A" stroke-width="1.33333"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
                                         </span>
                                         <span class="maco-openings-card-meta-text">Deadline:
                                             <!-- < ?php echo esc_html__('', 'mahbub-and-co'); ?> -->
