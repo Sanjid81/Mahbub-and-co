@@ -1,7 +1,7 @@
 <?php
 /**
  * Gutenberg Block: Insights Grid Display
- * Uses the reusable insights-grid-display.php component
+ * Uses the reusable insights-content-block.php component
  */
 
 Block::make('Insights Grid Block', 'insights-grid-display')
@@ -49,30 +49,15 @@ Block::make('Insights Grid Block', 'insights-grid-display')
     ])
     ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
 
-        $query_args = [
-            'post_type'      => 'insights',
-            'posts_per_page' => (int) ($fields['insights_posts_per_page'] ?? 6),
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ];
-
-        if (!empty($fields['insights_category_filter'])) {
-            $query_args['tax_query'] = [
-                [
-                    'taxonomy' => 'insights_category',
-                    'field'    => 'slug',
-                    'terms'    => $fields['insights_category_filter'],
-                ]
-            ];
-        }
-
+        // Set query vars for the template
         set_query_var('insights_grid_title', $fields['insights_grid_title'] ?: 'Our Insights');
-        set_query_var('insights_posts_per_page', $query_args['posts_per_page']);
+        set_query_var('insights_posts_per_page', $fields['insights_posts_per_page'] ?? 6);
         set_query_var('insights_category_filter', $fields['insights_category_filter'] ?? '');
         set_query_var('insights_grid_layout', $fields['insights_grid_layout'] ?? '3');
         set_query_var('show_load_more', $fields['show_load_more'] ?? false);
         set_query_var('load_more_text', $fields['load_more_text'] ?? 'Load More');
         set_query_var('load_more_link', $fields['load_more_link'] ?? '');
 
-        get_template_part('components/insights/insights-content-block');
-    }); 
+        // Include the main content template
+        get_template_part('insights/insights-content-block');
+    });

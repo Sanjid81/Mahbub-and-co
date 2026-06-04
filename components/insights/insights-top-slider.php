@@ -25,8 +25,8 @@ if (!$bg_url && $bg_id > 0) {
 
 // WP_Query setup
 $args = [
-    'post_type' => 'insights',
-    'posts_per_page' => -1,
+    'post_type' => 'post',
+    'posts_per_page' => $slides_count,
     'post_status' => 'publish',
     'orderby' => 'date',
     'order' => 'DESC',

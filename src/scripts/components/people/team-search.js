@@ -34,8 +34,14 @@ jQuery(document).ready(function ($) {
     // On form submit
     $('#mahbub__team-search-form').on('submit', function (e) {
         e.preventDefault();
-        var search = $('input[name="mahbub__team_search"]').val();
+        var searchInput = $('input[name="mahbub__team_search"]');
+        var search = searchInput.val();
         var area = $('select[name="mahbub__team_area"]').val();
+        
+        // Clear search input text
+        searchInput.val('');
+        
+        $('.our-people-container').addClass('is-searching'); // Shift to split-screen layout
         loadTeamMembers(search, area);
     });
 
@@ -43,6 +49,7 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.mahbub__clear-category', function () {
         $('select[name="mahbub__team_area"]').val('');
         $('input[name="mahbub__team_search"]').val('');
+        $('.our-people-container').removeClass('is-searching'); // Revert to full-page layout
         loadTeamMembers(); // reset to initial 6 members
     });
 

@@ -1,33 +1,36 @@
 <?php
 /**
- * Reusable Insights Grid + Tabs Display with AJAX Load More
- * Used in archive & Gutenberg block
+ * Reusable Insights Grid Display with AJAX Load More
+ * Used in Gutenberg block
  */
 
 // Exit if accessed directly
 defined('ABSPATH') || exit;
 
-// Default values passed via set_query_var
+// Get variables from block
 $title = get_query_var('insights_grid_title', 'Our Insights');
+$posts_per_page = (int) get_query_var('insights_posts_per_page', 6);
+$category_filter = get_query_var('insights_category_filter', '');
 $layout_columns = get_query_var('insights_grid_layout', '3');
-$category_filter = get_query_var('insights_category_filter', ''); // empty = show tabs
-$show_load_more = get_query_var('show_load_more', true);         // enable by default
+$show_load_more = get_query_var('show_load_more', false);
+$load_more_text = get_query_var('load_more_text', 'Load More');
+$load_more_link = get_query_var('load_more_link', '');
 
-// Load More settings
-$initial_posts = 9;
-$load_more_increment = 6;
+// Load More AJAX settings (-1 = show all, no AJAX paging)
+$show_all_posts = $posts_per_page < 1;
+$initial_posts = $show_all_posts ? -1 : $posts_per_page;
+$load_more_increment = $show_all_posts ? 6 : $posts_per_page;
 
 // Decide whether to show tabs or single category
 $use_tabs = empty($category_filter);
 
-// Load categories
+// Load categories for tabs
 $categories = [];
 
 if ($use_tabs) {
-    // Show tabs – load all categories
     $terms = get_terms([
-        'taxonomy' => 'insights_category',
-        'hide_empty' => false,
+        'taxonomy' => 'category',
+        'hide_empty' => true,
         'orderby' => 'name',
         'order' => 'ASC',
     ]);
@@ -37,20 +40,14 @@ if ($use_tabs) {
             $categories[$term->slug] = $term->name;
         }
     }
-
-    // Fallback categories
-    if (empty($categories)) {
-        $categories = [
-            'insights' => 'Insights',
-            'news-and-events' => 'News & Events',
-        ];
-    }
 } else {
-    // Block mode – single category or all
+    // Single category mode
     if (!empty($category_filter)) {
-        $term = get_term_by('slug', $category_filter, 'insights_category');
+        $term = get_term_by('slug', $category_filter, 'category');
         if ($term && !is_wp_error($term)) {
             $categories[$category_filter] = $term->name;
+        } else {
+            $categories[$category_filter] = $category_filter;
         }
     } else {
         $categories['all'] = $title;
@@ -60,31 +57,33 @@ if ($use_tabs) {
 
 <div class="insights-archive-section">
     <div class="container">
-
-        <?php if (!empty($title)): ?>
-            <!-- <h2 class="insights-section-title">< ?php echo esc_html($title); ?></h2> -->
-        <?php endif; ?>
+        
+        <!-- <?php if (!empty($title) && $use_tabs): ?>
+            <h2 class="insights-section-title"><?php echo esc_html($title); ?></h2>
+        <?php endif; ?> -->
 
         <div class="insights-page-section">
 
             <?php if ($use_tabs && count($categories) > 1): ?>
                 <!-- Category Tabs -->
                 <div class="insights-tabs-container">
-                    <div class="insights-tabs">
-                        <?php
-                        $first = true;
-                        foreach ($categories as $slug => $name):
-                            $active = $first ? 'active' : '';
-                            ?>
-                            <button class="insights-tab <?php echo esc_attr($active); ?>"
-                                data-category="<?php echo esc_attr($slug); ?>">
-                                <?php echo esc_html($name); ?>
-                            </button>
-                            <?php
-                            $first = false;
-                        endforeach; ?>
-                    </div>
-                </div>
+    <button class="insights-tabs-arrow arrow-prev" aria-label="Previous">&#8592;</button>
+    <div class="insights-tabs">
+        <?php
+        $first = true;
+        foreach ($categories as $slug => $name):
+            $active = $first ? 'active' : '';
+        ?>
+            <button class="insights-tab <?php echo esc_attr($active); ?>"
+                data-category="<?php echo esc_attr($slug); ?>">
+                <?php echo esc_html($name); ?>
+            </button>
+        <?php
+            $first = false;
+        endforeach; ?>
+    </div>
+    <button class="insights-tabs-arrow arrow-next" aria-label="Next">&#8594;</button>
+</div>
             <?php endif; ?>
 
             <!-- Tab Contents -->
@@ -96,7 +95,7 @@ if ($use_tabs) {
 
                     // Query for initial posts
                     $query_args = [
-                        'post_type' => 'insights',
+                        'post_type' => 'post',
                         'posts_per_page' => $initial_posts,
                         'orderby' => 'date',
                         'order' => 'DESC',
@@ -106,16 +105,16 @@ if ($use_tabs) {
                     if ($slug !== 'all' && !empty($slug)) {
                         $query_args['tax_query'] = [
                             [
-                                'taxonomy' => 'insights_category',
+                                'taxonomy' => 'category',
                                 'field' => 'slug',
                                 'terms' => $slug,
-                            ]
+                            ],
                         ];
                     }
 
                     $posts_query = new WP_Query($query_args);
 
-                    // Calculate total posts for this category (for load more logic)
+                    // Calculate total posts for this category
                     $total_args = $query_args;
                     $total_args['posts_per_page'] = -1;
                     $total_args['fields'] = 'ids';
@@ -124,110 +123,43 @@ if ($use_tabs) {
                     ?>
 
                     <div class="insights-tab-content <?php echo esc_attr($active); ?>"
-                        data-category="<?php echo esc_attr($slug); ?>">
+                        data-category="<?php echo esc_attr($slug); ?>"
+                        data-loaded="<?php echo $initial_posts; ?>"
+                        data-total="<?php echo $total_posts; ?>">
 
                         <?php if ($posts_query->have_posts()): ?>
-
                             <div class="insights-posts-grid columns-<?php echo esc_attr($layout_columns); ?>">
                                 <?php while ($posts_query->have_posts()):
                                     $posts_query->the_post(); ?>
-                                    <div class="insights-card">
-                                        <div class="insights-card-image">
-                                            <a href="<?php the_permalink(); ?>">
-                                                <?php
-                                                if (has_post_thumbnail()) {
-                                                    the_post_thumbnail('medium', [
-                                                        'class' => 'insights-card-img',
-                                                        'alt' => get_the_title()
-                                                    ]);
-                                                } else {
-                                                    echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image" class="insights-card-img">';
-                                                }
-                                                ?>
-                                            </a>
-                                        </div>
-
-                                        <div class="insights-card-content">
-                                            <div class="insights-card-meta">
-                                                <?php
-                                                // Category Badge
-                                                $terms = get_the_terms(get_the_ID(), 'insights_category');
-                                                if ($terms && !is_wp_error($terms) && !empty($terms)) {
-                                                    echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
-                                                }
-                                                ?>
-
-                                                <div class="circle"></div>
-
-                                                <?php
-                                                $custom_date = carbon_get_the_post_meta('insights_custom_publish_date');
-
-                                                if ($custom_date) {
-                                                    $display_date = date('M j, Y', strtotime($custom_date));
-                                                } else {
-                                                    $display_date = get_the_date('M j, Y');
-                                                }
-                                                ?>
-                                                <span class="insights-card-date">
-                                                    <?php echo esc_html($display_date); ?>
-                                                </span>
-                                            </div>
-
-
-                                            <h3 class="insights-card-title">
-                                                <a href="<?php the_permalink(); ?>">
-                                                    <?php the_title(); ?>
-                                                </a>
-                                            </h3>
-
-                                            <?php if (has_excerpt()): ?>
-                                                <div class="insights-card-excerpt">
-                                                    <?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?>
-                                                </div>
-                                            <?php endif; ?>
-
-                                            <div class="insights-card-details-button">
-                                                <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More <svg
-                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_1787_525)">
-                                                            <path
-                                                                d="M12.1727 11.9998L9.34375 9.17184L10.7577 7.75684L15.0007 11.9998L10.7577 16.2428L9.34375 14.8278L12.1727 11.9998Z"
-                                                                fill="#BC001A" />
-                                                        </g>
-                                                        <defs>
-                                                            <clipPath id="clip0_1787_525">
-                                                                <rect width="24" height="24" fill="white" />
-                                                            </clipPath>
-                                                        </defs>
-                                                    </svg>
-                                                </a>
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php get_template_part('components/insights/insights-card'); ?>
                                 <?php endwhile; ?>
                             </div>
 
-                            <?php if ($total_posts > $initial_posts && $show_load_more): ?>
+                            <?php if (!$show_all_posts && $total_posts > $initial_posts && $show_load_more): ?>
                                 <div class="load-more-wrap">
-                                    <button class="insights-load-more-btn load-more-btn" data-offset="<?php echo $initial_posts; ?>"
-                                        data-ppp="<?php echo $load_more_increment; ?>" data-total="<?php echo $total_posts; ?>"
-                                        data-category="<?php echo esc_attr($slug); ?>">
-                                        Load More
+                                    <button class="insights-load-more-btn load-more-btn" 
+                                        data-category="<?php echo esc_attr($slug); ?>"
+                                        data-offset="<?php echo $initial_posts; ?>"
+                                        data-ppp="<?php echo $load_more_increment; ?>"
+                                        data-total="<?php echo $total_posts; ?>">
+                                        <?php echo esc_html($load_more_text); ?>
                                     </button>
+                                </div>
+                            <?php elseif (!empty($load_more_link) && $show_load_more): ?>
+                                <div class="load-more-wrap">
+                                    <a href="<?php echo esc_url($load_more_link); ?>" class="load-more-link">
+                                        <?php echo esc_html($load_more_text); ?>
+                                    </a>
                                 </div>
                             <?php endif; ?>
 
                         <?php else: ?>
                             <div class="insights-no-posts">
-                                <h3>No <?php echo esc_html($name); ?> found</h3>
-                                <p>Sorry, there are no posts to display.</p>
+                                <p>No <?php echo esc_html($name); ?> found.</p>
                             </div>
                         <?php endif; ?>
 
                         <?php wp_reset_postdata(); ?>
-
                     </div>
 
                     <?php $first = false; endforeach; ?>

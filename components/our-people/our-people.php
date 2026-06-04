@@ -29,7 +29,7 @@ $terms = get_terms(array(
                         </p>
                     </div>
 
-                    <div class="form-wrapper" data-aos="fade-up">
+                    <div class="form-wrapper">
                         <form class="mahbub__team-search-form" id="mahbub__team-search-form" method="GET">
                             <div class="mahbub__input-wrapper">
                                 <input type="text" name="mahbub__team_search" placeholder="Search by name"
@@ -64,7 +64,7 @@ $terms = get_terms(array(
                                 ?>
                             </select>
 
-                            <button type="submit" class="primary-button" data-aos="fade-up">
+                            <button type="submit" class="primary-button">
                                 <div class="button-text">
                                     <?php echo esc_html($button_text); ?>
                                 </div>

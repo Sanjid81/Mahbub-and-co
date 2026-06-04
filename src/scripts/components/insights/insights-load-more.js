@@ -23,7 +23,11 @@ jQuery(function ($) {
             },
             success: function (response) {
                 if (response.success && response.data.html) {
-                    $('.insights-posts-grid:visible').append(response.data.html);
+                    var $grid = $btn.closest('.insights-tab-content').find('.insights-posts-grid');
+                    if (!$grid.length) {
+                        $grid = $btn.closest('.insights-archive-section').find('.insights-posts-grid').first();
+                    }
+                    $grid.append(response.data.html);
 
                     var newOffset = offset + ppp;
                     $btn.data('offset', newOffset);

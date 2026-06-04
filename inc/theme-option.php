@@ -81,6 +81,13 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_option_value('yes'),
         ]);
 
+
+    // user meta
+    Container::make( 'user_meta', 'User Additional Information' )
+    ->add_fields( array(
+        Field::make( 'image', 'user_image', 'User Image' )->set_help_text("Height: 200px ; Width: 200px"),
+    ) );
+
 });
 
 

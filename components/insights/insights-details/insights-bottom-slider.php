@@ -64,7 +64,7 @@
             </div>
 
             <?php if ($query->have_posts()): ?>
-                    <div class="insights-slider">
+                    <div class="insights-details-bottom-slider">
                         <div class="swiper">
                             <div class="swiper-wrapper">
                                 <?php while ($query->have_posts()):

@@ -62,7 +62,7 @@ function crb_load_carbonfields()
         '/inc/job-openings/job-opening-fields.php',
         '/inc/job-openings/job-opening-blocks.php',
         '/components/job-openings/current-openings-section.php',
-        '/inc/inc/apply-form.php',
+        '/inc/apply-form.php',
         '/inc/career-programs/career-programs-deatils-block.php',
     ];
 
@@ -313,7 +313,7 @@ wp_enqueue_script(
     'insights-load-more',
     get_template_directory_uri() . '/src/scripts/components/insights/insights-load-more.js',
     array('jquery'),
-    '1.0.1',
+    '1.0.3',
     true
 );
 
@@ -356,7 +356,7 @@ function load_more_insights_handler()
     $category_slug = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
 
     $args = [
-        'post_type' => 'insights',
+        'post_type' => 'post',
         'posts_per_page' => $ppp,
         'offset' => $offset,
         'orderby' => 'date',
@@ -367,10 +367,10 @@ function load_more_insights_handler()
     if (!empty($category_slug) && $category_slug !== 'all') {
         $args['tax_query'] = [
             [
-                'taxonomy' => 'insights_category',
+                'taxonomy' => 'category',
                 'field' => 'slug',
                 'terms' => $category_slug,
-            ]
+            ],
         ];
     }
 
@@ -380,48 +380,8 @@ function load_more_insights_handler()
 
     if ($query->have_posts()) {
         while ($query->have_posts()) {
-            $query->the_post(); ?>
-
-                        <div class="insights-card">
-                            <div class="insights-card-image">
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php
-                                    if (has_post_thumbnail()) {
-                                        the_post_thumbnail('medium', ['class' => 'insights-card-img', 'alt' => get_the_title()]);
-                                    } else {
-                                        echo '<img src="' . esc_url(get_template_directory_uri() . '/dist/img/placeholder.jpg') . '" alt="No image" class="insights-card-img">';
-                                    }
-                                    ?>
-                                </a>
-                            </div>
-
-                            <div class="insights-card-content">
-                                <div class="insights-card-meta">
-                                    <?php
-                                    $terms = get_the_terms(get_the_ID(), 'insights_category');
-                                    if ($terms && !is_wp_error($terms) && !empty($terms)) {
-                                        echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
-                                    }
-                                    ?>
-                                    <div class="circle"></div>
-                                    <span class="insights-card-date"><?php echo esc_html(get_the_date('M j, Y')); ?></span>
-                                </div>
-
-                                <h3 class="insights-card-title">
-                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                </h3>
-
-                                <?php if (has_excerpt()): ?>
-                                        <div class="insights-card-excerpt">
-                                            <?php echo wp_trim_words(get_the_excerpt(), 20, '...'); ?>
-                                        </div>
-                                <?php endif; ?>
-
-                                <a href="<?php the_permalink(); ?>" class="insights-card-link">Read More</a>
-                            </div>
-                        </div>
-
-                        <?php
+            $query->the_post();
+            get_template_part('components/insights/insights-card');
         }
     }
 
@@ -512,3 +472,89 @@ function display_insights_top_slider($args = [])
     set_query_var('insights_slider_fields', $fields);
     get_template_part('components/insights/insights-top-slider');
 }
+
+
+
+
+
+
+
+//*******************Apply form js**********************
+
+function apply_form_year_script()
+{
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const currentYear = new Date().getFullYear();
+        const startYear = 1993;
+
+        function populateYears(selectId, placeholderText) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            select.innerHTML = '';
+
+            // Placeholder
+            const ph = document.createElement('option');
+            ph.value = '';
+            ph.textContent = placeholderText;
+            ph.selected = true;
+            select.appendChild(ph);
+
+            // Years
+            for (let year = currentYear; year >= startYear; year--) {
+                const opt = document.createElement('option');
+                opt.value = year;
+                opt.textContent = year;
+                select.appendChild(opt);
+            }
+        }
+
+        function populateDistricts() {
+            const select = document.getElementById('city');
+            if (!select) return;
+
+            select.innerHTML = '';
+
+            const ph = document.createElement('option');
+            ph.value = '';
+            ph.textContent = 'Select District';
+            ph.selected = true;
+            select.appendChild(ph);
+
+            const districts = ["Dhaka","Gazipur","Narayanganj","Tangail","Kishoreganj","Manikganj","Munshiganj","Narsingdi","Faridpur","Gopalganj","Madaripur","Rajbari","Shariatpur","Chittagong","Comilla","Cox's Bazar","Feni","Noakhali","Brahmanbaria","Chandpur","Lakshmipur","Bandarban","Khagrachari","Rangamati","Rajshahi","Bogra","Pabna","Sirajganj","Natore","Naogaon","Joypurhat","Chapainawabganj","Khulna","Jessore","Satkhira","Bagerhat","Kushtia","Jhenaidah","Magura","Narail","Chuadanga","Meherpur","Barishal","Patuakhali","Bhola","Pirojpur","Jhalokati","Barguna","Sylhet","Sunamganj","Habiganj","Maulvibazar","Rangpur","Dinajpur","Nilphamari","Gaibandha","Kurigram","Lalmonirhat","Panchagarh","Thakurgaon","Mymensingh","Jamalpur","Netrokona","Sherpur"];
+
+            districts.forEach(district => {
+                const opt = document.createElement('option');
+                opt.value = district;
+                opt.textContent = district;
+                select.appendChild(opt);
+            });
+        }
+
+        // Populate all fields
+        populateDistricts();
+        populateYears('graduation', 'Select Graduation Year');
+        populateYears('completion', 'Select Year');
+        populateYears('admissionYear', 'Select Admission Year');
+
+        // Open native date picker on click/focus anywhere inside the input
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.addEventListener('click', function() {
+                try {
+                    this.showPicker();
+                } catch (e) {
+                    // Fallback for older browsers
+                }
+            });
+        });
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'apply_form_year_script', 100);
+
+// Disable Contact Form 7 enum validation for select dropdowns to support dynamic JS populating
+remove_action('wpcf7_swv_create_schema', 'wpcf7_swv_add_select_enum_rules', 20, 2);
