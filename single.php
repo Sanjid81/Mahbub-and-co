@@ -32,7 +32,7 @@ get_header();
                                 <!-- Category -->
                                 <div class="category-badge-and-date">
                                     <?php
-                                    $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                    $terms = get_the_terms(get_the_ID(), 'category');
                                     if ($terms && !is_wp_error($terms) && !empty($terms)) {
                                         echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
                                     }
@@ -102,13 +102,17 @@ get_header();
                         </div>
 
                         <div class="insights-single-content-wrapper-container">
-                            <div class="insights-authors-section">
+                            <?php
+                            $hide_author = carbon_get_the_post_meta('insights_hide_author');
+                            if ($hide_author !== 'none') :
+                            ?>
+                                <div class="insights-authors-section">
     <?php
     $author_id = get_the_author_meta('ID');
 
     $custom_author_name  = get_the_author_meta('display_name', $author_id);
     $custom_author_bio   = get_the_author_meta('description', $author_id);
-    $custom_author_link  = get_author_posts_url($author_id);
+    $custom_author_link  = home_url('/insights-author/' . get_the_author_meta('user_nicename', $author_id) . '/');
     $custom_author_image = carbon_get_user_meta($author_id, 'user_image');
 
     if (!empty($custom_author_name)) :
@@ -142,6 +146,7 @@ get_header();
         </div>
     <?php endif; ?>
 </div>
+                            <?php endif; ?>
 
                             <!-- Main Content -->
                             <div class="insights-main-content">
@@ -207,8 +212,8 @@ if (is_singular('post')) {
     // Exclude current post
     $args['post__not_in'] = [$current_post_id];
 
-    // Get current post's insights_category terms
-    $terms = get_the_terms($current_post_id, 'insights_category');
+    // Get current post's category terms
+    $terms = get_the_terms($current_post_id, 'category');
 
     if (!empty($terms) && !is_wp_error($terms)) {
 
@@ -216,7 +221,7 @@ if (is_singular('post')) {
 
         $args['tax_query'] = [
             [
-                'taxonomy' => 'insights_category',
+                'taxonomy' => 'category',
                 'field'    => 'term_id',
                 'terms'    => $term_ids,
                 'operator' => 'IN',
@@ -229,7 +234,7 @@ if (is_singular('post')) {
     // Block/archive fallback
     $args['tax_query'] = [
         [
-            'taxonomy' => 'insights_category',
+            'taxonomy' => 'category',
             'field'    => 'slug',
             'terms'    => $cat_slug,
         ]
@@ -281,7 +286,7 @@ $query = new WP_Query($args);
                                                 <div class="insights-card-content">
                                                     <div class="insights-card-meta">
                                                         <?php
-                                                        $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                                        $terms = get_the_terms(get_the_ID(), 'category');
                                                         if ($terms && !is_wp_error($terms)) {
                                                             echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
                                                         }

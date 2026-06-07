@@ -16,6 +16,48 @@ add_action('carbon_fields_register_fields', function () {
         ->add_fields(array(
             Field::make('image', 'hero_bg_image', 'Hero Background Image'),
 
+            Field::make('checkbox', 'show_video_bg', 'Show Video Background?')
+                ->set_default_value(false),
+
+            Field::make('file', 'hero_video', 'Hero Video')
+                ->set_type(array('video'))
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
+            Field::make('text', 'hero_video_title', 'Video Title')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
+            Field::make('text', 'hero_video_highlight_text', 'Highlighted Text (inside <span>)')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
+            Field::make('textarea', 'hero_video_description', 'Video Description')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
+            Field::make('text', 'hero_video_button_text', 'Button Text')
+                ->set_default_value('Get Started')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
+            Field::make('text', 'hero_video_button_link', 'Button Link')
+                ->set_default_value('#contact')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => true,
+                ]]),
+
             Field::make('complex', 'hero_slides', 'Hero Slides')
                 ->add_fields(array(
                     Field::make('text', 'title', 'Slide Title'),
@@ -26,8 +68,20 @@ add_action('carbon_fields_register_fields', function () {
                     Field::make('image', 'image', 'Slide Image')
                 ))
                 ->set_layout('tabbed-horizontal')
+                ->set_conditional_logic([[
+                    'field' => 'show_video_bg',
+                    'value' => false,
+                ]])
         ))
         ->set_render_callback(function ($fields) {
+
+            set_query_var('show_video_bg', $fields['show_video_bg'] ?? false);
+            set_query_var('hero_video', $fields['hero_video'] ?? '');
+            set_query_var('hero_video_title', $fields['hero_video_title'] ?? '');
+            set_query_var('hero_video_highlight_text', $fields['hero_video_highlight_text'] ?? '');
+            set_query_var('hero_video_description', $fields['hero_video_description'] ?? '');
+            set_query_var('hero_video_button_text', $fields['hero_video_button_text'] ?? 'Get Started');
+            set_query_var('hero_video_button_link', $fields['hero_video_button_link'] ?? '#contact');
 
             set_query_var('slides', $fields['hero_slides'] ?? []);
             set_query_var('hero_bg_image', $fields['hero_bg_image'] ?? '');
@@ -47,38 +101,125 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('text', 'insights_title', 'Insights Section Title')
                 ->set_default_value('Insights'),
 
-            // News Cards
-            Field::make('complex', 'news_cards', 'News Cards')
-                ->set_layout('tabbed-horizontal')
-
-                ->add_fields(array(
-                    Field::make('image', 'image', 'Card Image'),
-                    Field::make('text', 'meta', 'Meta Text')->set_default_value('NEWS • APRIL 28, 2025'),
-                    Field::make('text', 'heading', 'Card Heading'),
-                    Field::make('textarea', 'excerpt', 'Excerpt'),
-                    Field::make('text', 'read_more_text', 'Read More Text')->set_default_value('Read More'),
-                    Field::make('text', 'read_more_link', 'Read More URL')->set_default_value('#'),
+            // News Association Selector
+            Field::make('association', 'news_posts', 'Select News Posts')
+                ->set_types(array(
+                    array(
+                        'type' => 'post',
+                        'post_type' => 'post',
+                    )
                 )),
 
-            // Insights Cards
-            Field::make('complex', 'insights_cards', 'Insights Cards')
-                ->set_layout('tabbed-horizontal')
-                ->add_fields(array(
-                    Field::make('image', 'image', 'Card Image'),
-                    Field::make('text', 'meta', 'Meta Text')->set_default_value('NEWS • APRIL 28, 2025'),
-                    Field::make('text', 'heading', 'Card Heading'),
-                    Field::make('textarea', 'excerpt', 'Excerpt'),
-                    Field::make('text', 'read_more_text', 'Read More Text')->set_default_value('Read More'),
-                    Field::make('text', 'read_more_link', 'Read More URL')->set_default_value('#'),
+                
+   Field::make('text', 'insights_button_text', 'Insights Button Text')->set_default_value('Get Started'),
+            Field::make('text', 'insights_button_link', 'Insights Button Link')->set_default_value('#'),
+            // Insights Association Selector
+            Field::make('association', 'insights_posts', 'Select Insights Posts')
+                ->set_types(array(
+                    array(
+                        'type' => 'post',
+                        'post_type' => 'post',
+                    )
                 )),
 
             // Buttons
             Field::make('text', 'news_button_text', 'News Button Text')->set_default_value('View more'),
             Field::make('text', 'news_button_link', 'News Button Link')->set_default_value('#'),
-            Field::make('text', 'insights_button_text', 'Insights Button Text')->set_default_value('Get Started'),
-            Field::make('text', 'insights_button_link', 'Insights Button Link')->set_default_value('#'),
+          
         ))
         ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+            // Parse News Association
+            $news_assoc = $fields['news_posts'] ?? [];
+            $news_cards = [];
+            foreach ($news_assoc as $assoc) {
+                if (isset($assoc['id']) && $assoc['type'] === 'post') {
+                    $post_id = $assoc['id'];
+                    $post = get_post($post_id);
+                    if ($post && $post->post_status === 'publish') {
+                        $image_id = get_post_thumbnail_id($post_id);
+                        $post_type = get_post_type($post_id);
+                        
+                        if ($post_type === 'insights') {
+                            $terms = wp_get_post_terms($post_id, 'insights_category');
+                        } else {
+                            $terms = wp_get_post_terms($post_id, 'category');
+                        }
+                        
+                        $cat_name = '';
+                        if (!is_wp_error($terms) && !empty($terms)) {
+                            $cat_name = strtoupper($terms[0]->name);
+                        } else {
+                            $cat_name = 'NEWS';
+                        }
+                        
+                        $post_date = strtoupper(get_the_date('F j, Y', $post));
+                        $meta = $cat_name . ' • ' . $post_date;
+                        
+                        $excerpt = $post->post_excerpt;
+                        if (empty($excerpt)) {
+                            $excerpt = wp_trim_words($post->post_content, 20);
+                        }
+                        
+                        $news_cards[] = [
+                            'image' => $image_id,
+                            'meta' => $meta,
+                            'heading' => get_the_title($post_id),
+                            'excerpt' => $excerpt,
+                            'read_more_text' => 'Read More',
+                            'read_more_link' => get_permalink($post_id),
+                        ];
+                    }
+                }
+            }
+
+            // Parse Insights Association
+            $insights_assoc = $fields['insights_posts'] ?? [];
+            $insights_cards = [];
+            foreach ($insights_assoc as $assoc) {
+                if (isset($assoc['id']) && $assoc['type'] === 'post') {
+                    $post_id = $assoc['id'];
+                    $post = get_post($post_id);
+                    if ($post && $post->post_status === 'publish') {
+                        $image_id = get_post_thumbnail_id($post_id);
+                        $post_type = get_post_type($post_id);
+                        
+                        if ($post_type === 'insights') {
+                            $terms = wp_get_post_terms($post_id, 'insights_category');
+                        } else {
+                            $terms = wp_get_post_terms($post_id, 'category');
+                        }
+                        
+                        $cat_name = '';
+                        if (!is_wp_error($terms) && !empty($terms)) {
+                            $cat_name = strtoupper($terms[0]->name);
+                        } else {
+                            $cat_name = 'INSIGHTS';
+                        }
+                        
+                        $post_date = strtoupper(get_the_date('F j, Y', $post));
+                        $meta = $cat_name . ' • ' . $post_date;
+                        
+                        $excerpt = $post->post_excerpt;
+                        if (empty($excerpt)) {
+                            $excerpt = wp_trim_words($post->post_content, 20);
+                        }
+                        
+                        $insights_cards[] = [
+                            'image' => $image_id,
+                            'meta' => $meta,
+                            'heading' => get_the_title($post_id),
+                            'excerpt' => $excerpt,
+                            'read_more_text' => 'Read More',
+                            'read_more_link' => get_permalink($post_id),
+                        ];
+                    }
+                }
+            }
+
+            // Override cards with parsed associations
+            $fields['news_cards'] = $news_cards;
+            $fields['insights_cards'] = $insights_cards;
+
             // Pass all fields to template
             set_query_var('news_insights_fields', $fields);
             get_template_part('components/home/news-and-insights');
@@ -448,10 +589,11 @@ add_action('carbon_fields_register_fields', function () {
         });
 
     // =========================================================
-    // Insights Author Info Fields
+    // Insights Author Info Fields (Disabled - Authors are WP Users)
     // =========================================================
+    /*
     Container::make('post_meta', 'insights_authors_meta', 'Authors Information (Multiple)')
-        ->where('post_type', '=', 'insights')
+        ->where('post_type', '=', 'post')
         ->add_fields(array(
             Field::make('complex', 'insights_authors', 'Add Authors')
                 ->set_layout('tabbed-horizontal')
@@ -474,6 +616,7 @@ add_action('carbon_fields_register_fields', function () {
                         ->set_attribute('placeholder', 'https://linkedin.com/in/username'),
                 ))
         ));
+    */
 
     // =========================================================
     // Insights page - Display insights posts
@@ -504,13 +647,13 @@ add_action('carbon_fields_register_fields', function () {
 
             $args = [
                 'posts_per_page' => $fields['insights_posts_per_page'] ?? 6,
-                'post_type' => 'insights',
+                'post_type' => 'post',
             ];
 
             if (!empty($fields['insights_category_filter'])) {
                 $args['tax_query'] = [
                     [
-                        'taxonomy' => 'insights_category',
+                        'taxonomy' => 'category',
                         'field' => 'slug',
                         'terms' => $fields['insights_category_filter'],
                     ]
@@ -541,7 +684,7 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('select', 'insights_category', 'Filter by Category')
                 ->add_options(function () {
                     $terms = get_terms([
-                        'taxonomy' => 'insights_category',
+                        'taxonomy' => 'category',
                         'hide_empty' => false,
                     ]);
 

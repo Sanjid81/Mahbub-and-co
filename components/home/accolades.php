@@ -15,56 +15,27 @@ if (!empty($companies)):
                 ?>
             </h2>
 
-            <div class="initail-slider" data-aos="fade-up">
-                <div class="swiper">
-                    <div class="company-swiper">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($companies as $company):
-                                $logo_id = $company['logo'] ?? '';
-                                ?>
-                                <div class="swiper-slide">
-                                    <div class="company-content">
-                                        <?php if ($logo_id): ?>
-                                            <?php
-                                            echo wp_get_attachment_image(
-                                                $logo_id,
-                                                'medium',
-                                                false,
-                                                array(
-                                                    'alt' => get_post_meta($logo_id, '_wp_attachment_image_alt', true)
-                                                )
-                                            );
-                                            ?>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
+            <div class="company-grid" style="--total-items: <?php echo count($companies); ?>;" data-aos="fade-up">
+                <?php foreach ($companies as $company):
+                    $logo_id = $company['logo'] ?? '';
+                    ?>
+                    <div class="company-content">
+                        <?php if ($logo_id): ?>
+                            <?php
+                            echo wp_get_attachment_image(
+                                $logo_id,
+                                'medium',
+                                false,
+                                array(
+                                    'alt' => get_post_meta($logo_id, '_wp_attachment_image_alt', true)
+                                )
+                            );
+                            ?>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="initail-slider-two">
-                <div class="swiper">
-                    <div class="company-swiper-two">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($companies as $company):
-                                $logo_id = $company['logo'] ?? '';
-                                $alt = $company['alt'] ?? '';
-                                $logo_url = wp_get_attachment_url($logo_id);
-                                ?>
-                                <div class="swiper-slide">
-                                    <div class="company-content">
-                                        <?php if ($logo_url): ?>
-                                            <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr($alt); ?>">
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="button-wraper" data-aos="fade-up">
                 <a href="<?php echo esc_url($acolades_button_link); ?>" class="primary-button">
                     <div class="button-text">
@@ -86,7 +57,6 @@ if (!empty($companies)):
                 </a>
             </div>
 
-        </div>
         </div>
     </section>
 <?php endif; ?>

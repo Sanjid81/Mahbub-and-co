@@ -83,7 +83,7 @@ $query = new WP_Query($args);
                                         <div class="insights-slider-card-content">
                                             <div class="insights-slider-card-meta">
                                                 <?php
-                                                $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                                $terms = get_the_terms(get_the_ID(), 'category');
                                                 if ($terms && !is_wp_error($terms) && !empty($terms)) {
                                                     $first_term = $terms[0];
                                                     echo '<span class="category-badge meta-category">' . esc_html($first_term->name) . '</span>';

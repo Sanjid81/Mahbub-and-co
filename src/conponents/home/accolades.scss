@@ -59,119 +59,80 @@
       }
     }
 
-    .initail-slider {
-      @media (max-width: 480px) {
-        overflow: visible;
-
-        .swiper {
-          overflow: visible !important;
-        }
-
-        .swiper-wrapper {
-          flex-direction: column !important;
-          transform: none !important;
-          width: 100% !important;
-          gap: 16px;
-          align-items: center;
-        }
-
-        .swiper-slide {
-          width: 100% !important;
-          margin: 0 !important;
-          display: flex;
-          justify-content: center;
-        }
-      }
-    }
-
-    .company-swiper {
+    .company-grid {
+      display: grid;
+      gap: 16px;
+      justify-content: center;
+      justify-items: center;
       width: 100%;
-      overflow: hidden;
+      margin: 0 auto;
 
-      .swiper-wrapper {
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        transition-timing-function: linear !important;
+      // Smallest screen (< 360px): 1 column
+      grid-template-columns: repeat(1, minmax(0, 200px));
+
+      // Mobile (>= 360px): up to 2 columns
+      @media (min-width: 355px) {
+        grid-template-columns: repeat(min(2, var(--total-items, 2)), minmax(0, 1fr));
+        gap: 12px;
       }
 
-      .swiper-slide {
-        width: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    .company-swiper-two {
-      display: none;
-
-      width: 100%;
-      overflow: hidden;
-
-      .swiper-wrapper {
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        transition-timing-function: linear !important;
+      // Mobile (>= 480px): up to 2 columns, larger size
+      @media (min-width: 480px) {
+        grid-template-columns: repeat(min(2, var(--total-items, 2)), minmax(0, 150px));
+        gap: 16px;
       }
 
-      .swiper-slide {
-        width: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .company-content {
-        display: flex;
-        flex-direction: column;
+      // Small tablet (>= 640px): up to 3 columns
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(min(3, var(--total-items, 3)), minmax(0, 200px));
         gap: 20px;
-        justify-content: center;
-        align-items: center;
-        padding: 36px 50px;
-        background-color: var(--light-bg);
-        max-width: 200px;
-        position: relative;
-        z-index: 2;
-        border-radius: 12px;
       }
 
-      .company-content img {
-        width: 100px;
-        height: 100px;
-        object-fit: contain;
+      // Tablet (>= 768px): up to 4 columns
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(min(4, var(--total-items, 4)), minmax(0, 200px));
+        gap: 24px;
+      }
+
+      // Small desktop / Tablet landscape (>= 1024px): up to 5 columns
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(min(5, var(--total-items, 5)), minmax(0, 200px));
+        gap: 30px;
+      }
+
+      // Desktop (>= 1200px): up to 6 columns
+      @media (min-width: 1200px) {
+        grid-template-columns: repeat(min(6, var(--total-items, 6)), minmax(0, 200px));
+        gap: 30px;
+      }
+
+      // Full size desktop (>= 1440px): up to 6 columns, full size
+      @media (min-width: 1440px) {
+        grid-template-columns: repeat(min(6, var(--total-items, 6)), minmax(0, 263px));
+        gap: 30px;
       }
     }
 
     .company-content {
       display: flex;
       flex-direction: column;
-      gap: 20px;
       justify-content: center;
       align-items: center;
-      padding: 55px 72px;
       background-color: var(--light-bg);
-      max-width: 263px;
       position: relative;
       z-index: 2;
       border-radius: 12px;
+      width: 100%;
+      aspect-ratio: 263 / 230;
+      padding: 10%;
+      box-sizing: border-box;
 
-      @media (max-width: 800px) {
-        padding: 36px 50px;
-        background-color: var(--light-bg);
-        max-width: 200px;
-      }
-    }
-
-    .company-content img {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-
-      @media (max-width: 800px) {
-        width: 100px;
-        height: 100px;
+      img, svg {
+        max-width: 70%;
+        max-height: 70%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
       }
     }
 

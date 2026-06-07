@@ -12,6 +12,17 @@ $terms = get_terms(array(
 ?>
 
 <div class="our-people-section mahbub__team-section-wrapper" style="display:flex; gap:10px; flex-wrap:wrap;">
+    <!-- DEBUG TERMS:
+    <?php
+    if (!empty($terms) && !is_wp_error($terms)) {
+        foreach ($terms as $t) {
+            echo "ID: " . $t->term_id . " | Slug: '" . $t->slug . "' | Name: '" . $t->name . "'\n";
+        }
+    } else {
+        echo "No terms or WP_Error: " . (is_wp_error($terms) ? $terms->get_error_message() : 'empty');
+    }
+    ?>
+    -->
     <img class="bg-img" src="https://i.postimg.cc/hGk6QtbV/hero-background-img.webp" alt="Hero Background">
 
     <!-- <div class="container"> -->

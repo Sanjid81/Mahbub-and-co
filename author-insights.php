@@ -14,64 +14,51 @@ if (empty($author_slug)) {
     exit;
 }
 
-$author_name = trim(str_replace('-', ' ', urldecode($author_slug)));
-$author_name_lower = strtolower($author_name);
-
 $author_image = '';
 $author_bio = '';
 $fb_link = '';
 $li_link = '';
 $found = false;
+$author_name = '';
 
-// Find author info from repeater
-$search_query = new WP_Query([
-    'post_type' => 'insights',
-    'posts_per_page' => -1,
-    'fields' => 'ids',
-    'post_status' => 'publish'
-]);
+$author = get_user_by('slug', $author_slug);
 
-if ($search_query->have_posts()) {
-    foreach ($search_query->posts as $post_id) {
-        $authors = carbon_get_post_meta($post_id, 'insights_authors') ?: [];
-        foreach ($authors as $a) {
-            $rep_name = trim($a['author_name'] ?? '');
-            $rep_lower = strtolower($rep_name);
-
-            if ($rep_name === $author_name || $rep_lower === $author_name_lower) {
-                $found = true;
-                $author_image = $a['author_image'] ?? '';
-                $author_bio = $a['author_bio'] ?? '';
-                $fb_link = $a['facebook_link'] ?? '';
-                $li_link = $a['linkedin_link'] ?? '';
-                break 2;
-            }
+if ($author) {
+    $found = true;
+    $author_name = $author->display_name;
+    $author_bio = get_the_author_meta('description', $author->ID);
+    
+    $author_image_id = carbon_get_user_meta($author->ID, 'user_image');
+    if ($author_image_id) {
+        $author_image = wp_get_attachment_image_url($author_image_id, 'medium');
+        if (!$author_image) {
+            $author_image = wp_get_attachment_url($author_image_id);
         }
     }
+    
+    $fb_link = carbon_get_user_meta($author->ID, 'user_facebook_link');
+    $li_link = carbon_get_user_meta($author->ID, 'user_linkedin_link');
 }
 
 // Get posts by this author
-$author_posts_query = new WP_Query([
-    'post_type' => 'insights',
-    'posts_per_page' => 12,
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'post_status' => 'publish'
-]);
-
 $author_posts = [];
-if ($author_posts_query->have_posts()) {
-    while ($author_posts_query->have_posts()) {
-        $author_posts_query->the_post();
-        $post_authors = carbon_get_the_post_meta('insights_authors') ?: [];
-        foreach ($post_authors as $a) {
-            if (strtolower(trim($a['author_name'] ?? '')) === $author_name_lower) {
-                $author_posts[] = $post;
-                break;
-            }
+if ($found) {
+    $author_posts_query = new WP_Query([
+        'post_type' => 'post',
+        'author' => $author->ID,
+        'posts_per_page' => 12,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => 'publish'
+    ]);
+
+    if ($author_posts_query->have_posts()) {
+        while ($author_posts_query->have_posts()) {
+            $author_posts_query->the_post();
+            $author_posts[] = get_post();
         }
+        wp_reset_postdata();
     }
-    wp_reset_postdata();
 }
 ?>
 
@@ -169,7 +156,7 @@ if ($author_posts_query->have_posts()) {
                                 <div class="insights-card-content">
                                     <div class="insights-card-meta">
                                         <?php
-                                        $terms = get_the_terms(get_the_ID(), 'insights_category');
+                                        $terms = get_the_terms(get_the_ID(), 'category');
                                         if ($terms && !is_wp_error($terms) && !empty($terms)) {
                                             echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
                                         }

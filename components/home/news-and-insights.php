@@ -63,11 +63,6 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
               <div class="card-grid-inner"data-aos="fade-down">
                 <?php foreach ($news_cards as $card): ?>
                   <div class="card">
-                    <?php if ($card['image'] ?? false): ?>
-                      <div class="card-image">
-                        <?php echo wp_get_attachment_image($card['image'], 'full'); ?>
-                      </div>
-                    <?php endif; ?>
                     <div class="card-content">
                       <p class="meta" ><?php echo esc_html($card['meta']); ?></p>
                       <h3 class="heading-three" ><?php echo esc_html($card['heading']); ?></h3>
@@ -160,11 +155,6 @@ $insights_button_link = $fields['insights_button_link'] ?? '#';
               <div class="card-grid-inner"data-aos="fade-down">
                 <?php foreach ($insights_cards as $card): ?>
                   <div class="card">
-                    <?php if ($card['image'] ?? false): ?>
-                      <div class="card-image">
-                        <?php echo wp_get_attachment_image($card['image'], 'full'); ?>
-                      </div>
-                    <?php endif; ?>
                     <div class="card-content">
                       <p class="meta"><?php echo esc_html($card['meta']); ?></p>
                       <h3 class="heading-three"><?php echo esc_html($card['heading']); ?></h3>

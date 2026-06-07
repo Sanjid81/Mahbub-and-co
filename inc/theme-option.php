@@ -86,6 +86,8 @@ add_action('carbon_fields_register_fields', function () {
     Container::make( 'user_meta', 'User Additional Information' )
     ->add_fields( array(
         Field::make( 'image', 'user_image', 'User Image' )->set_help_text("Height: 200px ; Width: 200px"),
+        Field::make( 'text', 'user_facebook_link', 'Facebook Link' )->set_attribute('placeholder', 'https://facebook.com/username'),
+        Field::make( 'text', 'user_linkedin_link', 'LinkedIn Link' )->set_attribute('placeholder', 'https://linkedin.com/in/username'),
     ) );
 
 });

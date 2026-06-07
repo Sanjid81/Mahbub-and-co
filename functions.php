@@ -54,7 +54,7 @@ function crb_load_carbonfields()
         '/inc/expertise-area.php',
         '/inc/team-details/team-details.php',
         '/inc/insights-post-type.php',
-        '/inc/distribute-insights-categories.php',
+        // '/inc/distribute-insights-categories.php',
         '/inc/register-career-post-type.php',
         '/components/career/career-tab-section.php',
         '/inc/career-programs/career-fields.php',
@@ -93,6 +93,9 @@ function theme_enqueue_assets()
     // Webpack compiled CSS & JS
     wp_enqueue_style('app-style', get_template_directory_uri() . '/dist/app.css', [], '1.0');
     wp_enqueue_script('app-js', get_template_directory_uri() . '/dist/app.js', [], '1.0', true);
+    wp_localize_script('app-js', 'mahbub_ajax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+    ));
 
 
     // Swiper & AOS
@@ -110,7 +113,19 @@ add_action('wp_enqueue_scripts', 'theme_enqueue_assets');
 
 
 
-
+/**
+ * Enqueue custom styles for Block Editor (Gutenberg) to separate Carbon Fields blocks
+ */
+function mahbub_co_enqueue_block_editor_styles()
+{
+    wp_enqueue_style(
+        'mahbub-co-admin-editor-styles',
+        get_template_directory_uri() . '/admin-editor.css',
+        array(),
+        '1.0.0'
+    );
+}
+add_action('enqueue_block_editor_assets', 'mahbub_co_enqueue_block_editor_styles');
 
 
 
@@ -197,14 +212,7 @@ add_action('wp_footer', 'aos_init_script', 100);
 // =====================================================================================
 
 
-function mahbub_team_search_scripts()
-{
-    wp_enqueue_script('mahbub-team-search', get_stylesheet_directory_uri() . '/src/scripts/components/people/team-search.js', array('jquery'), '1.0', true);
-    wp_localize_script('mahbub-team-search', 'mahbub_ajax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-    ));
-}
-add_action('wp_enqueue_scripts', 'mahbub_team_search_scripts');
+// Removed mahbub_team_search_scripts since team-search.js is now bundled in app.js
 
 // ====================================// AJAX handler=================================================
 
@@ -558,3 +566,65 @@ add_action('wp_footer', 'apply_form_year_script', 100);
 
 // Disable Contact Form 7 enum validation for select dropdowns to support dynamic JS populating
 remove_action('wpcf7_swv_create_schema', 'wpcf7_swv_add_select_enum_rules', 20, 2);
+
+/**
+ * Rename standard 'Post' post type to 'News & Insights' in Admin Dashboard
+ */
+function mahbub_change_post_menu_label() {
+    global $menu;
+    global $submenu;
+    if (isset($menu[5])) {
+        $menu[5][0] = 'News & Insights';
+    }
+    if (isset($submenu['edit.php'][5])) {
+        $submenu['edit.php'][5][0] = 'All News & Insights';
+    }
+    if (isset($submenu['edit.php'][10])) {
+        $submenu['edit.php'][10][0] = 'Add News & Insights';
+    }
+    if (isset($submenu['edit.php'][16])) {
+        $submenu['edit.php'][16][0] = 'News & Insights Tags';
+    }
+}
+add_action('admin_menu', 'mahbub_change_post_menu_label');
+
+function mahbub_change_post_object_label() {
+    global $wp_post_types;
+    if (isset($wp_post_types['post'])) {
+        $labels = &$wp_post_types['post']->labels;
+        $labels->name = 'News & Insights';
+        $labels->singular_name = 'News & Insights';
+        $labels->add_new = 'Add News & Insights';
+        $labels->add_new_item = 'Add News & Insights';
+        $labels->edit_item = 'Edit News & Insights';
+        $labels->new_item = 'News & Insights';
+        $labels->view_item = 'View News & Insights';
+        $labels->search_items = 'Search News & Insights';
+        $labels->not_found = 'No News & Insights found';
+        $labels->not_found_in_trash = 'No News & Insights found in Trash';
+        $labels->all_items = 'All News & Insights';
+        $labels->menu_name = 'News & Insights';
+        $labels->name_admin_bar = 'News & Insights';
+    }
+}
+add_action('init', 'mahbub_change_post_object_label');
+
+/**
+ * Strip formatting tags (strong, em, u, b, i, span) from inside heading tags (h1-h6) and paragraph tags (p) in the post content
+ */
+function mahbub_strip_formatting_in_headings($content) {
+    if (is_singular()) {
+        $content = preg_replace_callback('/(<(h[1-6]|p)[^>]*>)(.*?)(<\/\\2>)/is', function($matches) {
+            $opening_tag = $matches[1];
+            $inner_content = $matches[3];
+            $closing_tag = $matches[4];
+            
+            // Strip formatting tags
+            $inner_content = preg_replace('/<\/?(strong|em|u|b|i|span)[^>]*>/i', '', $inner_content);
+            
+            return $opening_tag . $inner_content . $closing_tag;
+        }, $content);
+    }
+    return $content;
+}
+// add_filter('the_content', 'mahbub_strip_formatting_in_headings', 20);

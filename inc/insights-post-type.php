@@ -2,13 +2,11 @@
 // NO WHITESPACE ABOVE THIS LINE
 
 /**
- * Insights Post Type + Categories Taxonomy
+ * Insights Post Type + Categories Taxonomy (Disabled/Removed)
  */
+/*
 function register_insights_post_type_and_taxonomy()
 {
-    /* =========================
-     * Insights Post Type
-     * ========================= */
     register_post_type('insights', array(
         'labels' => array(
             'name' => 'All Insights',
@@ -30,9 +28,6 @@ function register_insights_post_type_and_taxonomy()
         'menu_position' => 6,
     ));
 
-    /* =========================
-     * Insights Category Taxonomy
-     * ========================= */
     register_taxonomy('insights_category', 'insights', array(
         'labels' => array(
             'name' => 'Insight Categories',
@@ -51,9 +46,6 @@ function register_insights_post_type_and_taxonomy()
 }
 add_action('init', 'register_insights_post_type_and_taxonomy');
 
-/**
- * Flush rewrite rules for insights
- */
 function flush_rewrite_rules_for_insights()
 {
     register_insights_post_type_and_taxonomy();
@@ -61,12 +53,8 @@ function flush_rewrite_rules_for_insights()
 }
 add_action('after_switch_theme', 'flush_rewrite_rules_for_insights');
 
-/**
- * Create default insights categories
- */
 function create_default_insights_categories()
 {
-    // Check if terms already exist
     if (!term_exists('Insights', 'insights_category')) {
         wp_insert_term('Insights', 'insights_category', array(
             'slug' => 'insights',
@@ -82,10 +70,7 @@ function create_default_insights_categories()
     }
 }
 add_action('after_switch_theme', 'create_default_insights_categories');
-
-
-
-
+*/
 
 // *************************post date and social media*********************************
 add_action('carbon_fields_register_fields', 'crb_attach_insights_custom_date_and_social', 100);
@@ -97,7 +82,7 @@ function crb_attach_insights_custom_date_and_social()
     }
 
     \Carbon_Fields\Container::make('post_meta', 'Custom Publish Date & Social Links')
-        ->where('post_type', '=', 'insights')
+        ->where('post_type', '=', 'post')
         ->add_fields(array(
 
             \Carbon_Fields\Field::make('date', 'insights_custom_publish_date', 'Custom Publish Date')
@@ -109,5 +94,12 @@ function crb_attach_insights_custom_date_and_social()
 
             \Carbon_Fields\Field::make('text', 'insights_linkedin_link', 'LinkedIn Link')
                 ->set_attribute('placeholder', 'https://linkedin.com/in/yourprofile'),
+
+            \Carbon_Fields\Field::make('select', 'insights_hide_author', 'Author Display')
+                ->add_options(array(
+                    'show' => 'Show Author',
+                    'none' => 'None (Hide Author)',
+                ))
+                ->set_default_value('show'),
         ));
 }

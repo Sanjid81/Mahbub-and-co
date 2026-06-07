@@ -1,0 +1,20 @@
+/* 
+ * Style Carbon Fields blocks in the WordPress Block Editor (Gutenberg)
+ * to visually separate them into distinct card-like panels.
+ */
+.wp-block[data-type^="carbon-fields/"],
+.block-editor-block-list__block[data-type^="carbon-fields/"] {
+    border: 1px solid #dcdcdc !important;
+    border-radius: 8px !important;
+    padding: 24px !important;
+    margin-top: 16px !important;
+    margin-bottom: 32px !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Adjust padding inside Carbon Fields block containers */
+.wp-block[data-type^="carbon-fields/"] .cf-block__fields,
+.block-editor-block-list__block[data-type^="carbon-fields/"] .cf-block__fields {
+    margin-top: 0 !important;
+}

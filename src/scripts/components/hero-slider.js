@@ -1,17 +1,19 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-  const swiper = new Swiper('.hero-swiper', {
-    direction: 'horizontal',
-    loop: true,
+  if (document.querySelector('.hero-swiper')) {
+    const swiper = new Swiper('.hero-swiper', {
+      direction: 'horizontal',
+      loop: true,
 
-    autoplay: {
-      delay: 3000,
-    },
+      autoplay: {
+        delay: 3000,
+      },
 
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true
-    },
-  });
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+    });
+  }
 });
 

@@ -184,19 +184,33 @@
               }
 
               .primary-button {
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                background-color: transparent;
-                transition: all 0.35s ease-in-out;
-                color: #ffff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 24px auto 0 auto;
+                background-color: transparent !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                outline: none !important;
+                padding: 6px 70px 6px 32px !important;
+                border-radius: 100px !important;
+                height: 56px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: var(--dark-normal) !important;
+                font-weight: 600 !important;
+                font-family: var(--font-primary) !important;
+                text-decoration: none !important;
+                width: fit-content !important;
+
                 .button-text {
-                  transition: all 0.35s ease-in-out;
-                  color: var(--color-white);
-                  font-family: var(--font-primary);
+                  color: white !important;
+                  font-weight: 600 !important;
+                }
+
+                &:hover {
+                  padding: 6px 32px 6px 70px !important;
+                  
+                  .button-text {
+                    color: #FFFFFF !important;
+                  }
                 }
               }
             }

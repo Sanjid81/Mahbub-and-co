@@ -26,7 +26,7 @@
 
           // WP_Query setup
           $args = [
-              'post_type' => 'insights',
+              'post_type' => 'post',
               'posts_per_page' => $slides_count,
               'post_status' => 'publish',
               'orderby' => 'date',
@@ -37,7 +37,7 @@
           if (!empty($cat_slug)) {
               $args['tax_query'] = [
                   [
-                      'taxonomy' => 'insights_category',
+                      'taxonomy' => 'category',
                       'field' => 'slug',
                       'terms' => $cat_slug,
                   ]
@@ -89,10 +89,10 @@
                                                 <div class="insights-card-content">
                                                     <div class="insights-card-meta">
                                                         <?php
-                                                        $terms = get_the_terms(get_the_ID(), 'insights_category');
-                                                        if ($terms && !is_wp_error($terms)) {
-                                                            echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
-                                                        }
+                                                         $terms = get_the_terms(get_the_ID(), 'category');
+                                                         if ($terms && !is_wp_error($terms)) {
+                                                             echo '<span class="category-badge meta-category">' . esc_html($terms[0]->name) . '</span>';
+                                                         }
                                                         ?>
                                                         <div class="circle"></div>
 

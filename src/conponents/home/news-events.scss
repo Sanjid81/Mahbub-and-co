@@ -23,6 +23,8 @@
             }
 
             .column {
+                display: flex;
+                flex-direction: column;
 
                 .heading-two {
                     color: white;
@@ -39,6 +41,7 @@
                     gap: 20px;
                     align-items: stretch;
                     padding-top: 80px;
+                    flex: 1;
 
                     @media (max-width: 1030px) {
                         padding-top: 54px;
@@ -79,6 +82,8 @@
                         .card-content {
                             padding: 20px;
                             flex: 1;
+                            display: flex;
+                            flex-direction: column;
 
                             .meta {
                                 @extend .small-text;
@@ -107,6 +112,7 @@
                                 align-items: center;
                                 gap: 0.3rem;
                                 transition: color 0.2s ease;
+                                margin-top: auto;
 
                                 span {
                                     margin-top: 3px;
