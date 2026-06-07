@@ -134,7 +134,16 @@ get_header();
                         ]
                     );
                     ?>
+                <?php else : ?>
+                    <div class="author-avatar author-avatar--placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true">
+                            <circle cx="40" cy="40" r="40" fill="#e8e0e2"/>
+                            <circle cx="40" cy="30" r="14" fill="#b0919a"/>
+                            <ellipse cx="40" cy="70" rx="22" ry="16" fill="#b0919a"/>
+                        </svg>
+                    </div>
                 <?php endif; ?>
+
 
                 <h4 class="author-name">
                     <a href="<?php echo esc_url($custom_author_link); ?>" class="author-link">

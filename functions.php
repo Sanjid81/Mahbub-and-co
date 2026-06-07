@@ -302,6 +302,7 @@ add_action('wp_enqueue_scripts', 'enable_jquery_properly');
 
 
 
+
 /**
  * Ensure featured image support is enabled
  */
