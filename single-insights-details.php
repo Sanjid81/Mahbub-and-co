@@ -20,21 +20,8 @@
                 <?php while (have_posts()):
                     the_post(); ?>
 
-                    <?php
-                    // Author Info
-                    $author_id = get_the_author_meta('ID');
-                    $author_name = get_the_author_meta('display_name', $author_id);
-                    $author_link = get_author_posts_url($author_id);
 
-                    // Custom Author Fields (Carbon)
-                    $custom_author_name = carbon_get_the_post_meta('insights_author_name') ?: '';
-                    $custom_author_bio = carbon_get_the_post_meta('insights_author_bio') ?: '';
-                    $custom_author_image = carbon_get_the_post_meta('insights_author_image') ?: '';
 
-                    // Custom author link (using slug)
-                    $custom_author_slug = sanitize_title($custom_author_name ?: $author_name);
-                    $custom_author_link = home_url('/author/' . $custom_author_slug);
-                    ?>
 
                     <article class="insights-single-article">
 
@@ -119,34 +106,41 @@
                         <div class="insights-single-content-wrapper-container">
                             <div class="insights-authors-section">
                                 <?php
-                                $authors = carbon_get_the_post_meta('insights_authors') ?: [];
-                                if (!empty($authors)): ?>
-                                    <span>Author<?php echo (count($authors) > 1) ? 's' : ''; ?> :</span>
+                                // Only display author if explicitly enabled via "Author Display" metabox
+                                $show_author = carbon_get_the_post_meta('insights_show_author');
+
+                                if ($show_author):
+                                    $author_id          = (int) get_the_author_meta('ID');
+                                    $author_name        = get_the_author_meta('display_name', $author_id);
+                                    $author_bio         = get_the_author_meta('description', $author_id);
+                                    $author_avatar      = get_avatar_url($author_id, ['size' => 96]);
+                                    $author_posts_url   = get_author_posts_url($author_id);
+                                ?>
+                                    <span>Author :</span>
                                     <div class="authors-grid">
-                                        <?php foreach ($authors as $author):
-                                            $name = trim($author['author_name'] ?? 'Unknown Author');
-                                            $image = $author['author_image'] ?? '';
-                                            $bio = $author['author_bio'] ?? '';
+                                        <div class="author-card">
+                                            <?php if ($author_avatar): ?>
+                                                <img src="<?php echo esc_url($author_avatar); ?>"
+                                                     alt="<?php echo esc_attr($author_name); ?>"
+                                                     class="author-avatar">
+                                            <?php endif; ?>
 
-                                            $author_slug = sanitize_title($name);
-                                            $author_url = home_url('/insights-author/' . $author_slug . '/'); // 
-                                            ?>
-                                            <div class="author-card">
-                                                <?php if ($image): ?>
-                                                    <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($name); ?>"
-                                                        class="author-avatar">
-                                                <?php endif; ?>
-
+                                            <div class="author-info">
                                                 <h4 class="author-name">
-                                                    <a href="<?php echo esc_url($author_url); ?>" class="author-link">
-                                                        <?php echo esc_html($name); ?>
+                                                    <a href="<?php echo esc_url($author_posts_url); ?>" class="author-link">
+                                                        <?php echo esc_html($author_name); ?>
                                                     </a>
                                                 </h4>
+                                                <?php if ($author_bio): ?>
+                                                    <p class="author-bio"><?php echo esc_html($author_bio); ?></p>
+                                                <?php endif; ?>
                                             </div>
-                                        <?php endforeach; ?>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </div>
+
+
 
                             <!-- Main Content -->
                             <div class="insights-main-content">

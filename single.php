@@ -103,59 +103,51 @@ get_header();
 
                         <div class="insights-single-content-wrapper-container">
                             <?php
-                            $hide_author = carbon_get_the_post_meta('insights_hide_author');
-                            if ($hide_author !== 'none') :
+                            // Only display author if explicitly enabled — default hidden
+                            $show_author = carbon_get_the_post_meta('insights_show_author');
+                            if ($show_author) :
+                                $author_id           = get_the_author_meta('ID');
+                                $custom_author_name  = get_the_author_meta('display_name', $author_id);
+                                $custom_author_bio   = get_the_author_meta('description', $author_id);
+                                $custom_author_link  = home_url('/insights-author/' . get_the_author_meta('user_nicename', $author_id) . '/');
+                                $custom_author_image = carbon_get_user_meta($author_id, 'user_image');
                             ?>
                                 <div class="insights-authors-section">
-    <?php
-    $author_id = get_the_author_meta('ID');
+                                    <?php if (!empty($custom_author_name)) : ?>
+                                        <span>Author :</span>
+                                        <div class="authors-grid">
+                                            <div class="author-card">
+                                                <?php if ($custom_author_image) : ?>
+                                                    <?php echo wp_get_attachment_image(
+                                                        $custom_author_image,
+                                                        'thumbnail',
+                                                        false,
+                                                        [
+                                                            'class' => 'author-avatar',
+                                                            'alt'   => esc_attr($custom_author_name),
+                                                        ]
+                                                    ); ?>
+                                                <?php else : ?>
+                                                    <div class="author-avatar author-avatar--placeholder">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true">
+                                                            <circle cx="40" cy="40" r="40" fill="#e8e0e2"/>
+                                                            <circle cx="40" cy="30" r="14" fill="#b0919a"/>
+                                                            <ellipse cx="40" cy="70" rx="22" ry="16" fill="#b0919a"/>
+                                                        </svg>
+                                                    </div>
+                                                <?php endif; ?>
 
-    $custom_author_name  = get_the_author_meta('display_name', $author_id);
-    $custom_author_bio   = get_the_author_meta('description', $author_id);
-    $custom_author_link  = home_url('/insights-author/' . get_the_author_meta('user_nicename', $author_id) . '/');
-    $custom_author_image = carbon_get_user_meta($author_id, 'user_image');
-
-    if (!empty($custom_author_name)) :
-    ?>
-        <span>Author :</span>
-
-        <div class="authors-grid">
-            <div class="author-card">
-
-                <?php if ($custom_author_image) : ?>
-                    <?php
-                    echo wp_get_attachment_image(
-                        $custom_author_image,
-                        'thumbnail',
-                        false,
-                        [
-                            'class' => 'author-avatar',
-                            'alt'   => esc_attr($custom_author_name),
-                        ]
-                    );
-                    ?>
-                <?php else : ?>
-                    <div class="author-avatar author-avatar--placeholder">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true">
-                            <circle cx="40" cy="40" r="40" fill="#e8e0e2"/>
-                            <circle cx="40" cy="30" r="14" fill="#b0919a"/>
-                            <ellipse cx="40" cy="70" rx="22" ry="16" fill="#b0919a"/>
-                        </svg>
-                    </div>
-                <?php endif; ?>
-
-
-                <h4 class="author-name">
-                    <a href="<?php echo esc_url($custom_author_link); ?>" class="author-link">
-                        <?php echo esc_html($custom_author_name); ?>
-                    </a>
-                </h4>
-
-            </div>
-        </div>
-    <?php endif; ?>
-</div>
+                                                <h4 class="author-name">
+                                                    <a href="<?php echo esc_url($custom_author_link); ?>" class="author-link">
+                                                        <?php echo esc_html($custom_author_name); ?>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             <?php endif; ?>
+
 
                             <!-- Main Content -->
                             <div class="insights-main-content">

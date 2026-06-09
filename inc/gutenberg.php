@@ -589,34 +589,21 @@ add_action('carbon_fields_register_fields', function () {
         });
 
     // =========================================================
-    // Insights Author Info Fields (Disabled - Authors are WP Users)
+    // Insights — Show Author on Front-end (opt-in, default OFF)
     // =========================================================
-    /*
-    Container::make('post_meta', 'insights_authors_meta', 'Authors Information (Multiple)')
+    Container::make('post_meta', 'insights_show_author_meta', 'Author Display')
         ->where('post_type', '=', 'post')
         ->add_fields(array(
-            Field::make('complex', 'insights_authors', 'Add Authors')
-                ->set_layout('tabbed-horizontal')
-                ->set_collapsed(true)
-                ->set_max(5)
-                ->add_fields(array(
-                    Field::make('text', 'author_name', 'Author Name')
-                        ->set_required(true),
-
-                    Field::make('textarea', 'author_bio', 'Author Bio / Description')
-                        ->set_rows(3),
-
-                    Field::make('image', 'author_image', 'Author Image')
-                        ->set_value_type('url'),
-
-                    Field::make('text', 'facebook_link', 'Facebook Link')
-                        ->set_attribute('placeholder', 'https://facebook.com/username'),
-
-                    Field::make('text', 'linkedin_link', 'LinkedIn Link')
-                        ->set_attribute('placeholder', 'https://linkedin.com/in/username'),
-                ))
+            Field::make('checkbox', 'insights_show_author', 'Show Author on this post?')
+                ->set_default_value(false)
+                ->set_help_text(
+                    'Unchecked by default — no author will show. ' .
+                    'Tick this box AND set the Author in the right sidebar to display the author on the front-end.'
+                ),
         ));
-    */
+
+
+
 
     // =========================================================
     // Insights page - Display insights posts
