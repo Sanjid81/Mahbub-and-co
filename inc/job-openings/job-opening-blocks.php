@@ -107,7 +107,6 @@ function maco_render_all_job_blocks_fallback($content) {
 function maco_register_job_opening_blocks() {
     Block::make('Job Description')
         ->set_icon('media-text')->set_category('layout')
-        ->where('post_type', '=', 'job_opening')
         ->add_fields([
             Field::make('text', 'heading', __('Section Heading', 'mahbub-and-co'))->set_default_value('Job Description'),
             Field::make('rich_text', 'content', __('Content', 'mahbub-and-co')),
@@ -115,7 +114,6 @@ function maco_register_job_opening_blocks() {
 
     Block::make('Key Requirements')
         ->set_icon('list-view')->set_category('layout')
-        ->where('post_type', '=', 'job_opening')
         ->add_fields([
             Field::make('text', 'heading', __('Section Heading', 'mahbub-and-co'))->set_default_value('Key Requirements'),
             Field::make('complex', 'items', __('Requirements', 'mahbub-and-co'))
@@ -125,7 +123,6 @@ function maco_register_job_opening_blocks() {
 
     Block::make('Key Skills')
         ->set_icon('performance')->set_category('layout')
-        ->where('post_type', '=', 'job_opening')
         ->add_fields([
             Field::make('text', 'heading', __('Section Heading', 'mahbub-and-co'))->set_default_value('Key Skills'),
             Field::make('complex', 'items', __('Skills', 'mahbub-and-co'))

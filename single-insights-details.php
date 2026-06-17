@@ -106,39 +106,64 @@
                         <div class="insights-single-content-wrapper-container">
                             <div class="insights-authors-section">
                                 <?php
-                                // Only display author if explicitly enabled via "Author Display" metabox
-                                $show_author = carbon_get_the_post_meta('insights_show_author');
+                                // Show author(s) only if explicitly set to 'show'
+                                $hide_author = carbon_get_the_post_meta('insights_hide_author');
 
-                                if ($show_author):
-                                    $author_id          = (int) get_the_author_meta('ID');
-                                    $author_name        = get_the_author_meta('display_name', $author_id);
-                                    $author_bio         = get_the_author_meta('description', $author_id);
-                                    $author_avatar      = get_avatar_url($author_id, ['size' => 96]);
-                                    $author_posts_url   = get_author_posts_url($author_id);
+                                if ($hide_author === 'show'):
+                                    // Get selected authors from association field (WP users)
+                                    $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
+                                    $author_ids = array_filter(array_map(function($item) {
+                                        if (!isset($item['id'], $item['type']) || $item['type'] !== 'user') return 0;
+                                        return (int) $item['id'];
+                                    }, $authors_assoc));
+
+                                    // Fallback: use the native post author if no users selected
+                                    if (empty($author_ids)) {
+                                        $author_ids = [(int) get_the_author_meta('ID')];
+                                    }
                                 ?>
-                                    <span>Author :</span>
+                                    <span>Author<?php echo count($author_ids) > 1 ? 's' : ''; ?> :</span>
                                     <div class="authors-grid">
-                                        <div class="author-card">
-                                            <?php if ($author_avatar): ?>
-                                                <img src="<?php echo esc_url($author_avatar); ?>"
-                                                     alt="<?php echo esc_attr($author_name); ?>"
-                                                     class="author-avatar">
-                                            <?php endif; ?>
-
-                                            <div class="author-info">
-                                                <h4 class="author-name">
-                                                    <a href="<?php echo esc_url($author_posts_url); ?>" class="author-link">
-                                                        <?php echo esc_html($author_name); ?>
-                                                    </a>
-                                                </h4>
-                                                <?php if ($author_bio): ?>
-                                                    <p class="author-bio"><?php echo esc_html($author_bio); ?></p>
+                                        <?php foreach ($author_ids as $uid):
+                                            $user = get_userdata($uid);
+                                            if (!$user) continue;
+                                            $author_name     = $user->display_name;
+                                            $author_posts_url = home_url('/insights-author/' . $user->user_nicename . '/');
+                                            $author_bio      = get_user_meta($uid, 'description', true);
+                                            $author_image_id = carbon_get_user_meta($uid, 'user_image');
+                                            $author_avatar   = get_avatar_url($uid, ['size' => 96]);
+                                        ?>
+                                            <div class="author-card">
+                                                <?php if ($author_image_id): ?>
+                                                    <?php echo wp_get_attachment_image(
+                                                        $author_image_id,
+                                                        'thumbnail',
+                                                        false,
+                                                        ['class' => 'author-avatar', 'alt' => esc_attr($author_name)]
+                                                    ); ?>
+                                                <?php elseif ($author_avatar): ?>
+                                                    <img src="<?php echo esc_url($author_avatar); ?>"
+                                                         alt="<?php echo esc_attr($author_name); ?>"
+                                                         class="author-avatar">
                                                 <?php endif; ?>
+
+                                                <div class="author-info">
+                                                    <h4 class="author-name">
+                                                        <a href="<?php echo esc_url($author_posts_url); ?>" class="author-link">
+                                                            <?php echo esc_html($author_name); ?>
+                                                        </a>
+                                                    </h4>
+                                                    <?php if ($author_bio): ?>
+                                                        <p class="author-bio"><?php echo esc_html($author_bio); ?></p>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
+
+
 
 
 

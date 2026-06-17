@@ -18,3 +18,47 @@
 .block-editor-block-list__block[data-type^="carbon-fields/"] .cf-block__fields {
     margin-top: 0 !important;
 }
+
+/* =====================================================
+ * Fix: Carbon Fields Association Field — Show full name
+ * ===================================================== */
+
+/* Result list items (left panel — search results) */
+.cf-association-results-list__item-header,
+.cf-association-results-list__item-title,
+.cf-association-list__item-title,
+.cf-association__item-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+}
+
+/* Selected items (right panel) */
+.cf-association-selected-list__item-title,
+.cf-association-selected-list__item-header {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+    font-size: 12px !important;
+}
+
+/* Widen the association field panels slightly */
+.cf-association-results-list,
+.cf-association-selected-list {
+    min-width: 0 !important;
+}
+
+/* Make item row taller to accommodate full name */
+.cf-association-results-list__item,
+.cf-association-selected-list__item {
+    height: auto !important;
+    min-height: 40px !important;
+    padding: 6px 8px !important;
+    align-items: flex-start !important;
+}

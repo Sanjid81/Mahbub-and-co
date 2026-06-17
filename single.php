@@ -103,38 +103,45 @@ get_header();
 
                         <div class="insights-single-content-wrapper-container">
                             <?php
-                            // Only display author if explicitly enabled — default hidden
-                            $show_author = carbon_get_the_post_meta('insights_show_author');
-                            if ($show_author) :
-                                $author_id           = get_the_author_meta('ID');
-                                $custom_author_name  = get_the_author_meta('display_name', $author_id);
-                                $custom_author_bio   = get_the_author_meta('description', $author_id);
-                                $custom_author_link  = home_url('/insights-author/' . get_the_author_meta('user_nicename', $author_id) . '/');
-                                $custom_author_image = carbon_get_user_meta($author_id, 'user_image');
+                            // Show author(s) only if explicitly set to 'show'
+                            $hide_author = carbon_get_the_post_meta('insights_hide_author');
+                            if ($hide_author === 'show') :
+
+                                // Get selected authors from association field (WP users)
+                                $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
+                                $author_ids = array_filter(array_map(function($item) {
+                                    if (!isset($item['id'], $item['type']) || $item['type'] !== 'user') return 0;
+                                    return (int) $item['id'];
+                                }, $authors_assoc));
+
+                                // Fallback: use the native post author if no users selected
+                                if (empty($author_ids)) {
+                                    $author_ids = [get_the_author_meta('ID')];
+                                }
                             ?>
                                 <div class="insights-authors-section">
-                                    <?php if (!empty($custom_author_name)) : ?>
-                                        <span>Author :</span>
-                                        <div class="authors-grid">
+                                    <span>Author<?php echo count($author_ids) > 1 ? 's' : ''; ?> :</span>
+                                    <div class="authors-grid">
+                                        <?php foreach ($author_ids as $uid):
+                                            $user = get_userdata($uid);
+                                            if (!$user) continue;
+                                            $custom_author_name  = $user->display_name;
+                                            $custom_author_link  = home_url('/insights-author/' . $user->user_nicename . '/');
+                                            $custom_author_image = carbon_get_user_meta($uid, 'user_image');
+                                            $author_avatar       = get_avatar_url($uid, ['size' => 96]);
+                                        ?>
                                             <div class="author-card">
                                                 <?php if ($custom_author_image) : ?>
                                                     <?php echo wp_get_attachment_image(
                                                         $custom_author_image,
                                                         'thumbnail',
                                                         false,
-                                                        [
-                                                            'class' => 'author-avatar',
-                                                            'alt'   => esc_attr($custom_author_name),
-                                                        ]
+                                                        ['class' => 'author-avatar', 'alt' => esc_attr($custom_author_name)]
                                                     ); ?>
-                                                <?php else : ?>
-                                                    <div class="author-avatar author-avatar--placeholder">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true">
-                                                            <circle cx="40" cy="40" r="40" fill="#e8e0e2"/>
-                                                            <circle cx="40" cy="30" r="14" fill="#b0919a"/>
-                                                            <ellipse cx="40" cy="70" rx="22" ry="16" fill="#b0919a"/>
-                                                        </svg>
-                                                    </div>
+                                                <?php elseif ($author_avatar): ?>
+                                                    <img src="<?php echo esc_url($author_avatar); ?>"
+                                                         alt="<?php echo esc_attr($custom_author_name); ?>"
+                                                         class="author-avatar">
                                                 <?php endif; ?>
 
                                                 <h4 class="author-name">
@@ -143,8 +150,8 @@ get_header();
                                                     </a>
                                                 </h4>
                                             </div>
-                                        </div>
-                                    <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             <?php endif; ?>
 

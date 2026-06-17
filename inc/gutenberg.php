@@ -589,23 +589,6 @@ add_action('carbon_fields_register_fields', function () {
         });
 
     // =========================================================
-    // Insights — Show Author on Front-end (opt-in, default OFF)
-    // =========================================================
-    Container::make('post_meta', 'insights_show_author_meta', 'Author Display')
-        ->where('post_type', '=', 'post')
-        ->add_fields(array(
-            Field::make('checkbox', 'insights_show_author', 'Show Author on this post?')
-                ->set_default_value(false)
-                ->set_help_text(
-                    'Unchecked by default — no author will show. ' .
-                    'Tick this box AND set the Author in the right sidebar to display the author on the front-end.'
-                ),
-        ));
-
-
-
-
-    // =========================================================
     // Insights page - Display insights posts
     // =========================================================
     Block::make('Insights Grid Block', 'insights-grid-display')
@@ -614,7 +597,8 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_default_value('Our Insights'),
             Field::make('text', 'load_more_text', 'Load More Button Text')
                 ->set_default_value('Load More'),
-            Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
+            Field::make('text', 'insights_posts_per_page', 'Posts Per Page')
+                ->set_attribute('type', 'number')
                 ->set_default_value(6),
             Field::make('select', 'insights_category_filter', 'Filter by Category')
                 ->add_options(array(
@@ -665,7 +649,8 @@ add_action('carbon_fields_register_fields', function () {
                 ->set_value_type('id'),
             Field::make('text', 'heading', 'Section Heading')
                 ->set_default_value('Featured Insights'),
-            Field::make('number', 'slides_count', 'Number of Slides')
+            Field::make('text', 'slides_count', 'Number of Slides')
+                ->set_attribute('type', 'number')
                 ->set_default_value(5),
 
             Field::make('select', 'insights_category', 'Filter by Category')

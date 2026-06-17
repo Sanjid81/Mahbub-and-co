@@ -9,10 +9,11 @@ Block::make('Insights Grid Block', 'insights-grid-display')
         Field::make('text', 'insights_grid_title', 'Section Title')
             ->set_default_value('Our Insights'),
 
-        Field::make('number', 'insights_posts_per_page', 'Posts Per Page')
-            ->set_default_value(6)
-            ->set_min(1)
-            ->set_max(20),
+        Field::make('text', 'insights_posts_per_page', 'Posts Per Page')
+            ->set_attribute('type', 'number')
+            ->set_attribute('min', 1)
+            ->set_attribute('max', 20)
+            ->set_default_value(6),
 
         Field::make('select', 'insights_category_filter', 'Filter by Category')
             ->add_options([

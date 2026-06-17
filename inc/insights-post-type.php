@@ -81,8 +81,9 @@ function crb_attach_insights_custom_date_and_social()
         return; 
     }
 
-    \Carbon_Fields\Container::make('post_meta', 'Custom Publish Date & Social Links')
-        ->where('post_type', '=', 'post')
+    \Carbon_Fields\Container::make('post_meta', 'Publish Settings & Authors')
+        ->set_context('normal')
+        ->set_priority('high')
         ->add_fields(array(
 
             \Carbon_Fields\Field::make('date', 'insights_custom_publish_date', 'Custom Publish Date')
@@ -97,9 +98,16 @@ function crb_attach_insights_custom_date_and_social()
 
             \Carbon_Fields\Field::make('select', 'insights_hide_author', 'Author Display')
                 ->add_options(array(
-                    'show' => 'Show Author',
                     'none' => 'None (Hide Author)',
+                    'show' => 'Show Author',
                 ))
-                ->set_default_value('show'),
+                ->set_default_value('none'),
+
+            \Carbon_Fields\Field::make('association', 'insights_authors', 'Select Author(s)')
+                ->set_types(array(
+                    array('type' => 'user')
+                ))
+                ->set_max(10)
+                ->set_help_text('Select one or more authors. Requires "Show Author" selected above. Leave empty to use the default post author.'),
         ));
 }

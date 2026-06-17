@@ -1,17 +1,11 @@
 .our-people-section {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   max-width: 100%;
-  width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow: clip;
   margin: 0 auto;
-
-  // Prevent extra white space below footer on tablet/desktop (height: 100% was stretching the section)
-  @media (min-width: 601px) {
-    height: auto;
-    min-height: 0;
-  }
 
   .bg-img {
     position: absolute;
@@ -30,7 +24,7 @@
     justify-content: center;
     transition: all 0.4s ease-in-out;
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1200px) {
       flex-wrap: wrap;
     }
 
@@ -46,7 +40,7 @@
       z-index: 1 !important;
       transition: all 0.4s ease-in-out;
 
-      @media (max-width: 1500px) {
+      @media (max-width: 1200px) {
         flex: 0 0 100%;
         max-width: 100%;
         justify-content: flex-start;
@@ -292,7 +286,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
 
-            @media (max-width: 992px) {
+            @media (max-width: 1300px) {
               grid-template-columns: repeat(2, 1fr);
             }
 
@@ -437,7 +431,7 @@
         min-height: 0;
         align-items: flex-start;
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1200px) {
           flex: 0 0 100%;
           width: 100%;
           max-width: 100%;
@@ -447,7 +441,14 @@
         .team-left-inner {
           margin: 0;
 
-          @media (max-width: 1500px) {
+          // Keep the form pinned while the (taller) results column scrolls
+          @media (min-width: 1201px) {
+            position: sticky;
+            top: 40px;
+            align-self: flex-start;
+          }
+
+          @media (max-width: 1200px) {
             margin: auto;
           }
         }
@@ -458,16 +459,16 @@
         flex: 0 0 60%;
         width: 60%;
         max-width: 60%;
-        max-height: 1000px;
+        height: auto;
+        max-height: none;
         opacity: 1;
         visibility: visible;
         overflow: visible;
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1200px) {
           flex: 0 0 100%;
           width: 100%;
           max-width: 100%;
-          max-height: none;
         }
       }
     }
