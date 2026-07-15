@@ -80,6 +80,33 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
+  // Scroll hide/show navbar
+  let lastScrollTop = 0;
+  const navbar = document.querySelector(".navbar");
+  if (navbar) {
+    window.addEventListener("scroll", () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // If at top of the page, show navbar
+      if (scrollTop <= 50) {
+        navbar.classList.remove("scroll-down");
+        navbar.classList.remove("scroll-up");
+        lastScrollTop = scrollTop;
+        return;
+      }
+      
+      if (scrollTop > lastScrollTop) {
+        // Scrolling down - hide navbar
+        navbar.classList.add("scroll-down");
+        navbar.classList.remove("scroll-up");
+      } else {
+        // Scrolling up - show navbar
+        navbar.classList.add("scroll-up");
+        navbar.classList.remove("scroll-down");
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }, { passive: true });
+  }
 });
 
 

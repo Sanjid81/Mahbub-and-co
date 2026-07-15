@@ -14,13 +14,13 @@ while (have_posts()) {
     <section class="program-details-page" id="program-<?php the_ID(); ?>">
         <div class="program-details-inner">
 
-            <div class="container">
+            <!-- <div class="container">
                 <header class="program-details-header">
                     <h1 class="program-details-title">
                         <?php the_title(); ?>
                     </h1>
                 </header>
-            </div>
+            </div> -->
             <div class="program-details-blocks">
                 <?php the_content(); ?>
             </div>

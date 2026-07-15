@@ -26,20 +26,20 @@ function register_custom_career_blocks()
                         ->set_default_value('Our Career Programs'),
                     Field::make('rich_text', 'career_intro', 'Intro Text Above List'),
 
-                    Field::make('complex', 'career_dev_sections', 'Development Sections (2 boxes for this tab)')
-                        ->add_fields(array(
-                            Field::make('text', 'dev_title', 'Section Title'),
-                            Field::make('rich_text', 'dev_content', 'Content'),
-                        ))
-                        ->set_max(5)
-                        ->set_layout('tabbed-horizontal')
-                        ->set_header_template('<%- dev_title || "Section" %>'),
+                    // Field::make('complex', 'career_dev_sections', 'Development Sections (2 boxes for this tab)')
+                    //     ->add_fields(array(
+                    //         Field::make('text', 'dev_title', 'Section Title'),
+                    //         Field::make('rich_text', 'dev_content', 'Content'),
+                    //     ))
+                    //     ->set_max(5)
+                    //     ->set_layout('tabbed-horizontal')
+                    //     ->set_header_template('<%- dev_title || "Section" %>'),
 
-                    Field::make('complex', 'dev_section_images', __('Section Images (dark block)', 'mahbub-and-co'))
-                        ->add_fields(array(
-                            Field::make('image', 'dev_image1', 'Image 1'),
-                        ))
-                        ->set_layout('tabbed-horizontal'),
+                    // Field::make('complex', 'dev_section_images', __('Section Images (dark block)', 'mahbub-and-co'))
+                    //     ->add_fields(array(
+                    //         Field::make('image', 'dev_image1', 'Image 1'),
+                    //     ))
+                    //     ->set_layout('tabbed-horizontal'),
 
                     Field::make('image', 'background_image', 'Background Image (dark section)')
                         ->set_value_type('url'),

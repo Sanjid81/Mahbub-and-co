@@ -1,7 +1,26 @@
 .navbar {
-    border-bottom: 1px solid #FFFFFF33;
+    // border-bottom: 1px solid #FFFFFF33;
     background-color: rgba(0, 0, 0, 1);
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+
+    body.admin-bar & {
+        top: 32px;
+
+        @media screen and (max-width: 782px) {
+            top: 46px;
+        }
+    }
+
+    &.scroll-down {
+        transform: translateY(-100%);
+    }
+
+    &.scroll-up {
+        transform: translateY(0);
+    }
 
     .nav-container {
         max-width: 1920px;

@@ -107,53 +107,81 @@ get_header();
                             $hide_author = carbon_get_the_post_meta('insights_hide_author');
                             if ($hide_author === 'show') :
 
-                                // Get selected authors from association field (WP users)
-                                $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
-                                $author_ids = array_filter(array_map(function($item) {
-                                    if (!isset($item['id'], $item['type']) || $item['type'] !== 'user') return 0;
-                                    return (int) $item['id'];
-                                }, $authors_assoc));
+                                 $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
+                                 $authors = [];
+                                 foreach ($authors_assoc as $item) {
+                                     if (isset($item['id'], $item['type'])) {
+                                         if ($item['type'] === 'user') {
+                                             $uid = (int) $item['id'];
+                                             $user = get_userdata($uid);
+                                             if ($user) {
+                                                 $authors[] = [
+                                                     'name' => $user->display_name,
+                                                     'link' => home_url('/insights-author/' . $user->user_nicename . '/'),
+                                                     'image_id' => carbon_get_user_meta($uid, 'user_image'),
+                                                     'avatar_fallback' => get_avatar_url($uid, ['size' => 96])
+                                                 ];
+                                             }
+                                         } elseif ($item['type'] === 'post') {
+                                             $pid = (int) $item['id'];
+                                             if (get_post_status($pid) === 'publish' || current_user_can('edit_posts')) {
+                                                 $authors[] = [
+                                                     'name' => get_the_title($pid),
+                                                     'link' => home_url('/insights-author/' . get_post_field('post_name', $pid) . '/'),
+                                                     'image_id' => carbon_get_post_meta($pid, 'user_image'),
+                                                     'avatar_fallback' => ''
+                                                 ];
+                                             }
+                                         }
+                                     }
+                                 }
 
-                                // Fallback: use the native post author if no users selected
-                                if (empty($author_ids)) {
-                                    $author_ids = [get_the_author_meta('ID')];
-                                }
-                            ?>
-                                <div class="insights-authors-section">
-                                    <span>Author<?php echo count($author_ids) > 1 ? 's' : ''; ?> :</span>
-                                    <div class="authors-grid">
-                                        <?php foreach ($author_ids as $uid):
-                                            $user = get_userdata($uid);
-                                            if (!$user) continue;
-                                            $custom_author_name  = $user->display_name;
-                                            $custom_author_link  = home_url('/insights-author/' . $user->user_nicename . '/');
-                                            $custom_author_image = carbon_get_user_meta($uid, 'user_image');
-                                            $author_avatar       = get_avatar_url($uid, ['size' => 96]);
-                                        ?>
-                                            <div class="author-card">
-                                                <?php if ($custom_author_image) : ?>
-                                                    <?php echo wp_get_attachment_image(
-                                                        $custom_author_image,
-                                                        'thumbnail',
-                                                        false,
-                                                        ['class' => 'author-avatar', 'alt' => esc_attr($custom_author_name)]
-                                                    ); ?>
-                                                <?php elseif ($author_avatar): ?>
-                                                    <img src="<?php echo esc_url($author_avatar); ?>"
-                                                         alt="<?php echo esc_attr($custom_author_name); ?>"
-                                                         class="author-avatar">
-                                                <?php endif; ?>
+                                 if (empty($authors)) {
+                                     $uid = (int) get_the_author_meta('ID');
+                                     $user = get_userdata($uid);
+                                     if ($user) {
+                                         $authors[] = [
+                                             'name' => $user->display_name,
+                                             'link' => home_url('/insights-author/' . $user->user_nicename . '/'),
+                                             'image_id' => carbon_get_user_meta($uid, 'user_image'),
+                                             'avatar_fallback' => get_avatar_url($uid, ['size' => 96])
+                                         ];
+                                     }
+                                 }
+                             ?>
+                                 <div class="insights-authors-section">
+                                     <span>Author<?php echo count($authors) > 1 ? 's' : ''; ?> :</span>
+                                     <div class="authors-grid">
+                                         <?php foreach ($authors as $author_data):
+                                             $custom_author_name = $author_data['name'];
+                                             $custom_author_link = $author_data['link'];
+                                             $custom_author_image = $author_data['image_id'];
+                                             $author_avatar = $author_data['avatar_fallback'];
+                                         ?>
+                                             <div class="author-card">
+                                                 <?php if ($custom_author_image) : ?>
+                                                     <?php echo wp_get_attachment_image(
+                                                         $custom_author_image,
+                                                         'thumbnail',
+                                                         false,
+                                                         ['class' => 'author-avatar', 'alt' => esc_attr($custom_author_name)]
+                                                     ); ?>
+                                                 <?php elseif ($author_avatar): ?>
+                                                     <img src="<?php echo esc_url($author_avatar); ?>"
+                                                          alt="<?php echo esc_attr($custom_author_name); ?>"
+                                                          class="author-avatar">
+                                                 <?php endif; ?>
 
-                                                <h4 class="author-name">
-                                                    <a href="<?php echo esc_url($custom_author_link); ?>" class="author-link">
-                                                        <?php echo esc_html($custom_author_name); ?>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
+                                                 <h4 class="author-name">
+                                                     <a href="<?php echo esc_url($custom_author_link); ?>" class="author-link">
+                                                         <?php echo esc_html($custom_author_name); ?>
+                                                     </a>
+                                                 </h4>
+                                             </div>
+                                         <?php endforeach; ?>
+                                     </div>
+                                 </div>
+                             <?php endif; ?>
 
 
                             <!-- Main Content -->

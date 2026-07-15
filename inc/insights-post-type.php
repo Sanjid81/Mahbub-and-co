@@ -72,6 +72,29 @@ function create_default_insights_categories()
 add_action('after_switch_theme', 'create_default_insights_categories');
 */
 
+// Register custom post type 'insights_author'
+function register_insights_author_post_type()
+{
+    register_post_type('insights_author', array(
+        'labels' => array(
+            'name' => 'Insights Authors',
+            'singular_name' => 'Insights Author',
+            'add_new_item' => 'Add New Author',
+            'edit_item' => 'Edit Author',
+            'all_items' => 'All Authors',
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-admin-users',
+        'supports' => array('title', 'editor', 'excerpt'), // title = Name, editor = Content, excerpt = Bio/Description
+        'has_archive' => false,
+        'rewrite' => array('slug' => 'insights-author'),
+        'show_in_rest' => true,
+        'publicly_queryable' => true,
+        'menu_position' => 7,
+    ));
+}
+add_action('init', 'register_insights_author_post_type');
+
 // *************************post date and social media*********************************
 add_action('carbon_fields_register_fields', 'crb_attach_insights_custom_date_and_social', 100);
 
@@ -80,6 +103,17 @@ function crb_attach_insights_custom_date_and_social()
     if (!class_exists('Carbon_Fields\\Container')) {
         return; 
     }
+
+    // Attach fields to CPT insights_author
+    \Carbon_Fields\Container::make('post_meta', 'Author Details')
+        ->where('post_type', '=', 'insights_author')
+        ->add_fields(array(
+            \Carbon_Fields\Field::make('image', 'user_image', 'Profile Image'),
+            \Carbon_Fields\Field::make('text', 'user_facebook_link', 'Facebook Link')
+                ->set_attribute('placeholder', 'https://facebook.com/yourprofile'),
+            \Carbon_Fields\Field::make('text', 'user_linkedin_link', 'LinkedIn Link')
+                ->set_attribute('placeholder', 'https://linkedin.com/in/yourprofile'),
+        ));
 
     \Carbon_Fields\Container::make('post_meta', 'Publish Settings & Authors')
         ->set_context('normal')
@@ -90,12 +124,6 @@ function crb_attach_insights_custom_date_and_social()
                 ->set_storage_format('Y-m-d')
                 ->set_input_format('Y-m-d', 'Y-m-d'),
 
-            \Carbon_Fields\Field::make('text', 'insights_facebook_link', 'Facebook Link')
-                ->set_attribute('placeholder', 'https://facebook.com/yourpage'),
-
-            \Carbon_Fields\Field::make('text', 'insights_linkedin_link', 'LinkedIn Link')
-                ->set_attribute('placeholder', 'https://linkedin.com/in/yourprofile'),
-
             \Carbon_Fields\Field::make('select', 'insights_hide_author', 'Author Display')
                 ->add_options(array(
                     'none' => 'None (Hide Author)',
@@ -105,9 +133,12 @@ function crb_attach_insights_custom_date_and_social()
 
             \Carbon_Fields\Field::make('association', 'insights_authors', 'Select Author(s)')
                 ->set_types(array(
-                    array('type' => 'user')
+                    array(
+                        'type' => 'post',
+                        'post_type' => 'insights_author',
+                    )
                 ))
                 ->set_max(10)
-                ->set_help_text('Select one or more authors. Requires "Show Author" selected above. Leave empty to use the default post author.'),
+                ->set_help_text('Select one or more custom Insights Authors. Leave empty to use default post author.'),
         ));
 }

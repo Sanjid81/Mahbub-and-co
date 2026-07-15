@@ -19,10 +19,19 @@ jQuery(document).ready(function ($) {
                 $('.mahbub__team-results').html(response);
 
                 
-                // Show selected category if any
-                if (area !== '') {
-                    var selectedText = $('select[name="mahbub__team_area"] option:selected').text();
-                    $('.mahbub__selected-category-name').text(selectedText);
+                // Show selected category or search query if active
+                if (area !== '' || search !== '') {
+                    var labelText = '';
+                    if (area !== '') {
+                        labelText += $('select[name="mahbub__team_area"] option:selected').text();
+                    }
+                    if (search !== '') {
+                        if (labelText !== '') {
+                            labelText += ' - ';
+                        }
+                        labelText += 'Search: "' + search + '"';
+                    }
+                    $('.mahbub__selected-category-name').text(labelText);
                     $('.mahbub__selected-category').show();
                 } else {
                     $('.mahbub__selected-category').hide();

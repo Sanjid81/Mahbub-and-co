@@ -221,9 +221,29 @@ add_action('wp_footer', 'aos_init_script', 100);
 // =====================================================================================
 
 // AJAX handler
+// Helper to restrict search to title only
+function mahbub_search_by_title_only($search_sql, $wp_query) {
+    if (!empty($search_sql)) {
+        global $wpdb;
+        $q = $wp_query->query_vars;
+        $n = !empty($q['exact']) ? '' : '%';
+        $search = '';
+        $searchand = '';
+        foreach ((array) $q['search_terms'] as $term) {
+            $term = esc_sql($wpdb->esc_like($term));
+            $search .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+            $searchand = ' AND ';
+        }
+        if (!empty($search)) {
+            $search_sql = " AND ({$search}) ";
+        }
+    }
+    return $search_sql;
+}
+
+// AJAX handler
 function mahbub_team_search_ajax()
 {
-
     $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
     $area = isset($_POST['area']) ? sanitize_text_field($_POST['area']) : '';
 
@@ -233,6 +253,7 @@ function mahbub_team_search_ajax()
     );
 
     if (!empty($search)) {
+        add_filter('posts_search', 'mahbub_search_by_title_only', 10, 2);
         $args['s'] = $search;
     }
 
@@ -248,12 +269,17 @@ function mahbub_team_search_ajax()
 
     $query = new WP_Query($args);
 
+    // Remove the filter right after query
+    if (!empty($search)) {
+        remove_filter('posts_search', 'mahbub_search_by_title_only', 10);
+    }
+
     if ($query->have_posts()):
         while ($query->have_posts()):
             $query->the_post(); ?>
             <a href="<?php the_permalink(); ?>" class="mahbub__team-member">
                 <?php if (has_post_thumbnail()): ?>
-                    <div class="mahbub__team-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
+                    <div class="mahbub__team-thumb"><?php the_post_thumbnail('large'); ?></div>
                 <?php endif; ?>
                 <div class="team-member-info">
                     <h3 class="mahbub__team-name">

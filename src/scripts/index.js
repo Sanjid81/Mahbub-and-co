@@ -15,6 +15,7 @@ import "./components/insights/insights-details-bottom-slider";
 import "./components/recognition/recognition-cards";
 import "./components/apply/apply-form-file-name";
 import "./components/apply/apply-form-validation";
+import "./components/apply/apply-form-repeater";
 import "./components/insights/insights-slide-more";
 import "./components/people/team-search";
 

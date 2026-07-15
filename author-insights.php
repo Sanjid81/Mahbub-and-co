@@ -14,21 +14,27 @@ if (empty($author_slug)) {
     exit;
 }
 
-$author_image = '';
-$author_bio = '';
-$fb_link = '';
-$li_link = '';
-$found = false;
-$author_name = '';
+$is_cpt = false;
+$author_post_id = 0;
+$author_user_id = 0;
 
-$author = get_user_by('slug', $author_slug);
+// 1. Try finding CPT author first
+$author_cpt_query = new WP_Query([
+    'post_type' => 'insights_author',
+    'name' => $author_slug,
+    'posts_per_page' => 1,
+    'post_status' => 'any'
+]);
 
-if ($author) {
+if ($author_cpt_query->have_posts()) {
+    $author_cpt_query->the_post();
     $found = true;
-    $author_name = $author->display_name;
-    $author_bio = get_the_author_meta('description', $author->ID);
+    $is_cpt = true;
+    $author_post_id = get_the_ID();
+    $author_name = get_the_title();
+    $author_bio = has_excerpt() ? get_the_excerpt() : get_the_content();
     
-    $author_image_id = carbon_get_user_meta($author->ID, 'user_image');
+    $author_image_id = carbon_get_post_meta($author_post_id, 'user_image');
     if ($author_image_id) {
         $author_image = wp_get_attachment_image_url($author_image_id, 'medium');
         if (!$author_image) {
@@ -36,21 +42,60 @@ if ($author) {
         }
     }
     
-    $fb_link = carbon_get_user_meta($author->ID, 'user_facebook_link');
-    $li_link = carbon_get_user_meta($author->ID, 'user_linkedin_link');
+    $fb_link = carbon_get_post_meta($author_post_id, 'user_facebook_link');
+    $li_link = carbon_get_post_meta($author_post_id, 'user_linkedin_link');
+    
+    wp_reset_postdata();
+} else {
+    // 2. Fallback: try finding User with this slug
+    $author = get_user_by('slug', $author_slug);
+    if ($author) {
+        $found = true;
+        $author_user_id = $author->ID;
+        $author_name = $author->display_name;
+        $author_bio = get_the_author_meta('description', $author->ID);
+        
+        $author_image_id = carbon_get_user_meta($author->ID, 'user_image');
+        if ($author_image_id) {
+            $author_image = wp_get_attachment_image_url($author_image_id, 'medium');
+            if (!$author_image) {
+                $author_image = wp_get_attachment_url($author_image_id);
+            }
+        }
+        
+        $fb_link = carbon_get_user_meta($author->ID, 'user_facebook_link');
+        $li_link = carbon_get_user_meta($author->ID, 'user_linkedin_link');
+    }
 }
 
 // Get posts by this author
 $author_posts = [];
 if ($found) {
-    $author_posts_query = new WP_Query([
-        'post_type' => 'post',
-        'author' => $author->ID,
-        'posts_per_page' => 12,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'post_status' => 'publish'
-    ]);
+    if ($is_cpt) {
+        $author_posts_query = new WP_Query([
+            'post_type' => 'post',
+            'posts_per_page' => 12,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'post_status' => 'publish',
+            'meta_query' => [
+                [
+                    'key' => 'insights_authors',
+                    'value' => 'post:insights_author:' . $author_post_id,
+                    'compare' => 'LIKE'
+                ]
+            ]
+        ]);
+    } else {
+        $author_posts_query = new WP_Query([
+            'post_type' => 'post',
+            'author' => $author_user_id,
+            'posts_per_page' => 12,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'post_status' => 'publish'
+        ]);
+    }
 
     if ($author_posts_query->have_posts()) {
         while ($author_posts_query->have_posts()) {

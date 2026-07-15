@@ -110,28 +110,59 @@
                                 $hide_author = carbon_get_the_post_meta('insights_hide_author');
 
                                 if ($hide_author === 'show'):
-                                    // Get selected authors from association field (WP users)
                                     $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
-                                    $author_ids = array_filter(array_map(function($item) {
-                                        if (!isset($item['id'], $item['type']) || $item['type'] !== 'user') return 0;
-                                        return (int) $item['id'];
-                                    }, $authors_assoc));
+                                    $authors = [];
+                                    foreach ($authors_assoc as $item) {
+                                        if (isset($item['id'], $item['type'])) {
+                                            if ($item['type'] === 'user') {
+                                                $uid = (int) $item['id'];
+                                                $user = get_userdata($uid);
+                                                if ($user) {
+                                                    $authors[] = [
+                                                        'name' => $user->display_name,
+                                                        'link' => home_url('/insights-author/' . $user->user_nicename . '/'),
+                                                        'bio' => get_user_meta($uid, 'description', true),
+                                                        'image_id' => carbon_get_user_meta($uid, 'user_image'),
+                                                        'avatar_fallback' => get_avatar_url($uid, ['size' => 96])
+                                                    ];
+                                                }
+                                            } elseif ($item['type'] === 'post') {
+                                                $pid = (int) $item['id'];
+                                                if (get_post_status($pid) === 'publish' || current_user_can('edit_posts')) {
+                                                    $authors[] = [
+                                                        'name' => get_the_title($pid),
+                                                        'link' => home_url('/insights-author/' . get_post_field('post_name', $pid) . '/'),
+                                                        'bio' => get_post_field('post_content', $pid),
+                                                        'image_id' => carbon_get_post_meta($pid, 'user_image'),
+                                                        'avatar_fallback' => ''
+                                                    ];
+                                                }
+                                            }
+                                        }
+                                    }
 
-                                    // Fallback: use the native post author if no users selected
-                                    if (empty($author_ids)) {
-                                        $author_ids = [(int) get_the_author_meta('ID')];
+                                    if (empty($authors)) {
+                                        $uid = (int) get_the_author_meta('ID');
+                                        $user = get_userdata($uid);
+                                        if ($user) {
+                                            $authors[] = [
+                                                'name' => $user->display_name,
+                                                'link' => home_url('/insights-author/' . $user->user_nicename . '/'),
+                                                'bio' => get_user_meta($uid, 'description', true),
+                                                'image_id' => carbon_get_user_meta($uid, 'user_image'),
+                                                'avatar_fallback' => get_avatar_url($uid, ['size' => 96])
+                                            ];
+                                        }
                                     }
                                 ?>
-                                    <span>Author<?php echo count($author_ids) > 1 ? 's' : ''; ?> :</span>
+                                    <span>Author<?php echo count($authors) > 1 ? 's' : ''; ?> :</span>
                                     <div class="authors-grid">
-                                        <?php foreach ($author_ids as $uid):
-                                            $user = get_userdata($uid);
-                                            if (!$user) continue;
-                                            $author_name     = $user->display_name;
-                                            $author_posts_url = home_url('/insights-author/' . $user->user_nicename . '/');
-                                            $author_bio      = get_user_meta($uid, 'description', true);
-                                            $author_image_id = carbon_get_user_meta($uid, 'user_image');
-                                            $author_avatar   = get_avatar_url($uid, ['size' => 96]);
+                                        <?php foreach ($authors as $author_data):
+                                            $author_name = $author_data['name'];
+                                            $author_posts_url = $author_data['link'];
+                                            $author_bio = $author_data['bio'];
+                                            $author_image_id = $author_data['image_id'];
+                                            $author_avatar = $author_data['avatar_fallback'];
                                         ?>
                                             <div class="author-card">
                                                 <?php if ($author_image_id): ?>
@@ -154,7 +185,7 @@
                                                         </a>
                                                     </h4>
                                                     <?php if ($author_bio): ?>
-                                                        <p class="author-bio"><?php echo esc_html($author_bio); ?></p>
+                                                        <p class="author-bio"><?php echo esc_html(wp_strip_all_tags($author_bio)); ?></p>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
