@@ -103,11 +103,9 @@ get_header();
 
                         <div class="insights-single-content-wrapper-container">
                             <?php
-                            // Show author(s) only if explicitly set to 'show'
-                            $hide_author = carbon_get_the_post_meta('insights_hide_author');
-                            if ($hide_author === 'show') :
+                            $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
+                            if (!empty($authors_assoc)) :
 
-                                 $authors_assoc = carbon_get_the_post_meta('insights_authors') ?: [];
                                  $authors = [];
                                  foreach ($authors_assoc as $item) {
                                      if (isset($item['id'], $item['type'])) {

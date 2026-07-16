@@ -109,8 +109,8 @@ function crb_attach_insights_custom_date_and_social()
         ->where('post_type', '=', 'insights_author')
         ->add_fields(array(
             \Carbon_Fields\Field::make('image', 'user_image', 'Profile Image'),
-            \Carbon_Fields\Field::make('text', 'user_facebook_link', 'Facebook Link')
-                ->set_attribute('placeholder', 'https://facebook.com/yourprofile'),
+            \Carbon_Fields\Field::make('text', 'user_email', 'Email Address')
+                ->set_attribute('placeholder', 'author@example.com'),
             \Carbon_Fields\Field::make('text', 'user_linkedin_link', 'LinkedIn Link')
                 ->set_attribute('placeholder', 'https://linkedin.com/in/yourprofile'),
         ));
@@ -124,12 +124,7 @@ function crb_attach_insights_custom_date_and_social()
                 ->set_storage_format('Y-m-d')
                 ->set_input_format('Y-m-d', 'Y-m-d'),
 
-            \Carbon_Fields\Field::make('select', 'insights_hide_author', 'Author Display')
-                ->add_options(array(
-                    'none' => 'None (Hide Author)',
-                    'show' => 'Show Author',
-                ))
-                ->set_default_value('none'),
+
 
             \Carbon_Fields\Field::make('association', 'insights_authors', 'Select Author(s)')
                 ->set_types(array(
@@ -141,4 +136,42 @@ function crb_attach_insights_custom_date_and_social()
                 ->set_max(10)
                 ->set_help_text('Select one or more custom Insights Authors. Leave empty to use default post author.'),
         ));
+}
+
+// 1. Add "Insights Author" column to posts list table in admin
+add_filter('manage_post_posts_columns', 'add_custom_insights_author_column');
+function add_custom_insights_author_column($columns) {
+    $new_columns = array();
+    foreach ($columns as $key => $title) {
+        $new_columns[$key] = $title;
+        if ($key === 'title') {
+            $new_columns['insights_authors_col'] = 'Insights Author';
+        }
+    }
+    unset($new_columns['author']);
+    return $new_columns;
+}
+
+// 2. Populate the "Insights Author" column with associated authors
+add_action('manage_post_posts_custom_column', 'populate_custom_insights_author_column', 10, 2);
+function populate_custom_insights_author_column($column, $post_id) {
+    if ($column === 'insights_authors_col') {
+        $authors_assoc = carbon_get_post_meta($post_id, 'insights_authors') ?: [];
+        if (!empty($authors_assoc)) {
+            $author_names = [];
+            foreach ($authors_assoc as $item) {
+                if (isset($item['id'], $item['type']) && $item['type'] === 'post') {
+                    $pid = (int) $item['id'];
+                    $author_names[] = get_the_title($pid);
+                }
+            }
+            if (!empty($author_names)) {
+                echo esc_html(implode(', ', $author_names));
+            } else {
+                echo '<span style="color:#999;">—</span>';
+            }
+        } else {
+            echo '<span style="color:#999;">—</span>';
+        }
+    }
 }

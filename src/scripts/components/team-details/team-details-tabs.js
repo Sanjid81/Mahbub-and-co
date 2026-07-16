@@ -49,3 +49,38 @@
         addActiveClass(current);
             }
         });
+
+    // Dynamic text download for buttons with '#' href
+    const downloadButtons = document.querySelectorAll('.download-btn');
+    downloadButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const href = btn.getAttribute('href');
+            if (!href || href === '#' || href === '') {
+                e.preventDefault();
+                
+                const section = btn.closest('section');
+                if (!section) return;
+                
+                const titleEl = section.querySelector('h2');
+                const contentEl = section.querySelector('.subcategory-description-container');
+                
+                if (!contentEl) return;
+                
+                const title = titleEl ? titleEl.textContent.trim() : 'Document';
+                const contentText = contentEl.textContent.trim().replace(/\n\s*\n/g, '\n');
+                
+                const fileContent = `${title}\n\n${contentText}`;
+                
+                const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                
+                const tempLink = document.createElement('a');
+                tempLink.href = url;
+                tempLink.download = `${title.replace(/[^a-z0-9\s]/gi, '').trim()}.txt`;
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
+                URL.revokeObjectURL(url);
+            }
+        });
+    });

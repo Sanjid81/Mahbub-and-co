@@ -80,7 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
-  // Scroll hide/show navbar
+  // Scroll hide/show navbar (Disabled to keep header permanently fixed)
+  /*
   let lastScrollTop = 0;
   const navbar = document.querySelector(".navbar");
   if (navbar) {
@@ -107,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, { passive: true });
   }
+  */
 });
 
 
